@@ -7,6 +7,7 @@ sys.path.append('/Users/emil/Documents/GitHub/apc')
 # HILDRETH QP SOLVER
 # =========================
 from apc.solvers.hildreth_qp import hildreth_qp
+from apc.filters.kalman_filter import kalman_filter
 
 # =========================
 # BUILD PREDICTION MATRICES
@@ -103,13 +104,25 @@ for k in range(sim_steps):
     # System update
     noise_std = 0.01
     added_noise = noise_std * np.random.randn(3)
+    
+    #no kalman filter
+    #x = A @ x + B @ u + added_noise
+    #x_history.append(x.copy())
 
-    x = A @ x + B @ u + added_noise
 
+    #kalman filter
+    y = A @ x + B @ u + added_noise
+    C = np.matrix('1 0 0; 0 0 0; 0 0 0')
+    D = np.matrix('0; 0; 0')
+    if k == 0:
+        P = 0.05 * np.eye(n)
+        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P, y)
+    else:
+        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P_pred, y)
     #print("x.shape : ", x.shape)
 
     # Save state
-    x_history.append(x.copy())
+    x_history.append(x_pred.copy())
 
     #print(f"Step {k}, state: {x}, control: {u}")
 

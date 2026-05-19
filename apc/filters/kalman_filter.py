@@ -27,18 +27,18 @@ def kalman_filter(A, B, C, D, u, x, P, y, Q=None, R=None):
     P_new : Updated covariance
     """
 
-    x = np.asarray(x).reshape(-1)
-    u = np.asarray(u).reshape(-1)
-    y = np.asarray(y).reshape(-1)
+    x = np.asarray(x)#.reshape(-1)
+    u = np.asarray(u)#.reshape(-1)
+    y = np.asarray(y)#.reshape(-1)
 
     n = A.shape[0]
     m = C.shape[0]
 
     # Default noise covariances
     if Q is None:
-        Q = 0.5 * np.eye(n)
+        Q = 0.05 * np.eye(n)
     if R is None:
-        R = 0.25 * np.eye(m)
+        R = 0.05 * np.eye(m)
 
     # ==================================
     # PREDICTION STEP

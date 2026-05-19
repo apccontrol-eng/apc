@@ -106,24 +106,32 @@ for k in range(sim_steps):
     added_noise = noise_std * np.random.randn(3)
     
     #no kalman filter
-    #x = A @ x + B @ u + added_noise
-    #x_history.append(x.copy())
-
+    '''
+    x = A @ x + B @ u + added_noise
+    x_history.append(x.copy())
+    '''
 
     #kalman filter
+
     y = A @ x + B @ u + added_noise
-    C = np.matrix('1 0 0; 0 0 0; 0 0 0')
-    D = np.matrix('0; 0; 0')
+    C = np.array([
+        [1.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0]
+    ])
+    D = np.array([
+    [0.0],
+    [0.0],
+    [0.0]])    
     if k == 0:
-        P = 0.05 * np.eye(n)
+        P = 0.05 * np.eye(3)
         x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P, y)
     else:
         x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P_pred, y)
+    x = x_pred
+    x_history.append(x.copy())
     #print("x.shape : ", x.shape)
-
-    # Save state
-    x_history.append(x_pred.copy())
-
+    
     #print(f"Step {k}, state: {x}, control: {u}")
 
 # Convert to arrays

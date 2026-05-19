@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+apc/__init__.py
+apc.egg-info/PKG-INFO
+apc.egg-info/SOURCES.txt
+apc.egg-info/dependency_links.txt
+apc.egg-info/requires.txt
+apc.egg-info/top_level.txt
+apc/solvers/__init__.py
+apc/solvers/hildreth_qp.py

@@ -3,12 +3,12 @@ import numpy as np
 # =========================
 # HILDRETH QP SOLVER
 # =========================
-def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-6, lambda0=None):
+def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-10, lambda0=None):
     n = H.shape[0]
     m = G.shape[0]
 
     # Regularize H
-    H = H + 1e-8 * np.eye(n)
+    H = H# + 1e-8 * np.eye(n)
 
     H_inv = np.linalg.inv(H)
     P = G @ H_inv @ G.T

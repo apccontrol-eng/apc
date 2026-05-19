@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+sys.path.append('/Users/emil/Documents/GitHub/apc')
 
 # =========================
 # HILDRETH QP SOLVER
 # =========================
 from apc.solvers.hildreth_qp import hildreth_qp
-from apc.solvers.primal_active_set_kkt import primal_active_set_kkt
 
 # =========================
 # BUILD PREDICTION MATRICES
@@ -93,7 +94,6 @@ for k in range(sim_steps):
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
     U_opt, lambda_prev = hildreth_qp(H, f, G, b, lambda0=None)
-    U_opt, lambda_prev = kkt_qp(H, f, G, b, lambda0=None)
     
     u = U_opt[:m]
 

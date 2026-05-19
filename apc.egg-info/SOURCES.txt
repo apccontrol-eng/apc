@@ -8,3 +8,4 @@ apc.egg-info/requires.txt
 apc.egg-info/top_level.txt
 apc/solvers/__init__.py
 apc/solvers/hildreth_qp.py
+apc/solvers/primal_active_set_kkt.py

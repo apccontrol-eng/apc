@@ -127,7 +127,7 @@ for k in range(sim_steps):
         P = 0.05 * np.eye(3)
         x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P, y)
     else:
-        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P_pred, y)
+        x_pred, P_pred = kalman_filter(A, B, C, D, u, x_pred, P_pred, y)
     x = x_pred
     x_history.append(x.copy())
     #print("x.shape : ", x.shape)

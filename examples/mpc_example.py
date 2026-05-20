@@ -1,3 +1,76 @@
+"""
+Model Predictive Control (MPC) Example with Hildreth QP Solver
+==============================================================
+
+Description
+-----------
+This script implements a constrained linear Model Predictive Control (MPC)
+simulation for a discrete-time system using a quadratic programming (QP)
+formulation solved via the Hildreth QP algorithm.
+
+The controller predicts future system behavior over a finite prediction
+horizon and computes an optimal control sequence while satisfying input
+constraints.
+
+A Kalman filter is optionally used to estimate the system state in the
+presence of Gaussian process noise.
+
+Main Features
+-------------
+- Linear MPC formulation
+- Prediction matrix construction
+- Quadratic cost function generation
+- Input constraint handling
+- Hildreth QP optimization solver
+- Optional Kalman filtering
+- Closed-loop simulation
+- State and control signal visualization
+
+System Model
+------------
+The simulated system is a discrete-time linear state-space model:
+
+    x[k+1] = A x[k] + B u[k] + w[k]
+
+where:
+    x : state vector
+    u : control input
+    w : Gaussian process noise
+
+Dependencies
+------------
+- numpy
+- matplotlib
+- apc.solvers.hildreth_qp
+- apc.filters.kalman_filter
+
+Author
+------
+Emil
+
+Usage
+-----
+Run the script directly:
+
+    python mpc_simulation.py
+
+The script will:
+1. Build MPC prediction matrices
+2. Solve the constrained QP problem
+3. Simulate the closed-loop system
+4. Apply Kalman filtering
+5. Plot system states and control inputs
+
+Notes
+-----
+- The prediction horizon is configurable through `N`.
+- Input constraints are defined by `umin` and `umax`.
+- Gaussian noise is added to the plant dynamics to test estimator robustness.
+- The Kalman filter section can be disabled by uncommenting the
+  "no kalman filter" block.
+
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import sys

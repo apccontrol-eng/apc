@@ -169,8 +169,8 @@ for k in range(sim_steps):
     Sx, Su = build_prediction_matrices(A, B, N)
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
-    #U_opt, lambda_prev = hildreth_qp(H, f, G, b, lambda0=None)
-    U_opt, activeset= interior_point_qp(H, f, G, b, max_iter=100, tol=1e-100)
+    #U_opt, lam = hildreth_qp(H, f, G, b, lambda0=None)
+    U_opt, lam= primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-100)
     u = U_opt[:m]
 
     # Save control

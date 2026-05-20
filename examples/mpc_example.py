@@ -1,12 +1,12 @@
 """
-Model Predictive Control (MPC) Example with Hildreth QP Solver
+Model Predictive Control (MPC) Example
 ==============================================================
 
 Description
 -----------
 This script implements a constrained linear Model Predictive Control (MPC)
 simulation for a discrete-time system using a quadratic programming (QP)
-formulation solved via the Hildreth QP algorithm.
+formulation.
 
 The controller predicts future system behavior over a finite prediction
 horizon and computes an optimal control sequence while satisfying input
@@ -21,7 +21,7 @@ Main Features
 - Prediction matrix construction
 - Quadratic cost function generation
 - Input constraint handling
-- Hildreth QP optimization solver
+- QP optimization solver
 - Optional Kalman filtering
 - Closed-loop simulation
 - State and control signal visualization
@@ -42,6 +42,7 @@ Dependencies
 - numpy
 - matplotlib
 - apc.solvers.hildreth_qp
+- apc.solvers.primal_dual_interior_point_qp
 - apc.filters.kalman_filter
 
 Author
@@ -77,7 +78,7 @@ import sys
 sys.path.append('/Users/emil/Documents/GitHub/apc')
 
 # =========================
-# HILDRETH QP SOLVER
+# QP SOLVERS and KF
 # =========================
 from apc.solvers.hildreth_qp import hildreth_qp
 from apc.solvers.primal_dual_interior_point_qp import primal_dual_interior_point_qp

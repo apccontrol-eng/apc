@@ -94,7 +94,7 @@ References
 
 import numpy as np
 
-def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-10, lambda0=None):
+def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-100, lambda0=None):
     
     '''
     Solve a constrained quadratic programming (QP) problem using the

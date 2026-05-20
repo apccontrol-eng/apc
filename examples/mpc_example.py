@@ -80,6 +80,7 @@ sys.path.append('/Users/emil/Documents/GitHub/apc')
 # HILDRETH QP SOLVER
 # =========================
 from apc.solvers.hildreth_qp import hildreth_qp
+from apc.solvers.primal_dual_interior_point_qp import primal_dual_interior_point_qp
 from apc.filters.kalman_filter import kalman_filter
 
 # =========================
@@ -167,24 +168,25 @@ for k in range(sim_steps):
     Sx, Su = build_prediction_matrices(A, B, N)
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
-    U_opt, lambda_prev = hildreth_qp(H, f, G, b, lambda0=None)
+    #U_opt, lambda_prev = hildreth_qp(H, f, G, b, lambda0=None)
+    U_opt, activeset= interior_point_qp(H, f, G, b, max_iter=100, tol=1e-100)
     u = U_opt[:m]
 
     # Save control
     u_history.append(u.copy())
 
     # System update
-    noise_std = 0.1
+    noise_std = 0.01
     added_noise = noise_std * np.random.randn(3)
     
     #no kalman filter
-    '''
+
     x = A @ x + B @ u + added_noise
     x_history.append(x.copy())
-    '''
+
 
     #kalman filter
-    
+    '''
     y = A @ x + B @ u + added_noise
     C = np.array([
         [1.0, 0.0, 0.0],
@@ -204,6 +206,7 @@ for k in range(sim_steps):
         x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P_pred, y[0:2], Q, R)
     x = x_pred
     x_history.append(x.copy())
+    '''
     
     #print(f"Step {k}, state: {x}, control: {u}")
 

@@ -1,3 +1,82 @@
+"""
+Kalman Filter Implementation
+============================
+
+Description
+-----------
+This module implements a standard discrete-time linear Kalman Filter for
+state estimation of dynamic systems affected by process and measurement noise.
+
+The Kalman filter recursively estimates the internal system state using:
+1. A prediction model based on system dynamics
+2. Measurement updates from observed outputs
+
+The algorithm minimizes estimation uncertainty by combining model predictions
+with noisy sensor measurements.
+
+System Model
+------------
+State equation:
+
+    x[k+1] = A x[k] + B u[k] + w[k]
+
+Measurement equation:
+
+    y[k] = C x[k] + D u[k] + v[k]
+
+where:
+    x : system state vector
+    u : control input vector
+    y : measurement/output vector
+    w : process noise
+    v : measurement noise
+
+Noise Assumptions
+-----------------
+The filter assumes:
+- Process noise w follows a zero-mean Gaussian distribution
+- Measurement noise v follows a zero-mean Gaussian distribution
+- Process and measurement noise are uncorrelated
+
+Functions
+---------
+kalman_filter(...)
+    Executes one iteration of the linear Kalman filter:
+    - prediction step
+    - innovation computation
+    - state correction/update
+
+Dependencies
+------------
+- numpy
+
+Author
+------
+Emil
+
+Notes
+-----
+- If Q or R are not provided, default covariance matrices are used.
+- The implementation supports generic linear systems.
+- This implementation performs:
+    1. State prediction
+    2. Covariance prediction
+    3. Innovation calculation
+    4. Kalman gain computation
+    5. State update
+    6. Covariance update
+
+Example
+-------
+    x_new, P_new = kalman_filter(
+        A, B, C, D,
+        u,
+        x_prev,
+        P_prev,
+        y_measured
+    )
+
+"""
 import numpy as np
 
 def kalman_filter(A, B, C, D, u, x, P, y, Q=None, R=None):

@@ -122,10 +122,10 @@ def kalman_filter(A, B, C, D, u, x, P, y, Q=None, R=None):
 
     # initial process model covariance matrix
     if Q is None:
-        Q = 0.05 * np.eye(n)
+        Q = 5 * np.eye(n)
     # initial measurement model covariance matrix
     if R is None:
-        R = 0.05 * np.eye(m)
+        R = 5 * np.eye(m)
 
     # ==================================
     # PREDICTION STEP
@@ -137,7 +137,7 @@ def kalman_filter(A, B, C, D, u, x, P, y, Q=None, R=None):
     # ==================================
     # MEASUREMENT PREDICTION
     # ==================================
-
+    
     y_pred = C @ x_pred + D @ u
     innovation = y - y_pred
 

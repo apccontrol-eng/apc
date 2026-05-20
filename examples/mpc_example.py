@@ -156,11 +156,11 @@ G, b = input_constraints(N, m, umin, umax)
 # Initial state
 x = np.array([2.0, 0.0, 5.0])
 
-
 x_history = [x.copy()]
 u_history = []
 
 sim_steps = 100
+np.random.seed(42)
 
 for k in range(sim_steps):
 
@@ -168,14 +168,13 @@ for k in range(sim_steps):
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
     U_opt, lambda_prev = hildreth_qp(H, f, G, b, lambda0=None)
-    
     u = U_opt[:m]
 
     # Save control
     u_history.append(u.copy())
 
     # System update
-    noise_std = 0.01
+    noise_std = 0.1
     added_noise = noise_std * np.random.randn(3)
     
     #no kalman filter
@@ -185,25 +184,26 @@ for k in range(sim_steps):
     '''
 
     #kalman filter
-
+    
     y = A @ x + B @ u + added_noise
     C = np.array([
         [1.0, 0.0, 0.0],
-        [0.0, 0.0, 0.0],
-        [0.0, 0.0, 0.0]
+        [0.0, 1.0, 0.0]
     ])
     D = np.array([
-    [0.0],
-    [0.0],
-    [0.0]])    
+        [0.0],
+        [0.0]
+    ])
     if k == 0:
-        P = 0.05 * np.eye(3)
-        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P, y)
+        P = 0.01 * np.eye(3)
+        Q = 0.0 * np.eye(3)                                                     # this demo only contains measurement noise, so we trust the process model to contain no noise
+        R = 0.01 * np.eye(2)
+        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P, y[0:2], Q, R)       # only the first two states are "observed" with Gaussian noise
+
     else:
-        x_pred, P_pred = kalman_filter(A, B, C, D, u, x_pred, P_pred, y)
+        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P_pred, y[0:2], Q, R)
     x = x_pred
     x_history.append(x.copy())
-    #print("x.shape : ", x.shape)
     
     #print(f"Step {k}, state: {x}, control: {u}")
 
@@ -214,7 +214,7 @@ u_history = np.array(u_history)
 
 t = np.arange(len(x_history[:,0]))  # time index
 
-plt.figure(figsize=(14, 8))  # 👈 bigger and clearer
+plt.figure(figsize=(14, 8))  # bigger and clearer
 
 # ----------------------------
 # OUTPUT COMPARISON

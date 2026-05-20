@@ -1,4 +1,4 @@
-"""
+'''
 Hildreth Quadratic Programming (QP) Solver
 ==========================================
 
@@ -91,8 +91,12 @@ References
 # =========================
 # HILDRETH QP SOLVER
 # =========================
+
+import numpy as np
+
 def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-10, lambda0=None):
-    """
+    
+    '''
     Solve a constrained quadratic programming (QP) problem using the
     Hildreth iterative algorithm.
 
@@ -169,7 +173,7 @@ def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-10, lambda0=None):
     - Suitable for MPC applications with linear inequality constraints.
     - Warm-starting can significantly improve convergence speed.
     - Numerical regularization improves matrix inversion stability.
-    """
+    '''
 
     n = H.shape[0]
     m = G.shape[0]

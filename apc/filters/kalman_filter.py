@@ -76,6 +76,13 @@ Example
         y_measured
     )
 
+References
+----------
+[1] Simo Särkkä and Lennart Svensson,
+    Bayesian Filtering and Smoothing,
+    Second Edition,
+    Cambridge University Press, 2023.
+
 """
 import numpy as np
 

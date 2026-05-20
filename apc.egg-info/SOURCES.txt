@@ -6,6 +6,8 @@ apc.egg-info/SOURCES.txt
 apc.egg-info/dependency_links.txt
 apc.egg-info/requires.txt
 apc.egg-info/top_level.txt
+apc/calibration/PLS_NIPALS.py
+apc/filters/kalman_filter.py
 apc/solvers/__init__.py
 apc/solvers/hildreth_qp.py
-apc/solvers/primal_active_set_kkt.py
+apc/solvers/primal_dual_interior_point_qp.py

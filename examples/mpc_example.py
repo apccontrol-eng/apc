@@ -82,6 +82,8 @@ sys.path.append('/Users/emil/Documents/GitHub/apc')
 # =========================
 from apc.solvers.hildreth_qp import hildreth_qp
 from apc.solvers.primal_dual_interior_point_qp import primal_dual_interior_point_qp
+from apc.solvers.active_set_qp import active_set_qp
+from apc.solvers.projected_gradient_descent_qp import projected_gradient_descent_qp
 from apc.filters.kalman_filter import kalman_filter
 
 # =========================
@@ -170,9 +172,11 @@ for k in range(sim_steps):
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
     #U_opt, lam = hildreth_qp(H, f, G, b, lambda0=None)
-    U_opt, lam= primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-100)
+    #U_opt, lam= primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-100)
+    #U_opt, lam, W = active_set_qp(H, f, G, b, x0=None, tol=1e-10, max_iter=100)
+    U_opt = projected_gradient_descent_qp(H, f, G, b, x0=None, alpha=1e-1, max_iter=1000, tol=1e-10)
     u = U_opt[:m]
-
+    
     # Save control
     u_history.append(u.copy())
 

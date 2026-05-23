@@ -171,18 +171,23 @@ for k in range(sim_steps):
     Sx, Su = build_prediction_matrices(A, B, N)
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
-    #U_opt, lam = hildreth_qp(H, f, G, b, lambda0=None)
+    U_opt, lam = hildreth_qp(H, f, G, b, lambda0=None)
     #U_opt, lam= primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-100)
     #U_opt, lam, W = active_set_qp(H, f, G, b, x0=None, tol=1e-10, max_iter=100)
-    U_opt = projected_gradient_descent_qp(H, f, G, b, x0=None, alpha=1e-1, max_iter=1000, tol=1e-10)
+    #U_opt = projected_gradient_descent_qp(H, f, G, b, x0=None, alpha=1e-1, max_iter=100, tol=1e-10)
     u = U_opt[:m]
     
     # Save control
     u_history.append(u.copy())
 
     # System update
-    noise_std = 0.01
-    added_noise = noise_std * np.random.randn(3)
+    if k == 40:
+        bias = np.array([0.2, -0.3, -0.4])
+        noise_std = 0.01
+        added_noise = noise_std * np.random.randn(3) + bias
+    else:
+        noise_std = 0.01
+        added_noise = noise_std * np.random.randn(3)
     
     #no kalman filter
 

@@ -3,10 +3,12 @@ A simulation framework combining **Model Predictive Control (MPC)** with **Princ
 
 ---
 
-# Overview
+## Overview
 This project demonstrates a closed-loop system:
 - Constrained Model Predictive Control (MPC)
+- Kalman Filter and partial state observations
 - Quadratic Programming solved via several QP algorithms
+- Linear Matrix Inequality Infinite Horizon MPC formulation
 - Process disturbance + fault injection
 - PCA-based multivariate monitoring
   - Fault detection using T² and Q statistics
@@ -14,13 +16,14 @@ This project demonstrates a closed-loop system:
 
 ---
 
-# Model Predictive Control (MPC)
-The system is controlled using a constrained MPC formulation in lifted matrices form (also LMI form):
+## Model Predictive Control (MPC)
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
-- Optimization solved using QP or LMI
+- Optimization solved using QP algorithms or LMI/SDP
 
+---
+---
 ---
 
 # Plots of the MPC + PCA Monitoring example:

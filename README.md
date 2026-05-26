@@ -65,7 +65,7 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ### Before autoscaling
 
-![Calibration Before Scaling](examples/figures/Calibration-data_before_autoscaling.png)
+![Calibration Before Scaling](examples/figures/Calibration_data_before_autoscaling.png)
 
 ### After autoscaling
 

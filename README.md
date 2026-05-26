@@ -4,7 +4,7 @@ A simulation framework combining **Model Predictive Control (MPC)** with **Princ
 
 ---
 
-# 🚀 Overview
+# Overview
 
 This project demonstrates a complete closed-loop system:
 
@@ -17,11 +17,11 @@ This project demonstrates a complete closed-loop system:
 
 ---
 
-# 🧠 System Architecture
+# System Architecture
 
 ---
 
-# 🎮 Model Predictive Control (MPC)
+# Model Predictive Control (MPC)
 
 The system is controlled using a constrained MPC formulation:
 
@@ -32,7 +32,7 @@ The system is controlled using a constrained MPC formulation:
 
 ---
 
-## 📈 MPC System Response
+## MPC System Response
 
 ### States and control inputs over time
 
@@ -40,7 +40,7 @@ The system is controlled using a constrained MPC formulation:
 
 ---
 
-# ⚠️ Fault Injection
+# Fault Injection
 
 A fault is introduced into the system at time step **k = 150**:
 
@@ -49,7 +49,7 @@ A fault is introduced into the system at time step **k = 150**:
 
 ---
 
-# 📉 PCA-Based Process Monitoring
+# PCA-Based Process Monitoring
 
 The combined dataset (states + inputs) is analyzed using PCA.
 
@@ -61,7 +61,7 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ---
 
-## 📊 Calibration Phase (Normal Operation)
+## Calibration Phase (Normal Operation)
 
 ### Before autoscaling
 
@@ -73,7 +73,7 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ---
 
-## 📉 PCA Model (Calibration Data)
+## PCA Model (Calibration Data)
 
 ### PCA Biplot (Calibration)
 
@@ -81,7 +81,7 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ---
 
-## 📊 Fault Detection Statistics (Calibration)
+## Fault Detection Statistics (Calibration)
 
 ### Hotelling’s T² and Q (SPE)
 
@@ -89,13 +89,13 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ---
 
-# 🔍 Online Monitoring (New Data)
+# Online Monitoring (New Data)
 
 New process data is projected into the PCA model built from calibration data.
 
 ---
 
-## 📉 Monitoring Data Distribution
+## Monitoring Data Distribution
 
 ### Before autoscaling
 
@@ -107,7 +107,7 @@ New process data is projected into the PCA model built from calibration data.
 
 ---
 
-## 📊 PCA Monitoring Results
+## PCA Monitoring Results
 
 ### PCA Biplot (Monitoring data)
 
@@ -121,13 +121,13 @@ New process data is projected into the PCA model built from calibration data.
 
 ---
 
-# 🔍 Fault Diagnosis (Contribution Analysis)
+# Fault Diagnosis (Contribution Analysis)
 
 When a fault is detected, contribution plots identify responsible variables.
 
 ---
 
-## 📊 Variable Contributions to Principal Components
+## Variable Contributions to Principal Components
 
 ### Sample 150 — PC1 Contribution
 
@@ -140,5 +140,3 @@ When a fault is detected, contribution plots identify responsible variables.
 ![PC2 Contribution](examples/figures/Sample 150 contribution to PC2.png)
 
 ---
-
-# 📦 Project Structure

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
@@ -56,7 +57,7 @@ def standardize_matrix(matrix):
 
 
 
-def plot_column_distributions_with_stats(matrix, bins=10):
+def plot_column_distributions_with_stats(matrix, bins=10, name=""):
     """
     Plots histograms of each column in the matrix to show value distributions,
     with mean and standard deviation lines and printed numeric labels.
@@ -65,6 +66,13 @@ def plot_column_distributions_with_stats(matrix, bins=10):
         matrix (np.ndarray): A 2D NumPy array.
         bins (int): Number of bins for histogram.
     """
+    
+    os.makedirs("figures", exist_ok=True)
+    def save_fig(name):
+        plt.tight_layout()
+        plt.savefig(f"figures/{name}.png", dpi=300, bbox_inches="tight")
+    
+    
     if not isinstance(matrix, np.ndarray):
         raise TypeError("Input must be a NumPy array.")
     if matrix.ndim != 2:
@@ -98,8 +106,8 @@ def plot_column_distributions_with_stats(matrix, bins=10):
         ax.legend()
 
     plt.tight_layout()
+    save_fig(name)
     plt.show()
-    
     
 
 def scale_with_reference(X, mean_ref, std_ref):
@@ -166,10 +174,16 @@ def pca_from_correlation(corr_matrix):
 
 
 def pca_biplot_with_t2(scores, loadings, explained_variance_ratio, T2_thresh,
-                       labels=None, feature_names=None, scale_scores=1.0, scale_loadings=1.0):
+                       labels=None, feature_names=None, scale_scores=1.0, scale_loadings=1.0, message=""):
     """
     Plots a PCA biplot including Hotelling's T² threshold as an ellipse.
     """
+    
+    os.makedirs("figures", exist_ok=True)
+    def save_fig(name):
+        plt.tight_layout()
+        plt.savefig(f"figures/{name}.png", dpi=300, bbox_inches="tight")
+    
     plt.figure(figsize=(8, 6))
 
     # Plot scores
@@ -214,6 +228,7 @@ def pca_biplot_with_t2(scores, loadings, explained_variance_ratio, T2_thresh,
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
+    save_fig(message)
     plt.show()
     
     
@@ -247,10 +262,16 @@ def compute_t2_q(data, scores, loadings, num_components):
 
     return T2, Q
 
-def plot_t2_q(T2, Q, threshold_T2=None, threshold_Q=None):
+def plot_t2_q(T2, Q, threshold_T2=None, threshold_Q=None, name=""):
     """
     Plots Hotelling's T² and Q residuals with optional thresholds.
     """
+    
+    os.makedirs("figures", exist_ok=True)
+    def save_fig(name):
+        plt.tight_layout()
+        plt.savefig(f"figures/{name}.png", dpi=300, bbox_inches="tight")
+    
     fig, axs = plt.subplots(1, 2, figsize=(14, 5))
 
     axs[0].scatter(range(len(T2)), T2, color='steelblue')
@@ -268,6 +289,7 @@ def plot_t2_q(T2, Q, threshold_T2=None, threshold_Q=None):
     axs[1].grid(True)
 
     plt.tight_layout()
+    save_fig(name)
     plt.show()
 
 

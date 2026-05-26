@@ -553,6 +553,35 @@ pca_biplot_with_t2(
 )
 
 
+# loading plot of the PCA model
+variables = ['X1', 'X2', 'X3', 'X4']
+
+loadings = calibration_P
+
+p1 = loadings[:, 0]
+p2 = loadings[:, 1]
+
+# Create figure
+fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+
+# ----- Loading 1 -----
+ax[0].bar(variables, p1)
+ax[0].set_title('Loading 1')
+ax[0].set_ylabel(r'$p_1$ loading')
+ax[0].grid(True, alpha=0.3)
+ax[0].tick_params(axis='x', rotation=25)
+
+# ----- Loading 2 -----
+ax[1].bar(variables, p2)
+ax[1].set_title('Loading 2')
+ax[1].set_ylabel(r'$p_2$ loading')
+ax[1].axhline(0, color='gray', linewidth=1)
+ax[1].grid(True, alpha=0.3)
+ax[1].tick_params(axis='x', rotation=25)
+
+plt.tight_layout()
+plt.show()
+
 
 
 
@@ -629,10 +658,40 @@ pca_biplot_with_t2(
 )
 
 
+'''
+####################################################################################################
+'''
+#Diagnosing the alarm: contribution plot
 
+# choose faulty sample index
+i_fault = 150
 
+# PC1 contribution
+contrib = calibration_autoscaled_monitored_data[i_fault, :] * calibration_P[:, 0] * 1 / np.sqrt(eigvals[0])
 
+# plot
+plt.figure(figsize=(10,4))
+plt.bar(range(len(contrib)), contrib)
+plt.axhline(0, color='k')
+plt.xlabel('Variable')
+plt.ylabel('Contribution to PC1')
+plt.title(f'Sample {i_fault} contribution to PC1')
+plt.show()
 
+# choose faulty sample index
+i_fault = 150
+
+# PC2 contribution
+contrib = calibration_autoscaled_monitored_data[i_fault, :] * calibration_P[:, 1] * 1 / np.sqrt(eigvals[1])
+
+# plot
+plt.figure(figsize=(10,4))
+plt.bar(range(len(contrib)), contrib, color='r')
+plt.axhline(0, color='k')
+plt.xlabel('Variable')
+plt.ylabel('Contribution to PC2')
+plt.title(f'Sample {i_fault} contribution to PC2')
+plt.show()
 
 
 

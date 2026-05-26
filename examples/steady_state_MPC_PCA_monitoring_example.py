@@ -370,7 +370,7 @@ i_fault = 150
 variables = ['X1', 'X2', 'X3', 'U1']
 contrib = calibration_autoscaled_monitored_data[i_fault, :] * calibration_P[:, 0] * 1/np.sqrt(eigvals[0])
 
-plt.figure(figsize=(10,4))
+plt.figure(figsize=(8,4))
 plt.bar(range(len(contrib)), contrib)
 plt.axhline(0, color='k')
 plt.xticks(range(len(contrib)), variables)
@@ -380,7 +380,7 @@ plt.show()
 
 contrib = calibration_autoscaled_monitored_data[i_fault, :] * calibration_P[:, 1] * 1/np.sqrt(eigvals[1])
 
-plt.figure(figsize=(10,4))
+plt.figure(figsize=(8,4))
 plt.bar(range(len(contrib)), contrib)
 plt.axhline(0, color='k')
 plt.xticks(range(len(contrib)), variables)

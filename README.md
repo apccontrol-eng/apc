@@ -65,11 +65,11 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ### Before autoscaling
 
-![Calibration Before Scaling](examples/figures/Calibration data before autoscaling.png)
+![Calibration Before Scaling](examples/figures/Calibration-data_before_autoscaling.png)
 
 ### After autoscaling
 
-![Calibration After Scaling](examples/figures/Calibration data after autoscaling.png)
+![Calibration After Scaling](examples/figures/Calibration_data_after_autoscaling.png)
 
 ---
 
@@ -77,7 +77,7 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ### PCA Biplot (Calibration)
 
-![Calibration PCA Biplot](examples/figures/Calibration data PCA biplot.png)
+![Calibration PCA Biplot](examples/figures/Calibration_data_PCA_biplot.png)
 
 ---
 
@@ -85,7 +85,7 @@ The combined dataset (states + inputs) is analyzed using PCA.
 
 ### Hotelling’s T² and Q (SPE)
 
-![Calibration T2 SPE](examples/figures/Calibration T2 and SPE plot.png)
+![Calibration T2 SPE](examples/figures/Calibration_T2_and_SPE_plot.png)
 
 ---
 
@@ -99,11 +99,11 @@ New process data is projected into the PCA model built from calibration data.
 
 ### Before autoscaling
 
-![Monitoring Before Scaling](examples/figures/Monitored new data before autoscaling.png)
+![Monitoring Before Scaling](examples/figures/Monitored_new_data_before_autoscaling.png)
 
 ### After autoscaling
 
-![Monitoring After Scaling](examples/figures/Monitored new data after autoscaling.png)
+![Monitoring After Scaling](examples/figures/Monitored_new_data_after_autoscaling.png)
 
 ---
 
@@ -111,13 +111,13 @@ New process data is projected into the PCA model built from calibration data.
 
 ### PCA Biplot (Monitoring data)
 
-![Monitoring PCA Biplot](examples/figures/Monitoring data PCA biplot.png)
+![Monitoring PCA Biplot](examples/figures/Monitoring_data_PCA_biplot.png)
 
 ---
 
 ### Hotelling’s T² and Q (Monitoring)
 
-![Monitoring T2 SPE](examples/figures/Monitoring data T2 and SPE plot.png)
+![Monitoring T2 SPE](examples/figures/Monitoring_data_T2_and_SPE_plot.png)
 
 ---
 
@@ -131,12 +131,12 @@ When a fault is detected, contribution plots identify responsible variables.
 
 ### Sample 150 — PC1 Contribution
 
-![PC1 Contribution](examples/figures/Sample 150 contribution to PC1.png)
+![PC1 Contribution](examples/figures/Sample_150_contribution_to_PC1.png)
 
 ---
 
 ### Sample 150 — PC2 Contribution
 
-![PC2 Contribution](examples/figures/Sample 150 contribution to PC2.png)
+![PC2 Contribution](examples/figures/Sample_150_contribution_to_PC2.png)
 
 ---

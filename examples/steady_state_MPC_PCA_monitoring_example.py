@@ -240,9 +240,9 @@ print("calibration_state_covariance_matrix : ", calibration_state_covariance_mat
 
 # Distribution plots
 print("Calibration data before autoscaling:")
-plot_column_distributions_with_stats(calibration_data, bins=10, name="Calibration data before autoscaling")
+plot_column_distributions_with_stats(calibration_data, bins=10, name="Calibration_data_before_autoscaling")
 print("Calibration data after autoscaling:")
-plot_column_distributions_with_stats(calibration_standardized_matrix_states, bins=10, name="Calibration data after autoscaling")
+plot_column_distributions_with_stats(calibration_standardized_matrix_states, bins=10, name="Calibration_data_after_autoscaling")
 
 
 # ============================================================
@@ -278,7 +278,7 @@ calibration_T2_thresh = hotelling_t2_threshold(n_samples=n, n_components=k)
 calibration_Q_thresh = q_residual_threshold(eigenvalues=eigvals, n_components=k)
 
 # Monitoring plots
-plot_t2_q(calibration_T2, calibration_Q, threshold_T2=calibration_T2_thresh, threshold_Q=calibration_Q_thresh, name="Calibration T2 and SPE plot")
+plot_t2_q(calibration_T2, calibration_Q, threshold_T2=calibration_T2_thresh, threshold_Q=calibration_Q_thresh, name="Calibration_T2_and_SPE_plot")
 
 
 # PCA biplot
@@ -287,7 +287,7 @@ pca_biplot_with_t2(
     loadings=calibration_P,
     explained_variance_ratio=var_ratio,
     T2_thresh=calibration_T2_thresh,
-    feature_names=['X1', 'X2', 'X3', 'U1'], message="Calibration data PCA biplot"
+    feature_names=['X1', 'X2', 'X3', 'U1'], message="Calibration_data_PCA_biplot"
 )
 
 
@@ -330,10 +330,10 @@ calibration_autoscaled_monitored_data = scale_with_reference(
 )
 
 print("Monitored new data before autoscaling with calibration means and stds:")
-plot_column_distributions_with_stats(monitored_data, bins=10, name="Monitored new data before autoscaling")
+plot_column_distributions_with_stats(monitored_data, bins=10, name="Monitored_new_data_before_autoscaling")
 
 print("Monitored new data after autoscaling with calibration means and stds:")
-plot_column_distributions_with_stats(calibration_autoscaled_monitored_data, bins=10, name="Monitored new data after autoscaling")
+plot_column_distributions_with_stats(calibration_autoscaled_monitored_data, bins=10, name="Monitored_new_data_after_autoscaling")
 
 
 # PCA projection
@@ -349,14 +349,14 @@ monitored_T2, monitored_Q = compute_t2_q(
     num_components=k
 )
 
-plot_t2_q(monitored_T2, monitored_Q, threshold_T2=calibration_T2_thresh, threshold_Q=calibration_Q_thresh, name="Monitoring data T2 and SPE plot")
+plot_t2_q(monitored_T2, monitored_Q, threshold_T2=calibration_T2_thresh, threshold_Q=calibration_Q_thresh, name="Monitoring_data_T2_and_SPE_plot")
 
 pca_biplot_with_t2(
     scores=monitored_T,
     loadings=calibration_P,
     explained_variance_ratio=var_ratio,
     T2_thresh=calibration_T2_thresh,
-    feature_names=['X1', 'X2', 'X3', 'U1'], message="Monitoring data PCA biplot"
+    feature_names=['X1', 'X2', 'X3', 'U1'], message="Monitoring_data_PCA_biplot"
 )
 
 
@@ -375,7 +375,7 @@ plt.bar(range(len(contrib)), contrib)
 plt.axhline(0, color='k')
 plt.xticks(range(len(contrib)), variables)
 plt.title(f'Sample {i_fault} contribution to PC1')
-save_fig(f'Sample {i_fault} contribution to PC1')
+save_fig(f'Sample_{i_fault}_contribution_to_PC1')
 plt.show()
 
 contrib = calibration_autoscaled_monitored_data[i_fault, :] * calibration_P[:, 1] * 1/np.sqrt(eigvals[1])
@@ -385,7 +385,7 @@ plt.bar(range(len(contrib)), contrib)
 plt.axhline(0, color='k')
 plt.xticks(range(len(contrib)), variables)
 plt.title(f'Sample {i_fault} contribution to PC2')
-save_fig(f'Sample {i_fault} contribution to PC2')
+save_fig(f'Sample_{i_fault}_contribution_to_PC2')
 plt.show()
 
 

@@ -354,6 +354,7 @@ pca_biplot_with_t2(
 # FAULT DIAGNOSIS (CONTRIBUTION PLOTS)
 # ============================================================
 
+print("Selecting one of the samples that is out of spec:")
 i_fault = 150
 
 variables = ['X1', 'X2', 'X3', 'U1']

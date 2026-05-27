@@ -27,9 +27,7 @@ U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 $$
 
 s.t.
-$$
-X_k = \mathcal{A} x_k + \mathcal{B} U_k
-$$
+$$X_k = \mathcal{A} x_k + \mathcal{B} U_k$$
 
 $$
 U_k \in \mathcal{U}_{ad}(x_k)

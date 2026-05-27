@@ -26,7 +26,7 @@ This project demonstrates a closed-loop system:
 Lifted system matrices form:
 
 ```math
-X_k = A_lifted x_k + B_lifted U_k
+X_k = A_lifted x_k + B_{lifted} U_k
 ```
 
 ```math

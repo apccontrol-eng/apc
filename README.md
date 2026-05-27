@@ -26,25 +26,25 @@ This project demonstrates a closed-loop system:
 
 The optimization in (4) can be rewritten with the matrix notation (23), which yields
 
-\[
+$$
 U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 \tag{40a}
-\]
+$$
 
 s.t.
-\[
+$$
 X_k = \mathcal{A} x_k + \mathcal{B} U_k
 \tag{40b}
-\]
+$$
 
-\[
+$$
 U_k \in \mathcal{U}_{ad}(x_k)
 \tag{40c}
-\]
+$$
 
 with
 
-\[
+$$
 \tilde{Q} =
 \begin{bmatrix}
 Q &  &  \\
@@ -61,24 +61,24 @@ R &  &  \\
 \end{bmatrix}
 \in \mathbb{R}^{mN\times mN}.
 \tag{41}
-\]
+$$
 
 The optimization (40) can be simplified by substitution of \(X_k\) with (22), yielding
 
-\[
+$$
 U_k^\* =
 \arg\min_{U_k}\;
 U_k^\top(\mathcal{B}^\top \tilde{Q}\mathcal{B} + \tilde{R})U_k
 + 2x_k^\top \mathcal{A}^\top \mathcal{B}U_k
 + x_k^\top \mathcal{A}^\top \tilde{Q}\mathcal{A}x_k
 \tag{42a}
-\]
+$$
 
 s.t.
-\[
+$$
 U_N \in \mathcal{U}_{ad}(x_k).
 \tag{42b}
-\]
+$$
 
   
 ---

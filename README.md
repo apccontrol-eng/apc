@@ -372,10 +372,10 @@ A fault is introduced into the system at time step **k = 150**:
 
 ### Calibration Phase (Normal Operation)
 ### Before autoscaling
-<img src="examples/figures/Calibration_data_before_autoscaling.png" alt="drawing" width="650"/>
+<img src="examples/figures/Calibration_data_before_autoscaling.png" alt="drawing" width="800"/>
 
 ### After autoscaling
-<img src="examples/figures/Calibration_data_after_autoscaling.png" alt="drawing" width="650"/>
+<img src="examples/figures/Calibration_data_after_autoscaling.png" alt="drawing" width="800"/>
 
 ---
 
@@ -388,7 +388,7 @@ A fault is introduced into the system at time step **k = 150**:
 ## Fault Detection Statistics (Calibration)
 
 ### Hotelling’s T² and Q (SPE)
-<img src="examples/figures/Calibration_T2_and_SPE_plot.png" alt="drawing" width="650"/>
+<img src="examples/figures/Calibration_T2_and_SPE_plot.png" alt="drawing" width="800"/>
 
 ---
 
@@ -400,10 +400,10 @@ New process data is projected into the PCA model built from calibration data.
 ## Monitoring Data Distribution
 
 ### Before autoscaling
-<img src="examples/figures/Monitored_new_data_before_autoscaling.png" alt="drawing" width="650"/>
+<img src="examples/figures/Monitored_new_data_before_autoscaling.png" alt="drawing" width="800"/>
 
 ### After autoscaling
-<img src="examples/figures/Monitored_new_data_after_autoscaling.png" alt="drawing" width="650"/>
+<img src="examples/figures/Monitored_new_data_after_autoscaling.png" alt="drawing" width="800"/>
 
 ---
 

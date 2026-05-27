@@ -22,10 +22,6 @@ This project demonstrates a closed-loop system:
 - Box constraints on control inputs
 - Optimization solved using QP algorithms
 
-### 3.3.1 Regulation Problem
-
-The optimization in (4) can be rewritten with the matrix notation (23), which yields
-
 $$
 U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 $$
@@ -58,8 +54,6 @@ R &  &  \\
 \end{bmatrix}
 \in \mathbb{R}^{mN\times mN}.
 $$
-
-The optimization (40) can be simplified by substitution of \(X_k\) with (22), yielding
 
 $$
 U_k^\* =

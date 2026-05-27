@@ -66,8 +66,12 @@ s.t.
 U_N \in \mathcal{U}_{ad}(x_k)
 ```
 
+### Reference
+Michael Fink (2021).
+Implementation of Linear Model Predictive Control — Tutorial.
+arXiv preprint arXiv:2109.11986.
+https://arxiv.org/abs/2109.11986
 
-  
 ---
 ---
 ---

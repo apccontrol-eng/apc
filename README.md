@@ -323,13 +323,19 @@ P_{k} = (I - K_{k} C) P_{k}^{-}
 
 Predict:
 ```math
-\hat{x}_{k}^{-} = A \hat{x}_{k-1} + B u_{k-1}  
+\hat{x}_{k}^{-} = A \hat{x}_{k-1} + B u_{k-1}
+```
+```math
 P_{k}^{-} = A P_{k-1} A^{T} + Q  
 ```
 Update:
 ```math
-K_{k} = P_{k}^{-} C^{T} S_{k}^{-1}  
-\hat{x}_{k} = \hat{x}_{k}^{-} + K_{k} y_{k,res}  
+K_{k} = P_{k}^{-} C^{T} S_{k}^{-1}
+```
+```math
+\hat{x}_{k} = \hat{x}_{k}^{-} + K_{k} y_{k,res}
+```
+```math
 P_{k} = (I - K_{k} C) P_{k}^{-}  
 ```
 

@@ -39,8 +39,7 @@ u_k=Lx_k
 $$
 
 $$
-J
-=
+J =
 \sum_{k=0}^{\infty}
 \left(
 x_k^\top Q x_k

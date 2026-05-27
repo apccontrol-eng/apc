@@ -1,4 +1,4 @@
-# MPC + PCA-Based Fault Detection and Process Monitoring
+# MPC simulation framework with process monitoring
 A simulation framework combining **Model Predictive Control (MPC)** with **Principal Component Analysis (PCA)-based statistical process monitoring** for fault detection and diagnosis in a multivariable dynamic system.
 
 ---

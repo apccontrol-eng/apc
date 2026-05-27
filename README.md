@@ -31,7 +31,8 @@ $$U_k \in \mathcal{U}_{ad}(x_k)$$
 
 with
 
-$$\tilde{Q} =
+$$
+\tilde{Q} =
 \begin{bmatrix}
 Q &  &  \\
  & \ddots &  \\
@@ -45,7 +46,8 @@ R &  &  \\
  & \ddots &  \\
  &  & R
 \end{bmatrix}
-\in \mathbb{R}^{mN\times mN}.$$
+\in \mathbb{R}^{mN\times mN}
+$$
 
 $$
 U_k^\* =

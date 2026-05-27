@@ -39,7 +39,7 @@ The controller uses a linear state-feedback law
 $u_k = Lx_k$
 ### Infinite-Horizon Cost Function
 The control objective is to minimize the quadratic infinite-horizon cost
-$ J = \sum_{k=0}^{\infty} \left( x_k^{T}Qx_k + u_k^{T}Ru_k \right) $
+$J = \sum_{k=0}^{\infty} \left( x_k^{T}Qx_k + u_k^{T}Ru_k \right)$
 
 where
 

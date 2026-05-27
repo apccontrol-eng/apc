@@ -26,7 +26,7 @@ This project demonstrates a closed-loop system:
 Lifted system matrices form:
 
 ```math
-__X_k__ = __\mathcal{A}__ x_k + __\mathcal{B}__ __U_k__
+X_k = A_lifted x_k + B_lifted U_k
 ```
 
 ```math
@@ -53,7 +53,7 @@ U_k =
 ```
 
 ```math
-\mathcal{A} =
+A_lifted =
 \begin{bmatrix}
 I \\
 A \\
@@ -65,7 +65,7 @@ A^N
 ```
 
 ```math
-\mathcal{B} =
+B_lifted =
 \begin{bmatrix}
 0 & 0 & \cdots & 0 \\
 B & 0 & \cdots & 0 \\
@@ -83,7 +83,7 @@ U_k^* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 ```
 s.t.
 ```math
-X_k = \mathcal{A} x_k + \mathcal{B} U_k
+X_k = A_lifted x_k + B_lifted U_k
 ```
 
 ```math
@@ -113,9 +113,9 @@ The QP problem can be reduced to the following form if $X_k$ is substituted to t
 ```math
 U_k^* =
 \arg\min_{U_k}\;
-U_k^\top(\mathcal{B}^\top \tilde{Q}\mathcal{B} + \tilde{R})U_k
-+ 2x_k^\top \mathcal{A}^\top \mathcal{B}U_k
-+ x_k^\top \mathcal{A}^\top \tilde{Q}\mathcal{A}x_k
+U_k^\top(B_lifted^\top \tilde{Q}B_lifted + \tilde{R})U_k
++ 2x_k^\top A_lifted^\top B_lifted U_k
++ x_k^\top A_lifted^\top \tilde{Q}A_lifted x_k
 ```
 s.t.
 ```math

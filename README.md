@@ -124,8 +124,7 @@ U_k \in \mathcal{U}_{ad}(x_k)
 
 ### Reference
 Michael Fink (2021).  
-Implementation of Linear Model Predictive Control — Tutorial.  
-arXiv preprint arXiv:2109.11986.  
+Implementation of Linear Model Predictive Control — Tutorial.   
 https://arxiv.org/abs/2109.11986  
 
 ---

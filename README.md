@@ -23,21 +23,21 @@ This project demonstrates a closed-loop system:
 - Optimization solved using QP algorithms or LMI/SDP
 
 ---
-
-
-@article{kothare1996robust,
-  title={Robust constrained model predictive control using linear matrix inequalities},
-  author={Kothare, Mayuresh V and Balakrishnan, Venkataramanan and Morari, Manfred},
-  journal={Automatica},
-  volume={32},
-  number={10},
-  pages={1361--1379},
-  year={1996},
-  publisher={Elsevier},
-  doi={10.1016/0005-1098(96)00063-5}
-}
 ---
 ---
+
+---
+
+## Model Predictive Control (MPC)
+- Linear state-space model
+- Quadratic cost on states and inputs
+- Box constraints on control inputs
+- Optimization solved using QP algorithms or LMI/SDP
+
+---
+---
+---
+
 
 # Plots of the MPC + PCA Monitoring example:
 ### States and control inputs over time

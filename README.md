@@ -21,6 +21,62 @@ This project demonstrates a closed-loop system:
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
 - Optimization solved using QP algorithms
+- Lifted matrices dictated by prediction horizon
+
+Lifted system matrices form:
+
+```math
+X_k = \mathcal{A} x_k + \mathcal{B} U_k
+```
+
+```math
+X_k =
+\begin{bmatrix}
+\hat{x}_{k|k} \\
+\hat{x}_{k+1|k} \\
+\vdots \\
+\hat{x}_{k+N|k}
+\end{bmatrix}
+\in \mathcal{X}^{N+1} \subseteq \mathbb{R}^{n(N+1)},
+\quad
+```
+
+```math
+U_k =
+\begin{bmatrix}
+\hat{u}_{k|k} \\
+\hat{u}_{k+1|k} \\
+\vdots \\
+\hat{u}_{k+N-1|k}
+\end{bmatrix}
+\in \mathcal{U}^{N} \subseteq \mathbb{R}^{mN}
+```
+
+```math
+\mathcal{A} =
+\begin{bmatrix}
+I \\
+A \\
+A^2 \\
+\vdots \\
+A^N
+\end{bmatrix}
+\in \mathbb{R}^{n(N+1)\times n}
+```
+
+```math
+\mathcal{B} =
+\begin{bmatrix}
+0 & 0 & \cdots & 0 \\
+B & 0 & \cdots & 0 \\
+AB & B & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+A^{N-1}B & A^{N-2}B & \cdots & B
+\end{bmatrix}
+\in \mathbb{R}^{n(N+1)\times m(N+1)}
+```
+
+The Quadratic Programming problem is of form:
 
 ```math
 U_k^* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k

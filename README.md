@@ -53,7 +53,7 @@ R &  &  \\
 \in \mathbb{R}^{mN\times mN}
 ```
 
-The QP problem can be reduced to the following form if ```math X_k``` is substituted to the cost function.
+The QP problem can be reduced to the following form if $X_k$ is substituted to the cost function.
 
 ```math
 U_k^* =

@@ -261,10 +261,9 @@ DOI: 10.1016/0005-1098(96)00063-5
 ---
 
 ## Kalman Filter
-
-### Process model
+Process model:
 x_k = A x_{k-1} + B u_{k-1} + w_{k-1}
-### Measurement model
+Measurement model:
 y_k = C x_k + v_k
 
 Where:
@@ -295,19 +294,19 @@ P_k⁻ = A P_{k-1} Aᵀ + Q
 ### 4. Update Step (Measurement Update)
 
 #### Innovation (residual)
-y_k = z_k - H x̂_k⁻
+y_k_res = y_k - C x̂_k⁻
 
 #### Innovation covariance
-S_k = H P_k⁻ Hᵀ + R
+S_k = C P_k⁻ Cᵀ + R
 
 #### Kalman Gain
-K_k = P_k⁻ Hᵀ S_k⁻¹
+K_k = P_k⁻ Cᵀ S_k⁻¹
 
 #### State update
-x̂_k = x̂_k⁻ + K_k y_k
+x̂_k = x̂_k⁻ + K_k y_k_res
 
 #### Covariance update
-P_k = (I - K_k H) P_k⁻
+P_k = (I - K_k C) P_k⁻
 
 ---
 
@@ -318,9 +317,9 @@ x̂_k⁻ = A x̂_{k-1} + B u_{k-1}
 P_k⁻ = A P_{k-1} Aᵀ + Q
 
 Update:
-K_k = P_k⁻ Hᵀ (H P_k⁻ Hᵀ + R)⁻¹
-x̂_k = x̂_k⁻ + K_k (z_k - H x̂_k⁻)
-P_k = (I - K_k H) P_k⁻
+K_k = P_k⁻ Cᵀ (C P_k⁻ Cᵀ + R)⁻¹
+x̂_k = x̂_k⁻ + K_k (y_k - C x̂_k⁻)
+P_k = (I - K_k C) P_k⁻
 
 
 ---

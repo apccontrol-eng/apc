@@ -427,13 +427,11 @@ When a fault is detected, contribution plots identify responsible variables.
 ## Variable Contributions to Principal Components
 
 ### Sample 150 — PC1 Contribution
-<img src="examples/figures/Sample_150_contribution_to_PC1.png" alt="drawing" width="200"/>
-![PC1 Contribution](examples/figures/Sample_150_contribution_to_PC1.png)
+<img src="examples/figures/Sample_150_contribution_to_PC1.png" alt="drawing" width="500"/>
 
 ---
 
 ### Sample 150 — PC2 Contribution
-![PC2 Contribution](examples/figures/Sample_150_contribution_to_PC2.png)
-
+<img src="examples/figures/Sample_150_contribution_to_PC2.png" alt="drawing" width="500"/>
 
 ---

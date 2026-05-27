@@ -288,41 +288,50 @@ Where:
 ### 3. Prediction Step (Time Update)
 
 #### State prediction
-x̂_k⁻ = A x̂_{k-1} + B u_{k-1}
-
+```math
+\hat{x}_{k}^{-} = A \hat{x}_{k-1} + B u_{k-1}
+```
 #### Covariance prediction
-P_k⁻ = A P_{k-1} Aᵀ + Q
-
+```math
+P_{k}^{-} = A P_{k-1} A^{T} + Q
+```
 ### 4. Update Step (Measurement Update)
 
 #### Innovation (residual)
-y_k_res = y_k - C x̂_k⁻
-
+```math
+y_{k}_{res} = y_{k} - C \hat{x}_k^{-}
+```
 #### Innovation covariance
-S_k = C P_k⁻ Cᵀ + R
-
+```math
+S_{k} = C P_{k}^{-} C^{T} + R
+```
 #### Kalman Gain
-K_k = P_k⁻ Cᵀ S_k⁻¹
-
+```math
+K_{k} = P_{k}^{-} C^{T} S_{k}^{-1}
+```
 #### State update
-x̂_k = x̂_k⁻ + K_k y_k_res
-
+```math
+\hat{x}_{k} = \hat{x}_{k}^{-} + K_{k} y_{k}_{res}
+```
 #### Covariance update
-P_k = (I - K_k C) P_k⁻
-
+```math
+P_{k} = (I - K_{k} C) P_{k}^{-}
+```
 ---
 
 ### 5. Summary (Compact Form)
 
 Predict:
-x̂_k⁻ = A x̂_{k-1} + B u_{k-1}
-P_k⁻ = A P_{k-1} Aᵀ + Q
-
+```math
+\hat{x}_{k}^{-} = A \hat{x}_{k-1} + B u_{k-1}
+P_{k}^{-} = A P_{k-1} A^{T} + Q
+```
 Update:
-K_k = P_k⁻ Cᵀ (C P_k⁻ Cᵀ + R)⁻¹
-x̂_k = x̂_k⁻ + K_k (y_k - C x̂_k⁻)
-P_k = (I - K_k C) P_k⁻
-
+```math
+K_{k} = P_{k}^{-} C^{T} S_{k}^{-1}
+\hat{x}_{k} = \hat{x}_{k}^{-} + K_{k} y_{k}_{res}
+P_{k} = (I - K_{k} C) P_{k}^{-}
+```
 
 ---
 ---

@@ -20,19 +20,203 @@ This project demonstrates a closed-loop system:
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
-- Optimization solved using QP algorithms or LMI/SDP
+- Optimization solved using QP algorithms
+
+
+
 
 ---
----
----
 
----
-
-## Model Predictive Control (MPC)
+## Robust Model Predictive Control (RMPC)
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
-- Optimization solved using QP algorithms or LMI/SDP
+- Optimization solved using LMI
+
+\section{Robust MPC via Linear Matrix Inequalities}
+
+Consider the discrete-time linear system
+
+\begin{equation}
+x_{k+1} = A x_k + B u_k
+\label{eq:dynamics}
+\end{equation}
+
+where \(x_k \in \mathbb{R}^n\) is the state vector and
+\(u_k \in \mathbb{R}^m\) is the control input.
+
+The controller uses a linear state-feedback law
+
+\begin{equation}
+u_k = Lx_k
+\label{eq:feedback}
+\end{equation}
+
+with feedback gain \(L\).
+
+The infinite-horizon quadratic cost is
+
+\begin{equation}
+J
+=
+\sum_{k=0}^{\infty}
+\left(
+x_k^{T}Qx_k
++
+u_k^{T}Ru_k
+\right)
+\label{eq:cost}
+\end{equation}
+
+where
+
+\[
+Q \succ 0,
+\qquad
+R \succ 0
+\]
+
+are positive definite weighting matrices.
+
+Following Kothare et al.~\cite{kothare1996robust},
+the controller synthesis problem is reformulated using
+the substitution
+
+\begin{equation}
+Y = LQ_U
+\label{eq:substitution}
+\end{equation}
+
+where \(Q_U\) is a positive definite Lyapunov matrix.
+
+The robust MPC problem is posed as the semidefinite program
+
+\begin{equation}
+\min_{Q_U,Y,X_U,\gamma}
+\quad
+\gamma
+\label{eq:objective}
+\end{equation}
+
+subject to the following constraints.
+
+\subsection{State Feasibility Constraint}
+
+\begin{equation}
+\begin{bmatrix}
+1 & x_k^T \\
+x_k & Q_U
+\end{bmatrix}
+\succeq 0
+\label{eq:C1}
+\end{equation}
+
+\subsection{Input Feasibility Constraint}
+
+\begin{equation}
+\begin{bmatrix}
+X_U & Y \\
+Y^T & Q_U
+\end{bmatrix}
+\succeq 0
+\label{eq:C2}
+\end{equation}
+
+\subsection{Robust Stability and Performance LMI}
+
+The principal Kothare LMI is
+
+\begin{equation}
+\begin{bmatrix}
+Q_U
+&
+Q_UA^T + Y^TB^T
+&
+Q_UQ^{1/2}
+&
+Y^TR^{1/2}
+\\
+AQ_U + BY
+&
+Q_U
+&
+0
+&
+0
+\\
+Q^{1/2}Q_U
+&
+0
+&
+\gamma I
+&
+0
+\\
+R^{1/2}Y
+&
+0
+&
+0
+&
+\gamma I
+\end{bmatrix}
+\succeq
+0
+\label{eq:LMI}
+\end{equation}
+
+which guarantees robust stability and bounds the
+infinite-horizon quadratic cost.
+
+\subsection{Input Constraint}
+
+The controller enforces bounded control effort
+
+\begin{equation}
+|u_k|
+\le
+u_{\max}
+\label{eq:umax}
+\end{equation}
+
+implemented via
+
+\begin{equation}
+X_U
+\le
+u_{\max}^{2}
+\label{eq:Xconstraint}
+\end{equation}
+
+After solving the semidefinite program, the controller gain is
+recovered as
+
+\begin{equation}
+L
+=
+YQ_U^{-1}
+\label{eq:gain}
+\end{equation}
+
+and the resulting control law becomes
+
+\begin{equation}
+u_k
+=
+Lx_k.
+\label{eq:control}
+\end{equation}
+
+The predicted next state is then
+
+\begin{equation}
+x_{k+1}
+=
+Ax_k
++
+Bu_k.
+\label{eq:prediction}
+\end{equation}
 
 ---
 ---

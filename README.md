@@ -277,8 +277,8 @@ Where:
 - $A$: state transition matrix  
 - $B$: control input matrix  
 - $C$: observation matrix  
-- $w_k$ ~ N(0, Q): process noise  
-- $v_k$ ~ N(0, R): measurement noise  
+- $w_k$ ~ N(0, $Q$): process noise  
+- $v_k$ ~ N(0, $R$): measurement noise  
 
 ### 2. Initialization
 

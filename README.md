@@ -283,7 +283,7 @@ Where:
 ### 2. Initialization
 
 ```math
-x_{0}^{^}
+\hat{x}_{0}
 ```
 
 ```math

@@ -141,10 +141,8 @@ $$
 u_k=Lx_k
 $$
 
----
 
-## Reference
-
+### Reference
 Kothare, M. V., Balakrishnan, V., & Morari, M. (1996).  
 **Robust constrained model predictive control using linear matrix inequalities**.  
 *Automatica*, 32(10), 1361–1379.  

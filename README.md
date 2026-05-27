@@ -351,7 +351,7 @@ Cambridge: Cambridge University Press.
 
 # Plots of the MPC + PCA Monitoring example:
 ### States and control inputs over time
-<img src="examples/figures/MPC_states_controls.png" alt="drawing" width="500"/>
+<img src="examples/figures/MPC_states_controls.png" alt="drawing" width="650"/>
 
 ---
 # Fault Injection
@@ -372,23 +372,23 @@ A fault is introduced into the system at time step **k = 150**:
 
 ### Calibration Phase (Normal Operation)
 ### Before autoscaling
-<img src="examples/figures/Calibration_data_before_autoscaling.png" alt="drawing" width="500"/>
+<img src="examples/figures/Calibration_data_before_autoscaling.png" alt="drawing" width="650"/>
 
 ### After autoscaling
-<img src="examples/figures/Calibration_data_after_autoscaling.png" alt="drawing" width="500"/>
+<img src="examples/figures/Calibration_data_after_autoscaling.png" alt="drawing" width="650"/>
 
 ---
 
 ## PCA Model (Calibration Data)
 ### PCA Biplot (Calibration)
-<img src="examples/figures/Calibration_data_PCA_biplot.png" alt="drawing" width="500"/>
+<img src="examples/figures/Calibration_data_PCA_biplot.png" alt="drawing" width="650"/>
 
 ---
 
 ## Fault Detection Statistics (Calibration)
 
 ### Hotelling’s T² and Q (SPE)
-<img src="examples/figures/Calibration_T2_and_SPE_plot.png" alt="drawing" width="500"/>
+<img src="examples/figures/Calibration_T2_and_SPE_plot.png" alt="drawing" width="650"/>
 
 ---
 
@@ -400,21 +400,21 @@ New process data is projected into the PCA model built from calibration data.
 ## Monitoring Data Distribution
 
 ### Before autoscaling
-<img src="examples/figures/Monitored_new_data_before_autoscaling.png" alt="drawing" width="500"/>
+<img src="examples/figures/Monitored_new_data_before_autoscaling.png" alt="drawing" width="650"/>
 
 ### After autoscaling
-<img src="examples/figures/Monitored_new_data_after_autoscaling.png" alt="drawing" width="500"/>
+<img src="examples/figures/Monitored_new_data_after_autoscaling.png" alt="drawing" width="650"/>
 
 ---
 
 ## PCA Monitoring Results
 ### PCA Biplot (Monitoring data)
-<img src="examples/figures/Monitoring_data_PCA_biplot.png" alt="drawing" width="500"/>
+<img src="examples/figures/Monitoring_data_PCA_biplot.png" alt="drawing" width="650"/>
 
 ---
 
 ### Hotelling’s T² and Q (Monitoring)
-<img src="examples/figures/Monitoring_data_T2_and_SPE_plot.png" alt="drawing" width="500"/>
+<img src="examples/figures/Monitoring_data_T2_and_SPE_plot.png" alt="drawing" width="800"/>
 
 ---
 

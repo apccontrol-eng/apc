@@ -26,8 +26,9 @@ This project demonstrates a closed-loop system:
 U_k^* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 ```
 
-s.t.
+
 ```math
+s.t.
 X_k = \mathcal{A} x_k + \mathcal{B} U_k
 ```
 

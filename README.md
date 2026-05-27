@@ -23,18 +23,19 @@ This project demonstrates a closed-loop system:
 - Optimization solved using QP algorithms
 
 ```math
-SE = \frac{\sigma}{\sqrt{n}}
+
 ```
 
 ```math
 U_k^* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 ```
 
-$$
-U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
-$$
-
 s.t.
+```math
+X_k = \mathcal{A} x_k + \mathcal{B} U_k
+```
+
+
 $$
 X_k = \mathcal{A} x_k + \mathcal{B} U_k
 $$

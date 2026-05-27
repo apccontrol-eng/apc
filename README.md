@@ -260,6 +260,75 @@ DOI: 10.1016/0005-1098(96)00063-5
 ---
 ---
 
+## Kalman Filter
+
+### Process model
+x_k = A x_{k-1} + B u_{k-1} + w_{k-1}
+### Measurement model
+y_k = C x_k + v_k
+
+Where:
+- x_k: state vector  
+- u_k: control input  
+- y_k: measurement  
+- A: state transition matrix  
+- B: control input matrix  
+- C: observation matrix  
+- w_k ~ N(0, Q): process noise  
+- v_k ~ N(0, R): measurement noise  
+
+### 2. Initialization
+
+x̂_0, P_0
+
+- x̂_0: initial state estimate  
+- P_0: initial covariance  
+
+### 3. Prediction Step (Time Update)
+
+#### State prediction
+x̂_k⁻ = A x̂_{k-1} + B u_{k-1}
+
+#### Covariance prediction
+P_k⁻ = A P_{k-1} Aᵀ + Q
+
+---
+
+### 4. Update Step (Measurement Update)
+
+#### Innovation (residual)
+y_k = z_k - H x̂_k⁻
+
+#### Innovation covariance
+S_k = H P_k⁻ Hᵀ + R
+
+#### Kalman Gain
+K_k = P_k⁻ Hᵀ S_k⁻¹
+
+#### State update
+x̂_k = x̂_k⁻ + K_k y_k
+
+#### Covariance update
+P_k = (I - K_k H) P_k⁻
+
+---
+
+### 5. Summary (Compact Form)
+
+Predict:
+x̂_k⁻ = A x̂_{k-1} + B u_{k-1}
+P_k⁻ = A P_{k-1} Aᵀ + Q
+
+Update:
+K_k = P_k⁻ Hᵀ (H P_k⁻ Hᵀ + R)⁻¹
+x̂_k = x̂_k⁻ + K_k (z_k - H x̂_k⁻)
+P_k = (I - K_k H) P_k⁻
+
+
+---
+---
+---
+
 
 # Plots of the MPC + PCA Monitoring example:
 ### States and control inputs over time

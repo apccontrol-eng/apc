@@ -22,21 +22,16 @@ This project demonstrates a closed-loop system:
 - Box constraints on control inputs
 - Optimization solved using QP algorithms
 
-$$
-U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
-$$
+$$U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k$$
 
 s.t.
 $$X_k = \mathcal{A} x_k + \mathcal{B} U_k$$
 
-$$
-U_k \in \mathcal{U}_{ad}(x_k)
-$$
+$$U_k \in \mathcal{U}_{ad}(x_k)$$
 
 with
 
-$$
-\tilde{Q} =
+$$\tilde{Q} =
 \begin{bmatrix}
 Q &  &  \\
  & \ddots &  \\
@@ -50,8 +45,7 @@ R &  &  \\
  & \ddots &  \\
  &  & R
 \end{bmatrix}
-\in \mathbb{R}^{mN\times mN}.
-$$
+\in \mathbb{R}^{mN\times mN}.$$
 
 $$
 U_k^\* =

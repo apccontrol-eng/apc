@@ -27,51 +27,22 @@ This project demonstrates a closed-loop system:
 
 ---
 
-## Robust Model Predictive Control (RMPC)
+## Robust Model Predictive Control (RMPC) (Kothare 1996)
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
 - Optimization solved using LMI
 
-# Robust MPC via Linear Matrix Inequalities (Kothare 1996)
-
-This implementation follows the LMI-based infinite-horizon MPC formulation of Kothare et al. (1996).
-
-## System Model
-
-Consider the discrete-time linear system
-
-$$
-x_{k+1} = A x_k + B u_k
-$$
-
-where
+$$ x_{k+1} = A x_k + B u_k $$
 
 - $x_k \in \mathbb{R}^n$ is the state vector
 - $u_k \in \mathbb{R}^m$ is the control input
 
 The controller uses a linear state-feedback law
-
-$$
-u_k = Lx_k
-$$
-
----
-
-## Infinite-Horizon Cost Function
-
+$$ u_k = Lx_k $$
+### Infinite-Horizon Cost Function
 The control objective is to minimize the quadratic infinite-horizon cost
-
-$$
-J
-=
-\sum_{k=0}^{\infty}
-\left(
-x_k^{T}Qx_k
-+
-u_k^{T}Ru_k
-\right)
-$$
+$$ J = \sum_{k=0}^{\infty} \left( x_k^{T}Qx_k + u_k^{T}Ru_k \right) $$
 
 where
 

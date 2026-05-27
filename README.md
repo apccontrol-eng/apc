@@ -292,8 +292,6 @@ x̂_k⁻ = A x̂_{k-1} + B u_{k-1}
 #### Covariance prediction
 P_k⁻ = A P_{k-1} Aᵀ + Q
 
----
-
 ### 4. Update Step (Measurement Update)
 
 #### Innovation (residual)

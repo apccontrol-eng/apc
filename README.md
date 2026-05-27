@@ -281,9 +281,9 @@ Where:
 - $v_k$ ~ N(0, R): measurement noise  
 
 ### 2. Initialization
-
-$x_0^^$, $P_0$
-
+```math
+x_0^^, P_0
+```
 - x̂_0: initial state estimate  
 - P_0: initial covariance  
 

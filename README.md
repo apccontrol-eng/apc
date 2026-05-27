@@ -119,7 +119,7 @@ U_k^\top(B_{lifted}^\top \tilde{Q}B_{lifted} + \tilde{R})U_k
 ```
 subject to
 ```math
-U_N \in \mathcal{U}_{ad}(x_k)
+U_k \in \mathcal{U}_{ad}(x_k)
 ```
 
 ### Reference

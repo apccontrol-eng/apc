@@ -24,7 +24,10 @@ This project demonstrates a closed-loop system:
 - Lifted matrices dictated by prediction horizon
 
 Lifted system matrices form:
-\usepackage{amsmath,amssymb}
+
+$$
+X_k = \mathcal{A} x_k + \mathcal{B} U_k
+$$
 
 ```math
 X_k = \mathcal{A} x_k + \mathcal{B} U_k

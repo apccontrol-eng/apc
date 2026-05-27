@@ -22,6 +22,10 @@ This project demonstrates a closed-loop system:
 - Box constraints on control inputs
 - Optimization solved using QP algorithms
 
+```math
+SE = \frac{\sigma}{\sqrt{n}}
+```
+
 $$
 U_k^\* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 $$

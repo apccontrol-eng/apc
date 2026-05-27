@@ -299,7 +299,7 @@ P_{k}^{-} = A P_{k-1} A^{T} + Q
 
 #### Innovation (residual)
 ```math
-y_{k}_{res} = y_{k} - C \hat{x}_k^{-}
+y_{k,res} = y_{k} - C \hat{x}_{k}^{-}
 ```
 #### Innovation covariance
 ```math
@@ -311,7 +311,7 @@ K_{k} = P_{k}^{-} C^{T} S_{k}^{-1}
 ```
 #### State update
 ```math
-\hat{x}_{k} = \hat{x}_{k}^{-} + K_{k} y_{k}_{res}
+\hat{x}_{k} = \hat{x}_{k}^{-} + K_{k} y_{k,res}
 ```
 #### Covariance update
 ```math

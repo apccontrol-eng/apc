@@ -31,175 +31,73 @@ This project demonstrates a closed-loop system:
 - Optimization solved using LMI
 
 $x_{k+1} = A x_k + B u_k$
-
-- $x_k \in \mathbb{R}^n$ is the state vector
-- $u_k \in \mathbb{R}^m$ is the control input
+where
+$x_k \in \mathbb{R}^n$ is the state vector
+$u_k \in \mathbb{R}^m$ is the control input
 
 The controller uses a linear state-feedback law
 $u_k = Lx_k$
 ### Infinite-Horizon Cost Function
 The control objective is to minimize the quadratic infinite-horizon cost
 $J = \sum_{k=0}^{\infty} \left( x_k^{T}Qx_k + u_k^{T}Ru_k \right)$
-
 where
-
-$$
-Q \succ 0,
-\qquad
-R \succ 0
-$$
-
+$Q \succ 0, \qquad R \succ 0$
 are positive-definite weighting matrices.
 
----
-
-## Kothare LMI Reformulation
-
 Following Kothare et al., introduce the variable substitution
-
-$$
-Y = LQ_U
-$$
-
+$Y = LQ_U$
 where $Q_U$ is a positive-definite Lyapunov matrix.
-
 The controller is obtained by solving
-
-$$
-\min_{Q_U,Y,X_U,\gamma}
-\quad
-\gamma
-$$
-
+$\min_{Q_U,Y,X_U,\gamma}\quad\gamma$
 subject to the following LMIs.
 
-### 1. State Feasibility Constraint
-
-$$
-\begin{bmatrix}
-1 & x_k^T \\
-x_k & Q_U
-\end{bmatrix}
-\succeq 0
-$$
+#### 1. State Feasibility Constraint
+$\begin{bmatrix}1 & x_k^T \\x_k & Q_U\end{bmatrix}\succeq 0$
 
 ---
 
-### 2. Input Feasibility Constraint
-
-$$
-\begin{bmatrix}
-X_U & Y \\
-Y^T & Q_U
-\end{bmatrix}
-\succeq 0
-$$
+#### 2. Input Feasibility Constraint
+$\begin{bmatrix}X_U & Y \\Y^T & Q_U\end{bmatrix}\succeq 0$
 
 ---
 
-### 3. Robust Stability and Performance LMI
-
+#### 3. Robust Stability and Performance LMI
 The principal Kothare LMI is
-
-$$
-\begin{bmatrix}
-Q_U
-&
-Q_UA^T + Y^TB^T
-&
-Q_UQ^{1/2}
-&
-Y^TR^{1/2}
-\\
-AQ_U + BY
-&
-Q_U
-&
-0
-&
-0
-\\
-Q^{1/2}Q_U
-&
-0
-&
-\gamma I
-&
-0
-\\
-R^{1/2}Y
-&
-0
-&
-0
-&
-\gamma I
-\end{bmatrix}
-\succeq
-0
-$$
+$\begin{bmatrix}Q_U&Q_UA^T + Y^TB^T&Q_UQ^{1/2}&Y^TR^{1/2}\\AQ_U + BY&Q_U&0&0\\Q^{1/2}Q_U&0&\gamma I&0\\R^{1/2}Y&0&0&\gamma I\end{bmatrix}\succeq0$
 
 This LMI guarantees:
-
 - closed-loop stability
 - bounded quadratic cost
 - Lyapunov performance guarantees
-
 where $\gamma$ represents an upper bound on the worst-case cost.
 
 ---
 
-### 4. Input Constraint
+#### 4. Input Constraint
 
 The controller enforces bounded actuation
-
-$$
-|u_k|
-\le
-u_{\max}
-$$
+$|u_k|\leu_{\max}$
 
 implemented through
-
-$$
-X_U
-\le
-u_{\max}^{2}
-$$
+$X_U\leu_{\max}^{2}$
 
 ---
 
-## Controller Recovery
-
+#### Controller Recovery
 After solving the semidefinite program, the feedback gain is recovered as
 
-$$
-L
-=
-YQ_U^{-1}
-$$
-
+$L=YQ_U^{-1}$
 and the control law becomes
 
-$$
-u_k
-=
-Lx_k
-$$
+$u_k=Lx_k$
 
 The next predicted state is
 
-$$
-x_{k+1}
-=
-Ax_k
-+
-Bu_k
-$$
+$x_{k+1}=Ax_k+Bu_k$
 
 ---
 
-## Reference
+#### Reference
 
 Kothare, M. V., Balakrishnan, V., & Morari, M. (1996).  
 **Robust constrained model predictive control using linear matrix inequalities**.  

@@ -30,95 +30,118 @@ This project demonstrates a closed-loop system:
 - Box constraints on control inputs
 - Optimization solved using LMI
 
-$x_{k+1} = A x_k + B u_k$
-where
-$x_k \in \mathbb{R}^n$ is the state vector
-$u_k \in \mathbb{R}^m$ is the control input
+$$
+x_{k+1}=Ax_k+Bu_k
+$$
 
-The controller uses a linear state-feedback law
-$u_k = Lx_k$
-### Infinite-Horizon Cost Function
-The control objective is to minimize the quadratic infinite-horizon cost
-$J = \sum_{k=0}^{\infty} \left( x_k^{T}Qx_k + u_k^{T}Ru_k \right)$
-where
-$Q \succ 0, \qquad R \succ 0$
-are positive-definite weighting matrices.
+$$
+u_k=Lx_k
+$$
 
-Following Kothare et al., introduce the variable substitution
-$Y = LQ_U$
-where $Q_U$ is a positive-definite Lyapunov matrix.
-The controller is obtained by solving
-$\min_{Q_U,Y,X_U,\gamma}\quad\gamma$
-subject to the following LMIs.
+$$
+J
+=
+\sum_{k=0}^{\infty}
+\left(
+x_k^\top Q x_k
++
+u_k^\top R u_k
+\right)
+$$
 
-#### 1. State Feasibility Constraint
-$\begin{bmatrix}1 & x_k^T \\x_k & Q_U\end{bmatrix}\succeq 0$
+$$
+Q \succ 0,
+\qquad
+R \succ 0
+$$
 
----
+$$
+Y = LQ_U
+$$
 
-#### 2. Input Feasibility Constraint
-$\begin{bmatrix}X_U & Y \\Y^T & Q_U\end{bmatrix}\succeq 0$
+$$
+\min_{Q_U,Y,X_U,\gamma}
+\gamma
+$$
 
----
+subject to
 
-#### 3. Robust Stability and Performance LMI
-The principal Kothare LMI is
-$\begin{bmatrix}Q_U&Q_UA^T + Y^TB^T&Q_UQ^{1/2}&Y^TR^{1/2}\\AQ_U + BY&Q_U&0&0\\Q^{1/2}Q_U&0&\gamma I&0\\R^{1/2}Y&0&0&\gamma I\end{bmatrix}\succeq0$
+$$
+\begin{bmatrix}
+1 & x_k^\top \\
+x_k & Q_U
+\end{bmatrix}
+\succeq 0
+$$
 
-This LMI guarantees:
-- closed-loop stability
-- bounded quadratic cost
-- Lyapunov performance guarantees
-where $\gamma$ represents an upper bound on the worst-case cost.
+$$
+\begin{bmatrix}
+X_U & Y \\
+Y^\top & Q_U
+\end{bmatrix}
+\succeq 0
+$$
 
----
+$$
+\begin{bmatrix}
+Q_U
+&
+Q_UA^\top + Y^\top B^\top
+&
+Q_UQ^{1/2}
+&
+Y^\top R^{1/2}
+\\
+AQ_U + BY
+&
+Q_U
+&
+0
+&
+0
+\\
+Q^{1/2}Q_U
+&
+0
+&
+\gamma I
+&
+0
+\\
+R^{1/2}Y
+&
+0
+&
+0
+&
+\gamma I
+\end{bmatrix}
+\succeq
+0
+$$
 
-#### 4. Input Constraint
+$$
+|u_k| \le u_{\max}
+$$
 
-The controller enforces bounded actuation
-$|u_k|\leu_{\max}$
+implemented as
 
-implemented through
-$X_U\leu_{\max}^{2}$
+$$
+X_U \le u_{\max}^2
+$$
 
----
+Recover the feedback gain via
 
-#### Controller Recovery
-After solving the semidefinite program, the feedback gain is recovered as
+$$
+L = YQ_U^{-1}
+$$
 
-$L=YQ_U^{-1}$
-and the control law becomes
+and compute control input
 
-$u_k=Lx_k$
+$$
+u_k=Lx_k
+$$
 
-The next predicted state is
-
-$x_{k+1}=Ax_k+Bu_k$
-
----
-
-#### Reference
-
-Kothare, M. V., Balakrishnan, V., & Morari, M. (1996).  
-**Robust constrained model predictive control using linear matrix inequalities**.  
-*Automatica*, 32(10), 1361–1379.  
-DOI: 10.1016/0005-1098(96)00063-5
-
-## BibTeX
-
-```bibtex
-@article{kothare1996robust,
-  title={Robust constrained model predictive control using linear matrix inequalities},
-  author={Kothare, Mayuresh V and Balakrishnan, Venkataramanan and Morari, Manfred},
-  journal={Automatica},
-  volume={32},
-  number={10},
-  pages={1361--1379},
-  year={1996},
-  publisher={Elsevier},
-  doi={10.1016/0005-1098(96)00063-5}
-}
-```
 
 ---
 ---

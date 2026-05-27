@@ -33,30 +33,36 @@ This project demonstrates a closed-loop system:
 - Box constraints on control inputs
 - Optimization solved using LMI
 
-\section{Robust MPC via Linear Matrix Inequalities}
+# Robust MPC via Linear Matrix Inequalities (Kothare 1996)
+
+This implementation follows the LMI-based infinite-horizon MPC formulation of Kothare et al. (1996).
+
+## System Model
 
 Consider the discrete-time linear system
 
-\begin{equation}
+$$
 x_{k+1} = A x_k + B u_k
-\label{eq:dynamics}
-\end{equation}
+$$
 
-where \(x_k \in \mathbb{R}^n\) is the state vector and
-\(u_k \in \mathbb{R}^m\) is the control input.
+where
+
+- $x_k \in \mathbb{R}^n$ is the state vector
+- $u_k \in \mathbb{R}^m$ is the control input
 
 The controller uses a linear state-feedback law
 
-\begin{equation}
+$$
 u_k = Lx_k
-\label{eq:feedback}
-\end{equation}
+$$
 
-with feedback gain \(L\).
+---
 
-The infinite-horizon quadratic cost is
+## Infinite-Horizon Cost Function
 
-\begin{equation}
+The control objective is to minimize the quadratic infinite-horizon cost
+
+$$
 J
 =
 \sum_{k=0}^{\infty}
@@ -65,68 +71,69 @@ x_k^{T}Qx_k
 +
 u_k^{T}Ru_k
 \right)
-\label{eq:cost}
-\end{equation}
+$$
 
 where
 
-\[
+$$
 Q \succ 0,
 \qquad
 R \succ 0
-\]
+$$
 
-are positive definite weighting matrices.
+are positive-definite weighting matrices.
 
-Following Kothare et al.~\cite{kothare1996robust},
-the controller synthesis problem is reformulated using
-the substitution
+---
 
-\begin{equation}
+## Kothare LMI Reformulation
+
+Following Kothare et al., introduce the variable substitution
+
+$$
 Y = LQ_U
-\label{eq:substitution}
-\end{equation}
+$$
 
-where \(Q_U\) is a positive definite Lyapunov matrix.
+where $Q_U$ is a positive-definite Lyapunov matrix.
 
-The robust MPC problem is posed as the semidefinite program
+The controller is obtained by solving
 
-\begin{equation}
+$$
 \min_{Q_U,Y,X_U,\gamma}
 \quad
 \gamma
-\label{eq:objective}
-\end{equation}
+$$
 
-subject to the following constraints.
+subject to the following LMIs.
 
-\subsection{State Feasibility Constraint}
+### 1. State Feasibility Constraint
 
-\begin{equation}
+$$
 \begin{bmatrix}
 1 & x_k^T \\
 x_k & Q_U
 \end{bmatrix}
 \succeq 0
-\label{eq:C1}
-\end{equation}
+$$
 
-\subsection{Input Feasibility Constraint}
+---
 
-\begin{equation}
+### 2. Input Feasibility Constraint
+
+$$
 \begin{bmatrix}
 X_U & Y \\
 Y^T & Q_U
 \end{bmatrix}
 \succeq 0
-\label{eq:C2}
-\end{equation}
+$$
 
-\subsection{Robust Stability and Performance LMI}
+---
+
+### 3. Robust Stability and Performance LMI
 
 The principal Kothare LMI is
 
-\begin{equation}
+$$
 \begin{bmatrix}
 Q_U
 &
@@ -162,61 +169,90 @@ R^{1/2}Y
 \end{bmatrix}
 \succeq
 0
-\label{eq:LMI}
-\end{equation}
+$$
 
-which guarantees robust stability and bounds the
-infinite-horizon quadratic cost.
+This LMI guarantees:
 
-\subsection{Input Constraint}
+- closed-loop stability
+- bounded quadratic cost
+- Lyapunov performance guarantees
 
-The controller enforces bounded control effort
+where $\gamma$ represents an upper bound on the worst-case cost.
 
-\begin{equation}
+---
+
+### 4. Input Constraint
+
+The controller enforces bounded actuation
+
+$$
 |u_k|
 \le
 u_{\max}
-\label{eq:umax}
-\end{equation}
+$$
 
-implemented via
+implemented through
 
-\begin{equation}
+$$
 X_U
 \le
 u_{\max}^{2}
-\label{eq:Xconstraint}
-\end{equation}
+$$
 
-After solving the semidefinite program, the controller gain is
-recovered as
+---
 
-\begin{equation}
+## Controller Recovery
+
+After solving the semidefinite program, the feedback gain is recovered as
+
+$$
 L
 =
 YQ_U^{-1}
-\label{eq:gain}
-\end{equation}
+$$
 
-and the resulting control law becomes
+and the control law becomes
 
-\begin{equation}
+$$
 u_k
 =
-Lx_k.
-\label{eq:control}
-\end{equation}
+Lx_k
+$$
 
-The predicted next state is then
+The next predicted state is
 
-\begin{equation}
+$$
 x_{k+1}
 =
 Ax_k
 +
-Bu_k.
-\label{eq:prediction}
-\end{equation}
+Bu_k
+$$
+
+---
+
+## Reference
+
+Kothare, M. V., Balakrishnan, V., & Morari, M. (1996).  
+**Robust constrained model predictive control using linear matrix inequalities**.  
+*Automatica*, 32(10), 1361–1379.  
+DOI: 10.1016/0005-1098(96)00063-5
+
+## BibTeX
+
+```bibtex
+@article{kothare1996robust,
+  title={Robust constrained model predictive control using linear matrix inequalities},
+  author={Kothare, Mayuresh V and Balakrishnan, Venkataramanan and Morari, Manfred},
+  journal={Automatica},
+  volume={32},
+  number={10},
+  pages={1361--1379},
+  year={1996},
+  publisher={Elsevier},
+  doi={10.1016/0005-1098(96)00063-5}
+}
+```
 
 ---
 ---

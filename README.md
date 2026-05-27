@@ -54,7 +54,7 @@ R &  &  \\
 ```
 
 ```math
-U_k^\* =
+U_k^* =
 \arg\min_{U_k}\;
 U_k^\top(\mathcal{B}^\top \tilde{Q}\mathcal{B} + \tilde{R})U_k
 + 2x_k^\top \mathcal{A}^\top \mathcal{B}U_k

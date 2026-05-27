@@ -282,16 +282,8 @@ Where:
 
 ### 2. Initialization
 
-```math
-\hat{x}_{0}
-```
-
-```math
-P_0
-```
-
-- x̂_0: initial state estimate  
-- P_0: initial covariance  
+- $\hat{x}_{0}$: initial state estimate  
+- $P_0$: initial covariance  
 
 ### 3. Prediction Step (Time Update)
 

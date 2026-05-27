@@ -81,7 +81,7 @@ The Quadratic Programming problem is of form:
 ```math
 U_k^* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
 ```
-s.t.
+subject to
 ```math
 X_k = A_{lifted} x_k + B_{lifted} U_k
 ```
@@ -117,7 +117,7 @@ U_k^\top(B_{lifted}^\top \tilde{Q}B_{lifted} + \tilde{R})U_k
 + 2x_k^\top A_{lifted}^\top B_{lifted} U_k
 + x_k^\top A_{lifted}^\top \tilde{Q}A_{lifted} x_k
 ```
-s.t.
+subject to
 ```math
 U_N \in \mathcal{U}_{ad}(x_k)
 ```

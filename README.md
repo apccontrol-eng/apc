@@ -26,7 +26,7 @@ This project demonstrates a closed-loop system:
 Lifted system matrices form:
 
 ```math
-X_k = \mathcal{A} x_k + \mathcal{B} U_k
+__X_k__ = __\mathcal{A}__ x_k + __\mathcal{B}__ __U_k__
 ```
 
 ```math

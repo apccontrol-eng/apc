@@ -262,23 +262,27 @@ DOI: 10.1016/0005-1098(96)00063-5
 
 ## Kalman Filter
 Process model:
+```math
 x_k = A x_{k-1} + B u_{k-1} + w_{k-1}
+```
 Measurement model:
+```math
 y_k = C x_k + v_k
+```
 
 Where:
-- x_k: state vector  
-- u_k: control input  
-- y_k: measurement  
-- A: state transition matrix  
-- B: control input matrix  
-- C: observation matrix  
-- w_k ~ N(0, Q): process noise  
-- v_k ~ N(0, R): measurement noise  
+- $x_k$: state vector  
+- $u_k$: control input  
+- $y_k$: measurement  
+- $A$: state transition matrix  
+- $B$: control input matrix  
+- $C$: observation matrix  
+- $w_k$ ~ N(0, Q): process noise  
+- $v_k$ ~ N(0, R): measurement noise  
 
 ### 2. Initialization
 
-x̂_0, P_0
+$x_0^^$, $P_0$
 
 - x̂_0: initial state estimate  
 - P_0: initial covariance  

@@ -23,7 +23,7 @@ This project demonstrates a closed-loop system:
 - Optimization solved using QP algorithms
 - Lifted matrices dictated by prediction horizon
 
-Lifted system matrices form:
+Lifted system matrices form when prediction horizon is set to N:
 
 ```math
 X_k = A_{lifted} x_k + B_{lifted} U_k

@@ -388,7 +388,10 @@ Suppose $k$ principal components are chosen, then the X is approximated as:
 
 ```math
 \hat{X} = T_{1:k}P_{1:k}^{T}
-```
+```  
+The common ways of directly solving for all scores T and loadings P directly are SVD and Eigenvalue decomposition.  
+SVD: $X = TP^{T}$ where $T = U\Sigma$ and $P = V$  
+
 
 ### Reference
 Dunn, K. G. (2026).  

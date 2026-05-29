@@ -40,11 +40,17 @@ where
 J = \sum_{k=0}^{N}\left(x_k^\top Q x_k+u_k^\top R u_k\right)
 ```
 where  
-$$
-Q \succ 0,
+```math
+Q \succeq 0,
 \qquad
-R \succ 0
-$$  are weight matrices for states and control effort.  
+ ```
+```math
+R \succ 0,
+\qquad
+ ```  
+
+
+are weight matrices for states and control effort.  
 
 - Box constraints (lower and upper bounds) on control inputs:  
 ```math

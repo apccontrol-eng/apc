@@ -48,13 +48,11 @@ Q \succeq 0,
 R \succ 0,
 \qquad
  ```  
-
-
-are weight matrices for states and control effort.  
+are weighting matrices for states and control effort.  
 
 - Box constraints (lower and upper bounds) on control inputs:  
 ```math
-u_{lb} <= u <= u_{ub}  
+u_{lb} <= u_{k} <= u_{ub}  
 ```  
 - Optimization solved using QP algorithms
 - Lifted matrices dictated by prediction horizon

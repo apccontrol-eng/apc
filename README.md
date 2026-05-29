@@ -449,16 +449,12 @@ $\frac{\partial}{\partial w} \left( c^{T}Y^{T}Xww^{T}X^{T}Yc \right) = 2X^{T}Ycc
 For the constraint term,  
 
 $\frac{\partial}{\partial w}\left[\lambda_1(w^{T}w-1)\right]=2\lambda_1 w$  
-
 and  
-
 $\frac{\partial}{\partial w}\left[\lambda_2(c^{T}c-1)\right]=0$  
 
 $\boxed{\frac{\partial L}{\partial w}=2X^{T}Ycc^{T}Y^{T}X\,w+2\lambda_1 w}$  
 
 $\boxed{\frac{\partial L}{\partial w}=2\left(X^{T}Ycc^{T}Y^{T}X+\lambda_1 I\right)w}$  
-
-$\boxed{\left(X^{T}Ycc^{T}Y^{T}X+\lambda_1 I\right)w=0}$  
 
 ---
 

@@ -434,9 +434,9 @@ subject to
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-max. $c^{T}Y^{T}Xww^{T}X^{T}Yc + \lambda_{1}(w^{T}w-1) + \lambda_{2}(c^{T}c-1)$  
+max. $c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
 
-max. $c^{T}Y^{T}Xww^{T}X^{T}Yc + \lambda_{1}(w^{T}w-1) + \lambda_{2}(c^{T}c-1)$  
+max. $c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
 
 Differentiation w.r.t Lagrange multipliers:  
 $w^{T}w-1=0$  
@@ -446,15 +446,7 @@ $c^{T}Y^{T}Xww^{T}X^{T}Yc = (w^{T}X^{T}Yc)^2 = w^{T}(X^{T}Ycc^{T}Y^{T}X)w$
 
 $\frac{\partial}{\partial w} \left( c^{T}Y^{T}Xww^{T}X^{T}Yc \right) = 2X^{T}Ycc^{T}Y^{T}X\,w$  
 
-For the constraint term,  
-
-$\frac{\partial}{\partial w}\left[\lambda_1(w^{T}w-1)\right]=2\lambda_1 w$  
-and  
-$\frac{\partial}{\partial w}\left[\lambda_2(c^{T}c-1)\right]=0$  
-
-$\boxed{\frac{\partial L}{\partial w}=2X^{T}Ycc^{T}Y^{T}X\,w+2\lambda_1 w}$  
-
-$\boxed{\frac{\partial L}{\partial w}=2\left(X^{T}Ycc^{T}Y^{T}X+\lambda_1 I\right)w}$  
+$2X^{T}Ycc^{T}Y^{T}X\,w+2\lambda_1 w}=0$  
 
 ---
 

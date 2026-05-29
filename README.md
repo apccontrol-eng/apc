@@ -396,15 +396,15 @@ X=tp^{T}
 ```math
 t=Xp
 ```
-max. var($t$)
+$\max_{p} var(t)$
 subject to 
 $p^{T}p=1$
 
-max. $(Xp)^{T}(Xp)$
+$\max_{p} (Xp)^{T}(Xp)$
 subject to
 $p^{T}p=1$  
 
-max. $p^{T}X^{T}Xp - \lambda(p^{T}p-1)$  
+$\max_{p} p^{T}X^{T}Xp - \lambda(p^{T}p-1)$  
 
 $X^{T}Xp - \lambda(p)=0$  
 $(p^{T}p-1)=0$  
@@ -462,24 +462,24 @@ t=Xw
 u=Yc
 ```
 
-max. $cov(t,u)^{2}$  
+$\max_{w,c} cov(t,u)^{2}$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-max. $(w^{T}X^{T}Yc)^{2}$  
+$\max_{w,c} (w^{T}X^{T}Yc)^{2}$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-max. $(w^{T}X^{T}Yc)^{T}(w^{T}X^{T}Yc)$  
+$\max_{w,c} (w^{T}X^{T}Yc)^{T}(w^{T}X^{T}Yc)$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-max. $c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
+$\max_{w,c} c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
 
-max. $c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
+$\max_{w,c} c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
 
 Differentiation w.r.t Lagrange multipliers:  
 $w^{T}w-1=0$  

@@ -397,7 +397,7 @@ X=tp^{T}
 t=Xp
 ```  
 ```math
-var(t) = 1/n-1 t^{T}t \propto t^{T}t
+var(t) = \frac{1}{n-1} t^{T}t \propto t^{T}t
 ```  
 $\max_{p} var(t)$
 subject to 
@@ -465,7 +465,7 @@ t=Xw
 u=Yc
 ```  
 ```math
-cov(t,u) = 1/n-1 t^{T}u \propto t^{T}u
+cov(t,u) = \frac{1}{n-1} t^{T}u \propto t^{T}u
 ```  
 $\max_{w,c} cov(t,u)$  
 subject to  

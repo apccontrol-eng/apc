@@ -192,7 +192,7 @@ u_k^\top R u_k
 $$
 
 $$
-Q \succ 0,
+Q \succeq 0,
 \qquad
 R \succ 0
 $$

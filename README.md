@@ -346,7 +346,31 @@ Cambridge: Cambridge University Press.
 ---
 ---
 ---
+## PCA
 
+```math
+X = TP^{T} (+ E)
+```
+In rank-1 terms we solve the scores T and loadings P separately and deflate X either to the full column space or just to get e.g. the first to principal components.
+
+```math
+X=tp^{T}
+t=Xp
+```
+
+max. var($t$)
+subject to 
+$p^{T}p=1$
+
+
+
+
+### Reference
+  
+
+---
+---
+---
 
 # Plots of the MPC + PCA Monitoring example:
 ### States and control inputs over time

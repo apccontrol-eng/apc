@@ -351,7 +351,7 @@ Cambridge: Cambridge University Press.
 ```math
 X = TP^{T} (+ E)
 ```
-In rank-1 terms we solve the scores T and loadings P separately and deflate X either to the full column space or just to get e.g. the first to principal components.
+In rank-1 terms we solve the scores T and loadings P separately and deflate X either to the full column space or just to get e.g. the first two principal components.
 
 ```math
 X=tp^{T}
@@ -367,9 +367,7 @@ max. $(Xp)^{T}(Xp)$
 subject to 
 $p^{T}p=1$
 
-max. $p^{T}X^{T}Xp$
-subject to 
-$p^{T}p=1$
+max. $p^{T}X^{T}Xp$ - \lambda(p^{T}p-1)$
 
 
 

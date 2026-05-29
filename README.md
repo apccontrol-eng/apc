@@ -462,52 +462,50 @@ t=Xw
 u=Yc
 ```
 
-$\max_{w,c} cov(t,u)^{2}$  
+$\max_{w,c} cov(t,u)$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-$\max_{w,c} (w^{T}X^{T}Yc)^{2}$  
+$\max_{w,c} (w^{T}X^{T}Yc)$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-$\max_{w,c} (w^{T}X^{T}Yc)^{T}(w^{T}X^{T}Yc)$  
+$\max_{w,c} (w^{T}X^{T}Yc)$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-$\max_{w,c} c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
+$\max_{w,c} w^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
 
 Differentiation w.r.t Lagrange multipliers:  
 $w^{T}w-1=0$  
 $c^{T}c-1=0$  
 
-Since the order can be changed accordingly:  
-$c^{T}Y^{T}Xww^{T}X^{T}Yc = (w^{T}X^{T}Yc)^2 = w^{T}(X^{T}Ycc^{T}Y^{T}X)w$  
+Differentiation w.r.t $w$:  
+$X^{T}Yc-2\lambda_1w=0$  
 
-The objective function differentiated w.r.t $w$:  
-$2X^{T}Ycc^{T}Y^{T}Xw-2\lambda_1w=0$  
+Differentiation w.r.t $c$:  
+$Y^{T}Xw-2\lambda_2c=0$  
 
-The objective function differentiated w.r.t $c$:  
-$2Y^{T}Xww^{T}X^{T}Yc-2\lambda_2c=0$  
+By substituting $c=\frac{1}{2\lambda_2}Y^{T}Xw$ to $X^{T}Yc=2\lambda_1w$:  
+$X^{T}YY^{T}Xw=2\lambda_1 2\lambda_2 w$  
+and setting \lambda = (2\lambda_1) (2\lambda_2) the equation becomes a regular EVP:  
+$X^{T}YY^{T}Xw=\lambdaw$  
 
-The maximization problem is solved when the solution is found to these equations:  
-```math
-X^{T}Ycc^{T}Y^{T}Xw=\lambda_1w
-```  
-```math
-w^{T}w=1
-```  
-```math
-Y^{T}Xww^{T}X^{T}Yc=\lambda_2c
-```  
-```math
-c^{T}c=1
-```  
+For solving c, $w=\frac{1}{2\lambda_1}X^{T}Yc$ to $Y^{T}Xw=2\lambda_2c$:  
+$Y^{T}XX^{T}Yc=(2\lambda_1) (2\lambda_2) c$  
+$Y^{T}XX^{T}Yc=\lambdac$  
 
-We are mainly interested in the optimal values for $w$ and $c$ because the scores $t$ and $u$ are readily solved by calculating 
-$t = Xw$ and $u = Yc$. The loadings for the outer PLSR relation are solved by ordinary least squares:  
+The optimal solution to maximizing covariance is a matter of finding the optimal solution to these equations:
+$X^{T}YY^{T}Xw=\lambdaw$  
+$Y^{T}XX^{T}Yc=\lambdac$  
+$w^{T}w=1$  
+$c^{T}c=1$  
+
+The scores $t$ and $u$ are readily solved by calculating $t = Xw$ and $u = Yc$.
+The loadings for the outer PLSR relation are solved by ordinary least squares:  
 
 ```math
 p = (X^{T}w)/(w^{T}w)
@@ -534,7 +532,7 @@ or
 Y:=Y-tbq^{T}
 ```  
 
-The PLSR model is calculated usually with NIPALS algorithm.  
+The PLSR model is usually calculated with NIPALS algorithm.  
 
 ### Reference(s)
 Rosipal, R., & Krämer, N. (2006)   
@@ -547,6 +545,12 @@ Geladi, P., & Kowalski, B. R. (1986)
 *Partial least-squares regression: A tutorial*  
 *Analytica Chimica Acta*, *185*, 1–17.  
 https://doi.org/10.1016/0003-2670(86)80028-9  
+
+Wegelin, J. A. (2000)  
+*A survey of partial least squares (PLS) methods, with emphasis on the two-block case* (Technical Report No. 371)  
+Department of Statistics, University of Washington, Seattle  
+Available at: https://stat.uw.edu/research/tech-reports/survey-partial-least-squares-pls-methods-emphasis-two-block-case  
+
 
 ---
 ---

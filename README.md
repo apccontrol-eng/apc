@@ -498,7 +498,7 @@ For solving c, $w=\frac{1}{2\lambda_1}X^{T}Yc$ to $Y^{T}Xw=2\lambda_2c$:
 $Y^{T}XX^{T}Yc=(2\lambda_1) (2\lambda_2) c$  
 $Y^{T}XX^{T}Yc=\lambda c$  
 
-The solution to maximizing covariance is a matter of finding the solution to this set of equations:  
+The solution to maximizing covariance is a matter of finding the solution to this set of equations (notice similarities with SVD on $X^{T}Y$):  
 ```math
 X^{T}YY^{T}Xw=\lambda w  
 ```

@@ -498,7 +498,7 @@ For solving c, $w=\frac{1}{2\lambda_1}X^{T}Yc$ to $Y^{T}Xw=2\lambda_2c$:
 $Y^{T}XX^{T}Yc=(2\lambda_1) (2\lambda_2) c$  
 $Y^{T}XX^{T}Yc=\lambda c$  
 
-The optimal solution to maximizing covariance is a matter of finding the optimal solution to these equations:  
+The solution to maximizing covariance is a matter of finding the solution to this set of equations:  
 ```math
 X^{T}YY^{T}Xw=\lambda w  
 ```

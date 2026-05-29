@@ -26,7 +26,10 @@ x_{k+1} = A x_k + B u_k
 ```math
 J = \sum_{k=0}^{N}\left(x_k^\top Q x_k+u_k^\top R u_k\right)
 ```  
-- Box constraints on control inputs
+- Box constraints (lower and upper bounds) on control inputs:  
+```math
+u_{lb} <= u <= u_{ub}  
+```  
 - Optimization solved using QP algorithms
 - Lifted matrices dictated by prediction horizon
 

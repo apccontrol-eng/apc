@@ -392,10 +392,13 @@ In rank-1 terms we solve the scores T and loadings P separately and deflate X ei
 
 ```math
 X=tp^{T}
-```
+```  
 ```math
 t=Xp
-```
+```  
+```math
+var(t) = 1/n-1 t^{T}t \propto t^{T}t
+```  
 $\max_{p} var(t)$
 subject to 
 $p^{T}p=1$
@@ -460,14 +463,11 @@ t=Xw
 ```
 ```math
 u=Yc
-```
-
+```  
+```math
+cov(t,u) = 1/n-1 t^{T}u \propto t^{T}u
+```  
 $\max_{w,c} cov(t,u)$  
-subject to  
-$w^{T}w=1$  
-$c^{T}c=1$  
-
-$\max_{w,c} (w^{T}X^{T}Yc)$  
 subject to  
 $w^{T}w=1$  
 $c^{T}c=1$  
@@ -491,14 +491,14 @@ $Y^{T}Xw-2\lambda_2c=0$
 
 By substituting $c=\frac{1}{2\lambda_2}Y^{T}Xw$ to $X^{T}Yc=2\lambda_1w$:  
 $X^{T}YY^{T}Xw=2\lambda_1 2\lambda_2 w$  
-and setting \lambda = (2\lambda_1) (2\lambda_2) the equation becomes a regular EVP:  
+and setting $\lambda = (2\lambda_1) (2\lambda_2)$ the equation becomes a regular EVP:  
 $X^{T}YY^{T}Xw=\lambda w$  
 
 For solving c, $w=\frac{1}{2\lambda_1}X^{T}Yc$ to $Y^{T}Xw=2\lambda_2c$:  
 $Y^{T}XX^{T}Yc=(2\lambda_1) (2\lambda_2) c$  
 $Y^{T}XX^{T}Yc=\lambda c$  
 
-The optimal solution to maximizing covariance is a matter of finding the optimal solution to these equations:
+The optimal solution to maximizing covariance is a matter of finding the optimal solution to these equations:  
 $X^{T}YY^{T}Xw=\lambda w$  
 $Y^{T}XX^{T}Yc=\lambda c$  
 $w^{T}w=1$  

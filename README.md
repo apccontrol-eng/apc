@@ -459,22 +459,34 @@ The objective function differentiated w.r.t $c$:
 $2Y^{T}Xww^{T}X^{T}Yc-2\lambda_2c=0$  
 
 The maximization problem is solved when the solution is found to these equations:  
-
-$X^{T}Ycc^{T}Y^{T}Xw=\lambda_1w$  (This is an Eigenvalue problem)  
-$w^{T}w=1$  (Enforces normalization)  
-$Y^{T}Xww^{T}X^{T}Yc=\lambda_2c$  (This is an Eigenvalue problem)  
-$c^{T}c=1$  (Enforces normalization)  
+```math
+X^{T}Ycc^{T}Y^{T}Xw=\lambda_1w
+```  
+```math
+w^{T}w=1
+```  
+```math
+Y^{T}Xww^{T}X^{T}Yc=\lambda_2c
+```  
+```math
+c^{T}c=1
+```  
 
 We are mainly interested in the optimal values for $w$ and $c$ because the scores $t$ and $u$ are readily solved by calculating 
 $t = Xw$ and $u = Yc$. The loadings for the outer PLSR relation are solved by ordinary least squares:  
 
-$p = (X^{T}w)/(w^{T}w)$  
-$q = (Y^{T}c)/(c^{T}c)$  
+```math
+p = (X^{T}w)/(w^{T}w)
+```  
+```math
+q = (Y^{T}c)/(c^{T}c)
+```  
 
 The inner relation is then calculated by ordinary least squares on the scores:  
 
-$b = (u^{T}t)/(t^{T}t)$  
-
+```math
+b = (u^{T}t)/(t^{T}t)
+```  
 After these steps we have $w$, $c$, $p$, $q$ and $b$. The next latent variables are calculated for the deflated matrices:  
 
 ```math

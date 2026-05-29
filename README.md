@@ -364,16 +364,17 @@ subject to
 $p^{T}p=1$
 
 max. $(Xp)^{T}(Xp)$
-subject to 
-$p^{T}p=1$
+subject to
+$p^{T}p=1$  
 
-max. $p^{T}X^{T}Xp - \lambda(p^{T}p-1)$
+max. $p^{T}X^{T}Xp - \lambda(p^{T}p-1)$  
 
 $X^{T}Xp - \lambda(p)=0$  
 $(p^{T}p-1)=0$  
 
-$X^{T}Xp = \lambda(p)$  
+$X^{T}Xp = \lambda p$  
 $(p^{T}p) = 1$  
+
 This is an eigenvalue problem (EVP) for which there are multiple options. After p (the loading) is solved, t (the scores) are available by definition t = Xp.
 
 The remaining scores t and loadings p are calculated by repeating the optimization problem for deflated X.

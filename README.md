@@ -17,8 +17,15 @@ This project demonstrates a closed-loop system:
 ---
 
 ## Model Predictive Control (MPC)
-- Linear state-space model
-- Quadratic cost on states and inputs
+- Linear state-space model:  
+
+```math
+x_{k+1} = A x_k + B u_k
+```
+- Quadratic cost on states and inputs:  
+```math
+J = \sum_{k=0}^{N}\left(x_k^\top Q x_k+u_k^\top R u_k\right)
+```  
 - Box constraints on control inputs
 - Optimization solved using QP algorithms
 - Lifted matrices dictated by prediction horizon

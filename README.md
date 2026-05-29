@@ -386,7 +386,7 @@ Cambridge: Cambridge University Press.
 
 PCA relation (X auto-scaled):  
 ```math
-X = TP^{T} (+E)
+X = TP^{T} +E
 ```
 In rank-1 terms we solve the scores T and loadings P separately and deflate X either to the full column space or just to get e.g. the first two principal components.
 
@@ -446,10 +446,10 @@ https://doi.org/10.5281/zenodo.20284935
 
 PLSR outer relations (X and Y auto-scaled):  
 ```math
-X = TP^{T} (+E)
+X = TP^{T} +E
 ```
 ```math
-Y = UQ^{T} (+F)
+Y = UQ^{T} +F
 ```
 PLSR inner relation (we are interested in regression/prediction of Y variables):  
 ```math

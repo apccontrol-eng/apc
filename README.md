@@ -348,6 +348,7 @@ Cambridge: Cambridge University Press.
 ---
 ## PCA
 
+PCA relation (X auto-scaled):  
 ```math
 X = TP^{T} (+E)
 ```
@@ -404,12 +405,18 @@ https://doi.org/10.5281/zenodo.20284935
 ---
 ## PLSR
 
+PLSR outer relations (X and Y auto-scaled):  
 ```math
 X = TP^{T} (+E)
 ```
 ```math
 Y = UQ^{T} (+F)
 ```
+PLSR inner relation (we are interested in regression/prediction of Y variables):  
+```math
+U = TB (+R)
+```  
+
 In rank-1 terms, PLS is solved iteratively.  
 
 ```math
@@ -453,18 +460,48 @@ $2Y^{T}Xww^{T}X^{T}Yc-2\lambda_2c=0$
 
 The maximization problem is solved when the solution is found to these equations:  
 
-$2X^{T}Ycc^{T}Y^{T}Xw=2\lambda_1w$  
-$2Y^{T}Xww^{T}X^{T}Yc=2\lambda_2c$  
-$w^{T}w=1$  
-$c^{T}c=1$  
+$X^{T}Ycc^{T}Y^{T}Xw=\lambda_1w$  (This is an Eigenvalue problem)  
+$w^{T}w=1$  (Enforces normalization)  
+$Y^{T}Xww^{T}X^{T}Yc=\lambda_2c$  (This is an Eigenvalue problem)  
+$c^{T}c=1$  (Enforces normalization)  
 
+We are mainly interested in the optimal values for $w$ and $c$ because the scores $t$ and $u$ are readily solved by calculating 
+$t = Xw$ and $u = Yc$. The loadings for the outer PLSR relation are solved by ordinary least squares:  
 
+$p = (X^{T}w)/(w^{T}w)$  
+$q = (Y^{T}c)/(c^{T}c)$  
 
+The inner relation is then calculated by ordinary least squares on the scores:  
+
+$b = (u^{T}t)/(t^{T}t)$  
+
+After these steps we have $w$, $c$, $p$, $q$ and $b$. The next latent variables are calculated for the deflated matrices:  
+
+```math
+X:=X-tp^{T}
+```  
+```math
+Y:=Y-uq^{T}
+```  
+or
+```math
+Y:=Y-tbq^{T}
+```  
 
 
 ---
 
-### Reference
+### Reference(s)
+Rosipal, R., & Krämer, N. (2006)   
+*Overview and Recent Advances in Partial Least Squares*.  
+In C. Saunders et al. (Eds.), *Subspace, Latent Structure and Feature Selection* (LNCS 3940, pp. 34–51).  
+Springer.  
+https://www.ofai.at/~roman.rosipal/Papers/pls_book06.pdf
+
+Geladi, P., & Kowalski, B. R. (1986)  
+*Partial least-squares regression: A tutorial*  
+*Analytica Chimica Acta*, *185*, 1–17.  
+https://doi.org/10.1016/0003-2670(86)80028-9  
 
 ---
 ---

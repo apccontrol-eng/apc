@@ -18,10 +18,23 @@ This project demonstrates a closed-loop system:
 
 ## Model Predictive Control (MPC)
 - Linear state-space model:  
-
 ```math
 x_{k+1} = A x_k + B u_k
-```
+```  
+where 
+```math
+ A \in \mathbb{R}^{nxn}
+```  
+```math
+ B \in \mathbb{R}^{nxm}
+```  
+```math
+ x_{k} \in \mathbb{R}^{nx1}
+```  
+```math
+ u_{k} \in \mathbb{R}^{mx1}
+```  
+
 - Quadratic cost on states and inputs:  
 ```math
 J = \sum_{k=0}^{N}\left(x_k^\top Q x_k+u_k^\top R u_k\right)

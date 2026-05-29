@@ -479,8 +479,6 @@ $c^{T}c=1$
 
 $\max_{w,c} c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
 
-$\max_{w,c} c^{T}Y^{T}Xww^{T}X^{T}Yc - \lambda_{1}(w^{T}w-1) - \lambda_{2}(c^{T}c-1)$  
-
 Differentiation w.r.t Lagrange multipliers:  
 $w^{T}w-1=0$  
 $c^{T}c-1=0$  

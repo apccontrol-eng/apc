@@ -402,6 +402,35 @@ https://doi.org/10.5281/zenodo.20284935
 ---
 ---
 ---
+## PLS
+
+```math
+X = TP^{T} (+E)
+```
+```math
+Y = UQ^{T} (+F)
+```
+In rank-1 terms, PLS is solved iteratively.  
+
+```math
+t=Xw
+```
+```math
+u=Yc
+```
+
+max. $cov(t,u)^{2}$
+subject to 
+$w^{T}w=1$
+$c^{T}c=1$
+
+
+
+### Reference
+
+---
+---
+---
 
 # Plots of the MPC + PCA Monitoring example:
 ### States and control inputs over time

@@ -355,10 +355,19 @@ In rank-1 terms we solve the scores T and loadings P separately and deflate X ei
 
 ```math
 X=tp^{T}
+```
+```math
 t=Xp
 ```
-
 max. var($t$)
+subject to 
+$p^{T}p=1$
+
+max. $(Xp)^{T}(Xp)$
+subject to 
+$p^{T}p=1$
+
+max. $p^{T}X^{T}Xp$
 subject to 
 $p^{T}p=1$
 

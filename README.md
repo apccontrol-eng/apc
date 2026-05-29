@@ -488,9 +488,6 @@ or
 Y:=Y-tbq^{T}
 ```  
 
-
----
-
 ### Reference(s)
 Rosipal, R., & Krämer, N. (2006)   
 *Overview and Recent Advances in Partial Least Squares*.  

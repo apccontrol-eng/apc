@@ -16,7 +16,7 @@ This project demonstrates a closed-loop system:
 
 ---
 
-## Model Predictive Control (MPC) (Fink 2021)
+## Model Predictive Control (MPC)
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
@@ -131,7 +131,7 @@ https://arxiv.org/abs/2109.11986
 ---
 ---
 
-## Robust Model Predictive Control (RMPC) (Kothare 1996)
+## Robust Model Predictive Control (RMPC)
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs

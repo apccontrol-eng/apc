@@ -499,10 +499,18 @@ $Y^{T}XX^{T}Yc=(2\lambda_1) (2\lambda_2) c$
 $Y^{T}XX^{T}Yc=\lambda c$  
 
 The optimal solution to maximizing covariance is a matter of finding the optimal solution to these equations:  
-$X^{T}YY^{T}Xw=\lambda w$  
-$Y^{T}XX^{T}Yc=\lambda c$  
-$w^{T}w=1$  
-$c^{T}c=1$  
+```math
+X^{T}YY^{T}Xw=\lambda w  
+```
+```math
+Y^{T}XX^{T}Yc=\lambda c  
+```
+```math
+w^{T}w=1  
+```
+```math
+c^{T}c=1  
+```  
 
 The scores $t$ and $u$ are readily solved by calculating $t = Xw$ and $u = Yc$.
 The loadings for the outer PLSR relation are solved by ordinary least squares:  

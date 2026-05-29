@@ -402,7 +402,7 @@ https://doi.org/10.5281/zenodo.20284935
 ---
 ---
 ---
-## PLS
+## PLSR
 
 ```math
 X = TP^{T} (+E)
@@ -442,11 +442,25 @@ Differentiation w.r.t Lagrange multipliers:
 $w^{T}w-1=0$  
 $c^{T}c-1=0$  
 
+Since the order can be changed accordingly:  
 $c^{T}Y^{T}Xww^{T}X^{T}Yc = (w^{T}X^{T}Yc)^2 = w^{T}(X^{T}Ycc^{T}Y^{T}X)w$  
 
-$\frac{\partial}{\partial w} \left( c^{T}Y^{T}Xww^{T}X^{T}Yc \right) = 2X^{T}Ycc^{T}Y^{T}X\,w$  
+The objective function differentiated w.r.t $w$:  
+$2X^{T}Ycc^{T}Y^{T}Xw-2\lambda_1w=0$  
 
-$2X^{T}Ycc^{T}Y^{T}X\,w+2\lambda_1 w}=0$  
+The objective function differentiated w.r.t $c$:  
+$2Y^{T}Xww^{T}X^{T}Yc-2\lambda_2c=0$  
+
+The maximization problem is solved when the solution is found to these equations:  
+
+$2X^{T}Ycc^{T}Y^{T}Xw=2\lambda_1w$  
+$2Y^{T}Xww^{T}X^{T}Yc=2\lambda_2c$  
+$w^{T}w=1$  
+$c^{T}c=1$  
+
+
+
+
 
 ---
 

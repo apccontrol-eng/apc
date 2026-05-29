@@ -200,6 +200,7 @@ Y = LQ_U
 $$  
 
 The LMI formulation of the problem:  
+
 $$
 \min_{Q_U,Y,X_U,\gamma}
 \gamma
@@ -271,13 +272,13 @@ $$
 X_U \le u_{\max}^2
 $$
 
-Recover the feedback gain via
+The feedback gain is recovered from  
 
 $$
 L = YQ_U^{-1}
 $$
 
-and compute control input
+RMPC control input:  
 
 $$
 u_k=Lx_k

@@ -434,132 +434,31 @@ subject to
 $w^{T}w=1$  
 $c^{T}c=1$  
 
-max. $(c^{T}Y^{T}Xww^{T}X^{T}Yc)$ + \lambda_{1}(w^{T}w-1) + \lambda_{2}(c^{T}c-1)$  
+max. $c^{T}Y^{T}Xww^{T}X^{T}Yc + \lambda_{1}(w^{T}w-1) + \lambda_{2}(c^{T}c-1)$  
 
-max. $(c^{T}Y^{T}Xww^{T}X^{T}Yc)$ + \lambda_{1}(w^{T}w-1) + \lambda_{2}(c^{T}c-1)$  
+max. $c^{T}Y^{T}Xww^{T}X^{T}Yc + \lambda_{1}(w^{T}w-1) + \lambda_{2}(c^{T}c-1)$  
 
-$w^{T}w-1=0$
-$c^{T}c-1=0$
+Differentiation w.r.t Lagrange multipliers:  
+$w^{T}w-1=0$  
+$c^{T}c-1=0$  
 
----
-Let
+$c^{T}Y^{T}Xww^{T}X^{T}Yc = (w^{T}X^{T}Yc)^2 = w^{T}(X^{T}Ycc^{T}Y^{T}X)w$  
 
-\[
-L(w,c,\lambda_1,\lambda_2)
-=
-c^{T}Y^{T}Xww^{T}X^{T}Yc
-+\lambda_{1}(w^{T}w-1)
-+\lambda_{2}(c^{T}c-1).
-\]
+$\frac{\partial}{\partial w} \left( c^{T}Y^{T}Xww^{T}X^{T}Yc \right) = 2X^{T}Ycc^{T}Y^{T}X\,w$  
 
-Rewrite the first term as
+For the constraint term,  
 
-\[
-c^{T}Y^{T}Xww^{T}X^{T}Yc
-=
-(w^{T}X^{T}Yc)^2
-=
-w^{T}(X^{T}Ycc^{T}Y^{T}X)w.
-\]
+$\frac{\partial}{\partial w}\left[\lambda_1(w^{T}w-1)\right]=2\lambda_1 w$  
 
-Using the standard matrix calculus identity
+and  
 
-\[
-\frac{\partial}{\partial w}(w^{T}Aw)
-=
-(A+A^{T})w,
-\]
+$\frac{\partial}{\partial w}\left[\lambda_2(c^{T}c-1)\right]=0$  
 
-where
+$\boxed{\frac{\partial L}{\partial w}=2X^{T}Ycc^{T}Y^{T}X\,w+2\lambda_1 w}$  
 
-\[
-A = X^{T}Ycc^{T}Y^{T}X,
-\]
+$\boxed{\frac{\partial L}{\partial w}=2\left(X^{T}Ycc^{T}Y^{T}X+\lambda_1 I\right)w}$  
 
-we note that \(A\) is symmetric since
-
-\[
-A^{T}
-=
-(X^{T}Ycc^{T}Y^{T}X)^{T}
-=
-X^{T}Ycc^{T}Y^{T}X
-=
-A.
-\]
-
-Therefore,
-
-\[
-\frac{\partial}{\partial w}
-\left(
-c^{T}Y^{T}Xww^{T}X^{T}Yc
-\right)
-=
-2X^{T}Ycc^{T}Y^{T}X\,w.
-\]
-
-For the constraint term,
-
-\[
-\frac{\partial}{\partial w}
-\left[
-\lambda_1(w^{T}w-1)
-\right]
-=
-2\lambda_1 w,
-\]
-
-and
-
-\[
-\frac{\partial}{\partial w}
-\left[
-\lambda_2(c^{T}c-1)
-\right]
-=
-0.
-\]
-
-Hence the gradient with respect to \(w\) is
-
-\[
-\boxed{
-\frac{\partial L}{\partial w}
-=
-2X^{T}Ycc^{T}Y^{T}X\,w
-+
-2\lambda_1 w
-}
-\]
-
-or equivalently,
-
-\[
-\boxed{
-\frac{\partial L}{\partial w}
-=
-2\left(
-X^{T}Ycc^{T}Y^{T}X
-+
-\lambda_1 I
-\right)w
-}.
-\]
-
-Setting the gradient equal to zero gives the stationary condition
-
-\[
-\boxed{
-\left(
-X^{T}Ycc^{T}Y^{T}X
-+
-\lambda_1 I
-\right)w
-=
-0
-}.
-\]
+$\boxed{\left(X^{T}Ycc^{T}Y^{T}X+\lambda_1 I\right)w=0}$  
 
 ---
 

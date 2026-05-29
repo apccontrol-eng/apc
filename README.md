@@ -197,8 +197,9 @@ $$
 
 $$
 Y = LQ_U
-$$
+$$  
 
+The LMI formulation of the problem:  
 $$
 \min_{Q_U,Y,X_U,\gamma}
 \gamma

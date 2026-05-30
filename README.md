@@ -542,6 +542,25 @@ Y:=Y-tbq^{T}
 
 The PLSR model is usually calculated with NIPALS algorithm.  
 
+The following matrix is useful for predicting purposes:  
+```math
+W^{*} = W(P^{T}W)^{-1}
+```  
+which is used for new measurement data (autoscaled with calibration means and standard deviations) followingly:  
+```math
+T = XW^{*}
+```  
+```math
+U = TB
+```  
+```math
+\hat{Y} = TBQ^{T} = XW^{*}BQ^{T}
+```  
+Which is still in autoscaled form and is brought back to original scale by:  
+```math
+\hat{Y}_{unscaled} = \hat{Y}diag(s_{Y}) + 1\mu_{Y}
+```  
+
 ### Reference(s)
 Rosipal, R., & Krämer, N. (2006)   
 *Overview and Recent Advances in Partial Least Squares*.  

@@ -593,6 +593,11 @@ Wegelin, J. A. (2000)
 Department of Statistics, University of Washington, Seattle  
 Available at: https://stat.uw.edu/research/tech-reports/survey-partial-least-squares-pls-methods-emphasis-two-block-case  
 
+Qin, S. J. (1993)  
+*Partial least squares regression for recursive system identification*  
+In *Proceedings of the 32nd IEEE Conference on Decision and Control* (pp. 2617–2621).  
+IEEE.  
+https://doi.org/10.1109/CDC.1993.325671  
 
 ---
 ---

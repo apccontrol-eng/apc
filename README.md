@@ -453,7 +453,7 @@ Y = UQ^{T} +F
 ```
 PLSR inner relation (we are interested in regression/prediction of Y variables):  
 ```math
-U = TB (+R)
+U = TB +R
 ```  
 
 In rank-1 terms, PLS is solved iteratively.  

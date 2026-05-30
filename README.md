@@ -561,6 +561,21 @@ Which is still in autoscaled form and is brought back to original scale by:
 \hat{Y}_{unscaled} = \hat{Y}diag(s_{Y}) + 1\mu_{Y}
 ```  
 
+The autoscaling that is assumed for both PCA and PLSR can be expressed in the following way:
+
+```math
+Y = (Y_{unscaled} - 1\mu_{Y})diag(s_{Y})^{-1}
+```  
+```math
+X = (X_{unscaled} - 1\mu_{X})diag(s_{X})^{-1}
+```  
+$\mu_{X}$ is the mean vector of calibration block $X$.  
+$\mu_{Y}$ is the mean vector of calibration block $Y$.  
+$s_{X}$ is the sample standard deviation vector of calibration block $X$.  
+$s_{Y}$ is the sample standard deviation vector of calibration block $Y$.  
+
+The PLSR predicting power is in first checking whether the scores T of new X data fall under threshold which gives confidence for predicting estimates.  
+
 ### Reference(s)
 Rosipal, R., & Krämer, N. (2006)   
 *Overview and Recent Advances in Partial Least Squares*.  

@@ -66,7 +66,8 @@ def pls_nipals(X, Y, n_components):
         B[h] = b
     
     B = np.diag(B)
+    W_star = W@np.linalg.inv(P.T@W)
     
-    return T, U, P, Q, W, B
+    return T, U, P, Q, W, B, W_star
 
 

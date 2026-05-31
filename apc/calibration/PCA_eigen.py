@@ -30,31 +30,44 @@ def column_stats(matrix):
 
 def standardize_matrix(matrix):
     """
-    Centers and scales a matrix column-wise using mean and standard deviation.
+    Centers and scales a NumPy array.
 
-    Parameters:
-        matrix (np.ndarray): A 2D NumPy array.
+    - If input is 2D: standardizes column-wise.
+    - If input is 1D: standardizes the whole vector.
 
     Returns:
-        standardized_matrix (np.ndarray): The standardized matrix.
-        means (np.ndarray): Column means used for centering.
-        stds (np.ndarray): Column standard deviations used for scaling.
+        standardized (np.ndarray)
+        means (np.ndarray)
+        stds (np.ndarray)
     """
     if not isinstance(matrix, np.ndarray):
         raise TypeError("Input must be a NumPy array.")
+
+    # Handle vector input
+    if matrix.ndim == 1:
+        mean = np.mean(matrix)
+        std = np.std(matrix, ddof=1)
+
+        if std == 0:
+            std = 1.0
+
+        standardized = (matrix - mean) / std
+
+        return standardized, mean, std
+
+    # Handle matrix input
     if matrix.ndim != 2:
-        raise ValueError("Input must be a 2D matrix.")
+        raise ValueError("Input must be a 1D vector or 2D matrix.")
 
     means = np.mean(matrix, axis=0)
     stds = np.std(matrix, axis=0, ddof=1)
 
     # Prevent division by zero for constant columns
-    stds[stds == 0] = 1.0
+    stds = np.where(stds == 0, 1.0, stds)
 
-    standardized_matrix = (matrix - means) / stds
+    standardized = (matrix - means) / stds
 
-    return standardized_matrix, means, stds
-
+    return standardized, means, stds
 
 
 def plot_column_distributions_with_stats(matrix, bins=10, name=""):

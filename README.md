@@ -263,6 +263,7 @@ R^{1/2}Y
 $$  
 
 Where the box constraint:  
+
 $$
 |u_k| \le u_{\max}
 $$

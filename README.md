@@ -260,17 +260,18 @@ R^{1/2}Y
 \end{bmatrix}
 \succeq
 0
-$$
+$$  
 
+Where the box constraint:  
 $$
 |u_k| \le u_{\max}
 $$
 
-implemented as
+is implemented as  
 
 $$
 X_U \le u_{\max}^2
-$$
+$$  
 
 The feedback gain is recovered from  
 

@@ -8,6 +8,9 @@ apc.egg-info/requires.txt
 apc.egg-info/top_level.txt
 apc/calibration/PCA_eigen.py
 apc/calibration/PLS_NIPALS.py
+apc/calibration/__init__.py
+apc/data/__init__.py
+apc/filters/__init__.py
 apc/filters/kalman_filter.py
 apc/solvers/__init__.py
 apc/solvers/active_set_qp.py

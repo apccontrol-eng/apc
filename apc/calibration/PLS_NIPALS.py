@@ -18,6 +18,7 @@ def pls_nipals(X, Y, n_components):
         W: X weights
         B: Inner model coefficients (uᵗt / tᵗt)
     """
+    
     X = np.asarray(X)
     Y = np.asarray(Y)
     if Y.ndim == 1:
@@ -25,6 +26,9 @@ def pls_nipals(X, Y, n_components):
 
     n, px = X.shape
     _, py = Y.shape
+
+    if n_components > px:
+        raise("Latent variables cannot exceed the number of columns in X")
 
     # Initialize
     E = X.copy()

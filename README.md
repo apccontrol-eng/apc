@@ -308,14 +308,14 @@ y_k = C x_k + v_k
 ```
 
 Where:
-- $x_k$: state vector  
-- $u_k$: control input  
-- $y_k$: measurement  
-- $A$: state transition matrix  
-- $B$: control input matrix  
-- $C$: observation matrix  
-- $w_k$ ~ N(0, $Q$): process noise  
-- $v_k$ ~ N(0, $R$): measurement noise  
+$x_k$: state vector  
+$u_k$: control input  
+$y_k$: measurement  
+$A$: state transition matrix  
+$B$: control input matrix  
+$C$: observation matrix  
+$w_k$ ~ N(0, $Q$): process noise  
+$v_k$ ~ N(0, $R$): measurement noise  
 
 ### 2. Initialization
 

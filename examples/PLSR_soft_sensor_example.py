@@ -165,12 +165,13 @@ T_calibration, U_calibration, P_calibration, Q, W, B, W_star = pls_nipals(X_cali
 ## predictions with own PLSR implementation
 X_monitored_autoscaled = scale_with_reference(X_test, X_calibration_means, X_calibration_stds)
 
+#y_pred_PLSR = X_monitored_autoscaled@W_star@B@Q.T * y_calibration_stds + y_calibration_means
+y_pred = X_monitored_autoscaled@W_star@B@Q.T * y_calibration_stds + y_calibration_means
 
 #model = LinearRegression()
-model = PLSRegression( n_components = 9 )
-model.fit(X_train, y_train)
-
-y_pred = model.predict(X_test)
+#model = PLSRegression( n_components = 9 )
+#model.fit(X_train, y_train)
+#y_pred = model.predict(X_test)
 
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)

@@ -13,6 +13,7 @@ This project demonstrates a closed-loop system:
 - PCA-based multivariate monitoring
   - Fault detection using T² and Q statistics
   - Fault diagnosis via contribution plots
+-PLSR-based Soft Sensor 
 
 ---
 

@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-# Add local project path
 sys.path.append('/Users/emil/Documents/GitHub/apc')
 
 from apc.solvers.hildreth_qp import hildreth_qp

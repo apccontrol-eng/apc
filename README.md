@@ -571,10 +571,10 @@ Y = (Y_{unscaled} - 1\mu_{Y})diag(s_{Y})^{-1}
 ```math
 X = (X_{unscaled} - 1\mu_{X})diag(s_{X})^{-1}
 ```  
-$\mu_{X}$ is the mean vector of calibration block $X$.  
-$\mu_{Y}$ is the mean vector of calibration block $Y$.  
-$s_{X}$ is the sample standard deviation vector of calibration block $X$.  
-$s_{Y}$ is the sample standard deviation vector of calibration block $Y$.  
+$\mu_{X}$: mean vector of calibration block $X$.  
+$\mu_{Y}$: mean vector of calibration block $Y$.  
+$s_{X}$: sample standard deviation vector of calibration block $X$.  
+$s_{Y}$: sample standard deviation vector of calibration block $Y$.  
 
 The PLSR predicting power is in first checking whether the scores T of new X data fall under threshold which gives confidence for predicting estimates.  
 

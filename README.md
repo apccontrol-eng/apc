@@ -260,17 +260,19 @@ R^{1/2}Y
 \end{bmatrix}
 \succeq
 0
-$$
+$$  
+
+Where the box constraint:  
 
 $$
 |u_k| \le u_{\max}
 $$
 
-implemented as
+is implemented as  
 
 $$
 X_U \le u_{\max}^2
-$$
+$$  
 
 The feedback gain is recovered from  
 
@@ -306,14 +308,14 @@ y_k = C x_k + v_k
 ```
 
 Where:
-- $x_k$: state vector  
-- $u_k$: control input  
-- $y_k$: measurement  
-- $A$: state transition matrix  
-- $B$: control input matrix  
-- $C$: observation matrix  
-- $w_k$ ~ N(0, $Q$): process noise  
-- $v_k$ ~ N(0, $R$): measurement noise  
+$x_k$: state vector  
+$u_k$: control input  
+$y_k$: measurement  
+$A$: state transition matrix  
+$B$: control input matrix  
+$C$: observation matrix  
+$w_k$ ~ N(0, $Q$): process noise  
+$v_k$ ~ N(0, $R$): measurement noise  
 
 ### 2. Initialization
 
@@ -413,7 +415,7 @@ $X^{T}Xp - \lambda(p)=0$
 $(p^{T}p-1)=0$  
 
 $X^{T}Xp = \lambda p$  
-$(p^{T}p) = 1$  
+$p^{T}p = 1$  
 
 This is an eigenvalue problem (EVP) for which there are multiple ways of solving it. After p (the loading) is solved, t (the scores) are available by definition t = Xp.
 
@@ -569,10 +571,10 @@ Y = (Y_{unscaled} - 1\mu_{Y})diag(s_{Y})^{-1}
 ```math
 X = (X_{unscaled} - 1\mu_{X})diag(s_{X})^{-1}
 ```  
-$\mu_{X}$ is the mean vector of calibration block $X$.  
-$\mu_{Y}$ is the mean vector of calibration block $Y$.  
-$s_{X}$ is the sample standard deviation vector of calibration block $X$.  
-$s_{Y}$ is the sample standard deviation vector of calibration block $Y$.  
+$\mu_{X}$: mean vector of calibration block $X$.  
+$\mu_{Y}$: mean vector of calibration block $Y$.  
+$s_{X}$: sample standard deviation vector of calibration block $X$.  
+$s_{Y}$: sample standard deviation vector of calibration block $Y$.  
 
 The PLSR predicting power is in first checking whether the scores T of new X data fall under threshold which gives confidence for predicting estimates.  
 

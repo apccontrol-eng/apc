@@ -266,13 +266,13 @@ $$
 Where the box constraint:  
 
 $$
-|u_k| \le u_{\max}
+|u_{k,j}| \le u_{j,\max}
 $$
 
 is implemented as  
 
 $$
-X_U \le u_{\max}^2
+X_U_{jj} \le u_{j,\max}^2
 $$  
 
 The feedback gain is recovered from  

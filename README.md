@@ -272,7 +272,7 @@ $$
 is implemented as  
 
 $$
-X_U_{jj} \le u_{j,\max}^2
+(X_U)_{jj} \le u_{j,\max}^2
 $$  
 
 The feedback gain is recovered from  

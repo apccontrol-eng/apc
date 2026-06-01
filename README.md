@@ -1,5 +1,5 @@
 # MPC simulation framework with process monitoring
-A simulation framework combining **Model Predictive Control (MPC)** with **Principal Component Analysis (PCA)-based statistical process monitoring** for fault detection and diagnosis in a multivariable dynamic system.
+A simulation framework combining **Model Predictive Control (MPC)** with **Principal Component Analysis (PCA)-based statistical process monitoring** for fault detection and diagnosis in a multivariable dynamic system. Additional examples of **Infinite-Horizon Robust Model Predictive Control** and **Partial Least Squares Regression (PLSR) Soft Sensor**. The controller and monitoring combination is best suited for fixed point operations where MPC steers the system to one steady-state which is treated as 'normal operating conditions' for which variance and covariance based multivariable calibration/monitoring/fault-detection methods namely PCA and PLS can be constructed.
 
 ---
 
@@ -12,7 +12,8 @@ This project demonstrates a closed-loop system:
 - Process disturbance + fault injection
 - PCA-based multivariate monitoring
   - Fault detection using T² and Q statistics
-  - Fault diagnosis via contribution plots
+  - Fault diagnosis via contribution plots  
+- PLSR-based Soft Sensor 
 
 ---
 
@@ -265,13 +266,13 @@ $$
 Where the box constraint:  
 
 $$
-|u_k| \le u_{\max}
+|u_{k,j}| \le u_{j,\max}
 $$
 
 is implemented as  
 
 $$
-X_U \le u_{\max}^2
+(X_U)_{jj} \le u_{j,\max}^2
 $$  
 
 The feedback gain is recovered from  

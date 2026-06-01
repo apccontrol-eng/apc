@@ -94,7 +94,7 @@ subject to the LMI constraints
 
 implemented through
 
-    X_U(1,1) ≤ u_max²
+    X_U(0,0) ≤ u_max²
 
 After solving the SDP, the feedback gain is recovered as
 
@@ -203,14 +203,14 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
     
     LMI = cp.bmat([row1, row2, row3, row4])
     
-    u_max = 1 # |u| <= u_max
+    u_max = 1 # |u| <= u_max is a vector if we have many controls!
     
     # Collection of constraints
     constraints = [
         C1 >> 0,
         C2 >> 0,
         LMI >> 0,
-        -XU[0,0] >= - u_max**2
+        -XU[0,0] >= - u_max**2 # here we have only one control so 
     ]
 
     # Objective
@@ -225,7 +225,7 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
         print(f" Optimal γ: {gamma.value:.4f}")
         print("QU matrix:\n", QU.value)
         print("Y matrix:\n", Y.value)
-        print("X matrix:\n", XU.value)
+        print("XU matrix:\n", XU.value)
     else:
         print(f" Optimization failed: {prob.status}")
         

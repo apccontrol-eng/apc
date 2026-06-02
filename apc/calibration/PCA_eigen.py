@@ -340,3 +340,7 @@ def q_residual_threshold(eigenvalues, n_components, alpha=0.95):
         
     return Q_crit
 
+
+
+
+

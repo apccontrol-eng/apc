@@ -203,6 +203,7 @@ df = pd.DataFrame({
 
 plt.figure(figsize=(6,6))
 sns.scatterplot(data=df, x="Actual", y="Predicted")
+plt.grid(False)
 plt.xlabel("Actual ethanol concentration")
 plt.ylabel("Predicted ethanol concentration")
 plt.title("Regression Model Performance")
@@ -212,20 +213,21 @@ plt.show()
 
 
 df = pd.DataFrame({
-    "Index": np.arange(len(actual)),
+    "Sample": np.arange(len(actual)),
     "Actual": actual,
     "Predicted": pred
 })
 
 df_long = df.melt(
-    id_vars="Index",
+    id_vars="Sample",
     value_vars=["Actual", "Predicted"],
     var_name="Type",
-    value_name="Value"
+    value_name="Ethanol concentration"
 )
 
 plt.figure(figsize=(10,4))
-sns.lineplot(data=df_long, x="Index", y="Value", hue="Type")
+sns.lineplot(data=df_long, x="Sample", y="Ethanol concentration", hue="Type")
+plt.grid(False)
 
 plt.title("Model Prediction vs Actual")
 plt.show()

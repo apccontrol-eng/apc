@@ -105,8 +105,6 @@ and the control law becomes
     u = L x
 
 -------------------------------------------------------------------------------
-Implementation Notes
--------------------------------------------------------------------------------
 
 - CVXPY is used to formulate and solve the semidefinite program.
 - CVXOPT solves the LMI optimization.
@@ -210,7 +208,7 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
         C1 >> 0,
         C2 >> 0,
         LMI >> 0,
-        -XU[0,0] >= - u_max**2 # here we have only one control so 
+        -XU[0,0] >= - u_max**2 # here we have only one control so 0,0 means it is actually a scalar
     ]
 
     # Objective

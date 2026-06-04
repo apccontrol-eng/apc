@@ -332,7 +332,7 @@ def q_residual_threshold(eigenvalues, n_components, alpha=0.95):
     h0 = 1 - (2 * theta1 * theta3) / (3 * theta2**2)
     z_alpha = norm.ppf(alpha)
 
-    Q_crit = theta1 * ((z_alpha * np.sqrt(2 * theta2) / theta1) + (theta2 * h0 * (h0 - 1)) / (theta1**2) + 1)**(1 / h0)
+    Q_crit = theta1 * (1 + (z_alpha * np.sqrt(2 * theta2 * h0**2) / theta1) + (theta2 * h0 * (h0 - 1)) / (theta1**2))**(1 / h0)
     
     #print(" h0: " , h0)
     #print(" z_alpha: " , z_alpha)

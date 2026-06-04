@@ -322,8 +322,8 @@ y_pred = X_monitored_autoscaled@W_star@B@Q.T * y_calibration_stds + y_calibratio
 #y_pred = model.predict(X_test)
 
 mse = mean_squared_error(y_test, y_pred)
-rmse = round(np.sqrt(mse),4)
-r2 = round(r2_score(y_test, y_pred),4)
+rmse = round(np.sqrt(mse),3)
+r2 = round(r2_score(y_test, y_pred),3)
 print("RMSE:", rmse)
 print("R²:", r2)
 
@@ -334,6 +334,11 @@ C_PLSR_own = W_star@B@Q.T
 #print("C_PLSR_own : ", C_PLSR_own)
 
 ## PLOTTING RESULTS
+os.makedirs("figures", exist_ok=True)
+def save_fig(name):
+    plt.tight_layout()
+    plt.savefig(f"figures/{name}.png", dpi=300, bbox_inches="tight")
+
 show_start = 200
 show_end = 900
 
@@ -351,10 +356,34 @@ plt.grid(False)
 plt.xlabel("Actual ethanol concentration")
 plt.ylabel("Predicted ethanol concentration")
 plt.title("Regression Model Performance")
+save_fig("regression_model_performance")
 plt.show()
 
 
+#######################################################################################################
 
+plt.figure(figsize=(6,6))
+ax = sns.scatterplot(data=df, x="Actual", y="Predicted")
+
+plt.grid(False)
+plt.xlabel("Actual ethanol concentration")
+plt.ylabel("Predicted ethanol concentration")
+plt.title("Regression Model Performance")
+
+# Add RMSE and R² annotation
+ax.text(
+    0.05, 0.95,
+    f"RMSE = {rmse:.2f}\n$R^2$ = {r2:.2f}",
+    transform=ax.transAxes,
+    fontsize=11,
+    verticalalignment='top',
+    bbox=dict(boxstyle="round", facecolor="white", alpha=0.8)
+)
+
+save_fig("regression_model_performance")
+plt.show()
+
+#######################################################################################################
 
 df = pd.DataFrame({
     "Sample": np.arange(len(actual)),

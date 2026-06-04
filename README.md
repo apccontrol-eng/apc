@@ -698,7 +698,7 @@ When a fault is detected, contribution plots identify responsible variables.
 # PLSR:
 ### Predictions of ethanol concentration (distillation dataset)
 ![predictions](examples/figures/PLSR_model_prediction_vs_actual.gif)
-
+<img src="examples/figures/regression_model_performance.png" alt="drawing" width="500"/>
 
 
 

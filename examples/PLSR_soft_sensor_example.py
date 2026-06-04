@@ -509,39 +509,13 @@ def plot_t2_q(T2, Q, threshold_T2=None, threshold_Q=None, name=""):
 plot_t2_q(calibration_T2, calibration_Q, threshold_T2 = calibration_T2_thresh, threshold_Q = calibration_Q_thresh)
 
 
-'''
 pls_biplot_with_t2(
-    scores = calibration_T,
-    loadings = calibration_P,
+    scores = T_calibration,
+    loadings = P_calibration,
     T2_thresh = calibration_T2_thresh,
-    feature_names = ["$T$" , "$h$"]
+    feature_names = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12", "T13"]
 )
 
 
-
-calibration_T2, calibration_Q = compute_PLS_t2_q(data = calibration_X_scaled, 
-                                                 W_star = calibration_W_star, 
-                                                 loadings = calibration_P, 
-                                                 num_components = k)
-
-
-n = calibration_standardized_matrix_states.shape[0]
-
-calibration_T2_thresh = hotelling_t2_threshold(n_samples = n, n_components = k)
-calibration_Q_thresh = q_residual_threshold_PLS(scores_T = calibration_T, n_components = k)
-
-
-plot_t2_q(calibration_T2, calibration_Q, threshold_T2 = calibration_T2_thresh, threshold_Q = calibration_Q_thresh)
-
-pls_biplot_with_t2(
-    scores = calibration_T,
-    loadings = calibration_P,
-    T2_thresh = calibration_T2_thresh,
-    feature_names = ["$T$" , "$h$"] #['X1', 'X2', 'X3']
-)
-
-
-'''
-
-
+#### next on the line is implementing the monitoring statistics for new data and for biplot adding the labels how much variance LV1 and LV2 capture in the calibration data!
 

@@ -17,3 +17,6 @@ apc/solvers/active_set_qp.py
 apc/solvers/hildreth_qp.py
 apc/solvers/primal_dual_interior_point_qp.py
 apc/solvers/projected_gradient_descent_qp.py
+apc/subspace_identification/MOESP.py
+apc/subspace_identification/N4SID.py
+apc/subspace_identification/__init__.py

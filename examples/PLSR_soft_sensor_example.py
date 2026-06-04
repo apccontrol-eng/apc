@@ -307,7 +307,8 @@ y_test = y[2250:]
 
 
 ## calibration with own PLSR implementation
-n_components=2
+n_components=9
+
 X_calibration_autoscaled, X_calibration_means, X_calibration_stds = standardize_matrix(X_train)
 y_calibration_autoscaled, y_calibration_means, y_calibration_stds = standardize_matrix(y_train)
 T_calibration, U_calibration, P_calibration, Q, W, B, W_star = pls_nipals(X_calibration_autoscaled, y_calibration_autoscaled, n_components)
@@ -374,6 +375,96 @@ plt.grid(False)
 
 plt.title("Model Prediction vs Actual")
 plt.show()
+
+
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+# SAVING A GIF AND CONVERTING TO MP4
+
+import matplotlib.animation as animation
+import imageio as imageio
+import os
+
+os.makedirs("figures", exist_ok=True)
+
+fig, ax = plt.subplots(figsize=(10, 4))
+
+ax.set_xlim(0, len(actual) - 1)
+
+ymin = min(np.min(actual), np.min(pred))
+ymax = max(np.max(actual), np.max(pred))
+padding = 0.05 * (ymax - ymin)
+
+ax.set_ylim(ymin - padding, ymax + padding)
+
+ax.set_title("Model Prediction vs Actual")
+ax.set_xlabel("Sample")
+ax.set_ylabel("Ethanol concentration")
+ax.grid(False)
+
+
+actual_line, = ax.plot([], [], label="Actual", lw=2)
+pred_line,   = ax.plot([], [], label="Predicted", lw=2)
+
+ax.legend()
+
+
+def update(frame):
+    x = np.arange(frame + 1)
+
+    actual_line.set_data(x, actual[:frame + 1])
+    pred_line.set_data(x, pred[:frame + 1])
+
+    return actual_line, pred_line
+
+
+ani = animation.FuncAnimation(
+    fig,
+    update,
+    frames=len(actual),
+    interval=50,
+    blit=True,
+    repeat=False
+)
+
+gif_filename = os.path.join("figures", "PLSR_model_prediction_vs_actual.gif")
+
+
+ani.save(
+    gif_filename,
+    writer=animation.PillowWriter(fps=20)
+)
+
+plt.close(fig)
+
+
+def gif_to_mp4(gif_filename, mp4_filename, fps=20):
+    gif = imageio.get_reader(gif_filename)
+
+    writer = imageio.get_writer(
+        mp4_filename,
+        fps=fps,
+        codec="libx264"
+    )
+
+    for frame in gif:
+        writer.append_data(frame)
+
+    writer.close()
+
+mp4_filename = os.path.join("figures", "PLSR_model_prediction_vs_actual.mp4")
+
+gif_to_mp4(
+    gif_filename,
+    mp4_filename,
+    fps=20
+)
+
+print("Saved:")
+print(gif_filename)
+print(mp4_filename)
 
 
 #######################################################################################################

@@ -2,7 +2,7 @@ import numpy as np
 
 
 # Simple N4SID Joe Qin tutorial on subspace identification
-def n4sid(u, y, i, n):
+def N4SID(u, y, i, n):
     """
     u: (N, m)
     y: (N, p)

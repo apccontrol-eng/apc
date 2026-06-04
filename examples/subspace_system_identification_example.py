@@ -1,7 +1,8 @@
+import sys
+sys.path.insert(0, "/Users/emil/Documents/GitHub/apc")
+from apc.subspace_identification.MOESP import MOESP
+from apc.subspace_identification.N4SID import N4SID
 import numpy as np
-from apc.subspace_identification import MOESP
-from apc.subspace_identification import N4SID
-
 
 np.random.seed(0)
 
@@ -42,7 +43,6 @@ for i in range(num_steps):
 u = u.reshape(-1, 1)
 
 
-
 # ----------------------------
 # SIMULATE TRUE SYSTEM
 # ----------------------------
@@ -64,7 +64,7 @@ y_noisy = y + noise_std * np.random.randn(N, p)
 y_id = y_noisy
 
 # ----------------------------
-# 🔥 KEY FIX: CENTER DATA
+# CENTER DATA
 # ----------------------------
 u_mean = np.mean(u)
 y_mean = np.mean(y_id)
@@ -76,7 +76,7 @@ y_c = y_id - y_mean
 # IDENTIFICATION
 # ----------------------------
 A_id, B_id, C_id, D_id = MOESP(u_c, y_c, i=10, n=3)
-#A_id, B_id, C_id, D_id = n4sid(u_c, y_c, i=10, n=3)
+#A_id, B_id, C_id, D_id = N4SID(u_c, y_c, i=10, n=3)
 
 # ----------------------------
 # LINEAR SIMULATION FUNCTION
@@ -96,7 +96,7 @@ def simulate_linear(A, B, C, D, u):
     return y
 
 # ----------------------------
-# 🔥 KEY FIX: simulate in deviation form
+# Simulation in deviation (centered) form
 # ----------------------------
 y_id_model_dev = simulate_linear(A_id, B_id, C_id, D_id, u_c)
 

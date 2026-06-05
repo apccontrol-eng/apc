@@ -350,7 +350,7 @@ plt.plot(t, x_history[:,2], '--', label="state 3", linewidth=2)
 plt.title("LMI-based infinite horizon MPC input and states with added Gaussian noise", fontsize=14)
 plt.ylabel("Output", fontsize=12)
 plt.legend()
-plt.grid()
+plt.grid(False)
 
 # ----------------------------
 # INPUT SIGNAL
@@ -360,7 +360,7 @@ plt.plot(t[0:-1], u_history[:,0], label="MPC Input (u)", linewidth=2)
 plt.xlabel("Time step", fontsize=12)
 plt.ylabel("MPC Input", fontsize=12)
 plt.title("MPC Input Signal", fontsize=14)
-plt.grid()
+plt.grid(False)
 
 plt.tight_layout()
 plt.show()

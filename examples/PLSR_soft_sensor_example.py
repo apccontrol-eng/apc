@@ -512,8 +512,6 @@ calibration_T2, calibration_Q = compute_PLS_t2_q(data = X_calibration_autoscaled
 #print("calibration_Q : ", calibration_Q)
 
 n = X_calibration_autoscaled.shape[0]
-m_of_all_columns = X_calibration_autoscaled.shape[1]
-T_calibration_all_latent_variables, U_calibration_all_latent_variables, P_calibration_all_latent_variables, Q_calibration_all_latent_variables, W_calibration_all_latent_variables, B_calibration_all_latent_variables, W_star_calibration_all_latent_variables = pls_nipals(X_calibration_autoscaled, y_calibration_autoscaled, n_components=m_of_all_columns)
 
 calibration_T2_thresh = hotelling_t2_threshold(n_samples = n, n_components = n_components)
 
@@ -587,7 +585,7 @@ def q_residual_threshold_PLS(X, T, P, alpha=0.95):
 
 
 
-#calibration_Q_thresh = q_residual_threshold_PLS(scores_T = T_calibration_all_latent_variables, n_components = n_components) # we give all scores T inputs (the threshold needs unused latent variable scores) but we give the selected components i.e. first 2
+
 calibration_Q_thresh = q_residual_threshold_PLS(X_calibration_autoscaled, T_calibration, P_calibration, alpha=0.95)
 
 
@@ -620,7 +618,7 @@ def plot_t2_q(T2, Q, threshold_T2=None, threshold_Q=None, name=""):
     axs[1].set_title("Q Residuals (SPE)")
     axs[1].set_xlabel("Sample Index")
     axs[1].set_ylabel("Q")
-    axs[1].grid(True)
+    axs[1].grid(False)
 
     plt.tight_layout()
     save_fig(name)

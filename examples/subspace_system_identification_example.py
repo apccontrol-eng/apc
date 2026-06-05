@@ -104,7 +104,7 @@ y_id_model_dev = simulate_linear(A_id, B_id, C_id, D_id, u_c)
 y_id_model = y_id_model_dev + y_mean
 
 # ----------------------------
-# FIT METRIC
+# FIT R^2 METRIC
 # ----------------------------
 fit = 100 * (1 - np.linalg.norm(y - y_id_model) / np.linalg.norm(y - np.mean(y)))
 print(f"FIT: {fit:.2f}%")
@@ -134,7 +134,7 @@ plt.plot(t, y_id_model, '--', label="Identified model", linewidth=2)
 plt.title("True vs Identified System Output", fontsize=14)
 plt.ylabel("Output", fontsize=12)
 plt.legend()
-plt.grid()
+plt.grid(False)
 
 # ----------------------------
 # INPUT SIGNAL
@@ -146,7 +146,7 @@ plt.plot(t, u, label="Input (u)", linewidth=2)
 plt.xlabel("Time step", fontsize=12)
 plt.ylabel("Input", fontsize=12)
 plt.title("Input Signal", fontsize=14)
-plt.grid()
+plt.grid(False)
 
 plt.tight_layout()
 plt.show()
@@ -168,7 +168,7 @@ plt.title("Zoomed Output Comparison")
 plt.xlabel("Time step")
 plt.ylabel("Output")
 plt.legend()
-plt.grid()
+plt.grid(False)
 
 plt.show()
 

@@ -119,6 +119,7 @@ def plot_column_distributions_with_stats(matrix, bins=10, name=""):
         ax.legend()
 
     plt.tight_layout()
+    plt.grid(False)
     save_fig(name)
     plt.show()
     
@@ -238,9 +239,9 @@ def pca_biplot_with_t2(scores, loadings, explained_variance_ratio, T2_thresh,
     plt.axhline(0, color='black', linewidth=0.5, linestyle='--')
     plt.axvline(0, color='black', linewidth=0.5, linestyle='--')
     plt.title("PCA Biplot with Hotelling's T² Ellipse")
-    plt.grid(True)
     plt.legend()
     plt.tight_layout()
+    plt.grid(False)
     save_fig(message)
     plt.show()
     
@@ -292,14 +293,14 @@ def plot_t2_q(T2, Q, threshold_T2=None, threshold_Q=None, name=""):
     axs[0].set_title("Hotelling's T²")
     axs[0].set_xlabel("Sample Index")
     axs[0].set_ylabel("T²")
-    axs[0].grid(True)
+    axs[0].grid(False)
 
     axs[1].scatter(range(len(Q)), Q, color='darkgreen')
     axs[1].axhline(threshold_Q, color='red', linestyle='--', label='Threshold' if threshold_Q else None)
     axs[1].set_title("Q Residuals (SPE)")
     axs[1].set_xlabel("Sample Index")
     axs[1].set_ylabel("Q")
-    axs[1].grid(True)
+    axs[1].grid(False)
 
     plt.tight_layout()
     save_fig(name)

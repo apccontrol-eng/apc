@@ -197,13 +197,13 @@ plt.plot(t, x_history[:,1], '--', label="state 2")
 plt.plot(t, x_history[:,2], '--', label="state 3")
 plt.title("MPC states with noise and disturbance")
 plt.legend()
-plt.grid()
+plt.grid(False)
 
 # Inputs
 plt.subplot(2,1,2)
 plt.plot(t[:-1], u_history[:,0], label="control input")
 plt.title("MPC input signal")
-plt.grid()
+plt.grid(False)
 
 plt.tight_layout()
 save_fig("MPC_states_controls")
@@ -301,13 +301,12 @@ fig, ax = plt.subplots(1,2, figsize=(10,5))
 
 ax[0].bar(variables, p1)
 ax[0].set_title('Loading 1')
-ax[0].grid(True, alpha=0.3)
 
 ax[1].bar(variables, p2)
 ax[1].set_title('Loading 2')
-ax[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
+plt.grid(False)
 plt.show()
 
 

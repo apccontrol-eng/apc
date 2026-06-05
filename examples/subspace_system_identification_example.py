@@ -44,7 +44,7 @@ u = u.reshape(-1, 1)
 
 
 # ----------------------------
-# SIMULATE TRUE SYSTEM
+# SIMULATE DETERMINISTIC SYSTEM
 # ----------------------------
 x = np.zeros((N, n))
 y = np.zeros((N, p))

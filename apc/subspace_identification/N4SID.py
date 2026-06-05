@@ -1,6 +1,5 @@
 import numpy as np
 
-
 # Simple N4SID Joe Qin tutorial on subspace identification
 def N4SID(u, y, i, n):
     """

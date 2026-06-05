@@ -177,10 +177,8 @@ for k in range(sim_steps):
     #U_opt = projected_gradient_descent_qp(H, f, G, b, x0=None, alpha=1e-1, max_iter=100, tol=1e-10)
     u = U_opt[:m]
     
-    # Save control
     u_history.append(u.copy())
 
-    # System update
     if k == 40:
         bias = np.array([0.2, -0.3, -0.4])
         noise_std = 0.01
@@ -220,14 +218,14 @@ for k in range(sim_steps):
     
     #print(f"Step {k}, state: {x}, control: {u}")
 
-# Convert to arrays
+
 x_history = np.array(x_history)
 u_history = np.array(u_history)
 
 
-t = np.arange(len(x_history[:,0]))  # time index
+t = np.arange(len(x_history[:,0]))
 
-plt.figure(figsize=(14, 8))  # bigger and clearer
+plt.figure(figsize=(14, 8))
 
 # ----------------------------
 # OUTPUT COMPARISON

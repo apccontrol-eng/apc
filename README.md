@@ -638,7 +638,7 @@ A fault is introduced into the system at time step **k = 150**:
 
 ## PCA Model (Calibration Data)
 ### PCA Biplot (Calibration)
-<img src="examples/figures/Calibration_data_PCA_biplot.png" alt="drawing" width="650"/>
+<img src="examples/figures/Calibration_data_PCA_biplot.png" alt="drawing" width="550"/>
 
 ---
 
@@ -666,7 +666,7 @@ New process data is projected into the PCA model built from calibration data.
 
 ## PCA Monitoring Results
 ### PCA Biplot (Monitoring data)
-<img src="examples/figures/Monitoring_data_PCA_biplot.png" alt="drawing" width="650"/>
+<img src="examples/figures/Monitoring_data_PCA_biplot.png" alt="drawing" width="550"/>
 
 ---
 

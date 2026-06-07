@@ -4,13 +4,12 @@ A simulation framework combining **Model Predictive Control (MPC)** with **Princ
 ---
 
 ## Overview
-This project demonstrates a closed-loop system:
-- Constrained Model Predictive Control (MPC)
+This project demonstrates:
+-Two different formulations of constrained MPC:
+  - Finiter-Horizon constrained MPC solved with different QP solvers (Hildreth, Projected gradient descent, Primal-dual interior point and Active set method)
+  - Infinite-Horizon constrained MPC formulated as a Linear Matrix Inequality (LMI) and solved as a Semidefinite program (SDP)
 - Kalman Filter and partial state observations
-- Quadratic Programming solved via several QP algorithms
-- Linear Matrix Inequality Infinite Horizon MPC formulation
-- Process disturbance + fault injection
-- PCA-based multivariate monitoring
+- PCA-based multivariate process monitoring
   - Fault detection using T² and Q statistics
   - Fault diagnosis via contribution plots  
 - PLSR-based Soft Sensor 

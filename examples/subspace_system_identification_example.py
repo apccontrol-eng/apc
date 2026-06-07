@@ -118,9 +118,9 @@ print("Eigenvalues:", np.linalg.eigvals(A_id))
 
 import matplotlib.pyplot as plt
 
-t = np.arange(len(y))  # time index
+t = np.arange(len(y))
 
-plt.figure(figsize=(14, 8))  # 👈 bigger and clearer
+plt.figure(figsize=(14, 8))
 
 # ----------------------------
 # OUTPUT COMPARISON

@@ -44,7 +44,7 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append('/Users/emil/Documents/GitHub/apc')
 
-# --------------------------------------------------
+# =============================================================================
 # QP SOLVERS and KF
 
 from apc.solvers.hildreth_qp import hildreth_qp
@@ -53,7 +53,7 @@ from apc.solvers.active_set_qp import active_set_qp
 from apc.solvers.projected_gradient_descent_qp import projected_gradient_descent_qp
 from apc.filters.kalman_filter import kalman_filter
 
-# --------------------------------------------------
+# =============================================================================
 # BUILD PREDICTION MATRICES
 
 def build_prediction_matrices(A, B, N):
@@ -73,13 +73,13 @@ def build_prediction_matrices(A, B, N):
 
     return Sx, Su
 
-# --------------------------------------------------
+# =============================================================================
 # BLOCK DIAGONAL MATRIX
 
 def block_diag(Q, N):
     return np.kron(np.eye(N), Q)
 
-# --------------------------------------------------
+# =============================================================================
 # CONSTRUCTING QP MATRICES
 
 def build_qp(Sx, Su, Q_bar, R_bar, x0):
@@ -87,7 +87,7 @@ def build_qp(Sx, Su, Q_bar, R_bar, x0):
     f = Su.T @ Q_bar @ (Sx @ x0)
     return H, f
 
-# --------------------------------------------------
+# =============================================================================
 # CONSTRUCTING INPUT CONSTRAINTS
 
 def input_constraints(N, m, umin, umax):
@@ -95,7 +95,7 @@ def input_constraints(N, m, umin, umax):
     b = np.hstack((np.tile(umax, N), -np.tile(umin, N)))
     return G, b
 
-# --------------------------------------------------
+# =============================================================================
 # EXAMPLE MPC LOOP
 
 # example system
@@ -153,13 +153,13 @@ for k in range(sim_steps):
         noise_std = 0.01
         added_noise = noise_std * np.random.randn(3)
     
-    #no kalman filter
-
+    # =========================================================================
+    # no kalman filter:
     x = A @ x + B @ u + added_noise
     x_history.append(x.copy())
 
-
-    #kalman filter
+    # =========================================================================
+    # kalman filter:
     '''
     y = A @ x + B @ u + added_noise
     C = np.array([
@@ -193,9 +193,8 @@ t = np.arange(len(x_history[:,0]))
 
 plt.figure(figsize=(14, 8))
 
-# ----------------------------
+# =============================================================================
 # OUTPUT COMPARISON
-# ----------------------------
 
 plt.subplot(2,1,1)
 
@@ -208,9 +207,9 @@ plt.ylabel("Output", fontsize=12)
 plt.legend()
 plt.grid()
 
-# ----------------------------
+# =============================================================================
 # INPUT SIGNAL
-# ----------------------------
+
 plt.subplot(2,1,2)
 
 plt.plot(t[0:-1], u_history[:,0], label="MPC Input (u)", linewidth=2)
@@ -222,3 +221,6 @@ plt.grid()
 
 plt.tight_layout()
 plt.show()
+
+# =============================================================================
+

@@ -54,7 +54,8 @@ References:
 
 def q_residual_threshold_PLS(X, T, P, alpha=0.95):
     """
-    Compute SPE (Q-statistic) control limit for PLS using Jackson's chi-square approximation.
+    Compute SPE (Q-statistic) control limit for PLS using Jackson's chi-square 
+    approximation.
 
     Parameters:
         X : np.ndarray (n_samples, n_features)
@@ -210,10 +211,6 @@ def compute_PLS_t2_q(data, W_star, loadings, num_components):
     return T2, Q
 
 
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-
 sys.path.append('/Users/emil/Documents/GitHub/apc')
 
 # data source: https://www.kaggle.com/datasets/jorgecote/distillation-column?resource=download
@@ -242,9 +239,8 @@ cols = (
 df.columns = cols
 
 
-# ===========================================================================
+# =============================================================================
 # DISTRIBUTIONS (HISTOGRAMS)
-# ===========================================================================
 
 plt.figure(figsize=(6,4))
 sns.histplot(df["liquid_flow"], bins=30, kde=False)
@@ -287,9 +283,9 @@ for col in temp_cols:
     plt.show()
 
 
-# ===========================================================================
+# =============================================================================
 # TIME SERIES PLOTS
-# ===========================================================================
+
 features = [
     "liquid_flow",
     "vapor_flow",
@@ -349,6 +345,7 @@ X_test = X[2250:,0:13]
 y_test = y[2250:]
 
 
+# =============================================================================
 ## calibration with own PLSR implementation
 n_components=9
 
@@ -376,6 +373,7 @@ print("R²:", r2)
 C_PLSR_own = W_star@B@Q.T
 #print("C_PLSR_own : ", C_PLSR_own)
 
+# =============================================================================
 ## PLOTTING RESULTS
 os.makedirs("figures", exist_ok=True)
 def save_fig(name):
@@ -402,9 +400,7 @@ plt.title("Regression Model Performance")
 save_fig("regression_model_performance")
 plt.show()
 
-'''
-===============================================================================
-'''
+# =============================================================================
 
 plt.figure(figsize=(6,6))
 ax = sns.scatterplot(data=df, x="Actual", y="Predicted")
@@ -427,9 +423,7 @@ ax.text(
 save_fig("regression_model_performance")
 plt.show()
 
-'''
-===============================================================================
-'''
+# =============================================================================
 
 df = pd.DataFrame({
     "Sample": np.arange(len(actual)),
@@ -452,10 +446,9 @@ plt.title("Model Prediction vs Actual")
 plt.show()
 
 
-'''
-===============================================================================
-saving as a gif
-'''
+# =============================================================================
+# saving as a gif
+
 
 import matplotlib.animation as animation
 import imageio as imageio
@@ -541,11 +534,9 @@ print(gif_filename)
 print(mp4_filename)
 
 
-'''
-===============================================================================
-PLOTTING PLSR MONITORING STATISTICS
-'''
 
+# =============================================================================
+# PLOTTING PLSR MONITORING STATISTICS
 
 calibration_T2, calibration_Q = compute_PLS_t2_q(data = X_calibration_autoscaled, 
                                                  W_star = W_star, 
@@ -558,11 +549,6 @@ calibration_T2, calibration_Q = compute_PLS_t2_q(data = X_calibration_autoscaled
 n = X_calibration_autoscaled.shape[0]
 
 calibration_T2_thresh = hotelling_t2_threshold(n_samples = n, n_components = n_components)
-
-
-
-
-
 
 calibration_Q_thresh = q_residual_threshold_PLS(X_calibration_autoscaled, T_calibration, P_calibration, alpha=0.95)
 

@@ -2,61 +2,10 @@ import numpy as np
 
 def primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-10):
     """
+    ===========================================================================
     Primal-Dual Interior-Point Quadratic Programming Solver
-    =======================================================
-
-    Solves the constrained quadratic programming (QP) problem:
-
-        minimize:
-            (1/2) xᵀ H x + fᵀ x
-
-        subject to:
-            Gx <= b
-
-    using a primal-dual interior-point method with slack variables.
-
-    -------------------------------------------------------------------
-    Optimization Problem
-    -------------------------------------------------------------------
-
-    The inequality constraints are converted into equality constraints
-    using slack variables:
-
-        Gx + s = b
-        s > 0
-
-    where:
-        s : slack variables
-
-    The algorithm solves the Karush-Kuhn-Tucker (KKT) optimality
-    conditions iteratively using Newton steps.
-
-    -------------------------------------------------------------------
-    KKT Conditions
-    -------------------------------------------------------------------
-
-    The primal-dual interior-point method solves:
-
-        Hx + f + Gᵀ λ = 0
-        Gx + s - b = 0
-        SΛe = μe
-
-    where:
-        λ : dual variables (Lagrange multipliers)
-        S : diag(s)
-        Λ : diag(λ)
-        μ : barrier parameter
-
-    The complementarity condition:
-
-        SΛe = μe
-
-    forces the iterates to remain strictly inside the feasible region
-    while gradually approaching the active constraints.
-
-    -------------------------------------------------------------------
+    ===========================================================================
     Parameters
-    -------------------------------------------------------------------
 
     H : ndarray (n x n)
         Positive definite Hessian matrix of the quadratic cost.
@@ -76,9 +25,8 @@ def primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-10):
     tol : float, optional
         Numerical convergence tolerance.
 
-    -------------------------------------------------------------------
+    ===========================================================================
     Returns
-    -------------------------------------------------------------------
 
     x : ndarray (n,)
         Optimal primal solution.
@@ -86,35 +34,8 @@ def primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-10):
     lam : ndarray (m,)
         Optimal dual variables (Lagrange multipliers).
 
-    -------------------------------------------------------------------
-    Algorithm Overview
-    -------------------------------------------------------------------
-
-    1. Initialize primal, dual, and slack variables.
-    2. Construct residuals for:
-           - stationarity
-           - primal feasibility
-           - complementarity
-    3. Build and solve the KKT linear system.
-    4. Compute Newton search directions.
-    5. Apply positivity-preserving step length.
-    6. Update variables and reduce barrier parameter.
-    7. Repeat until KKT residuals satisfy tolerance.
-
-    -------------------------------------------------------------------
-    Numerical Notes
-    -------------------------------------------------------------------
-
-    - A small regularization term is added to H for numerical stability.
-    - Slack variables remain strictly positive during iterations.
-    - The barrier parameter μ is reduced progressively to tighten
-      constraint satisfaction.
-    - A final projection step is applied to reduce numerical
-      constraint violations.
-
-    -------------------------------------------------------------------
+    ===========================================================================
     References
-    -------------------------------------------------------------------
 
     Stephen J. Wright
     "Primal-Dual Interior-Point Methods"
@@ -124,62 +45,47 @@ def primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-10):
     "Numerical Optimization"
     Springer, Second Edition, 2006
 
-    -------------------------------------------------------------------
-    Example
-    -------------------------------------------------------------------
-
-    Solve:
-
-        minimize:
-            (1/2) xᵀ H x + fᵀ x
-
-        subject to:
-            -1 <= x_i <= 1
-
-    using:
-
-        x_opt, lam = primal_dual_interior_point_qp(H, f, G, b)
-
-    -------------------------------------------------------------------
+    ===========================================================================
     """
 
     n = H.shape[0]
     m = G.shape[0]
 
-    # Regularization for numerical stability
+    # =========================================================================
+    # regularization for numerical stability
     H = H + 1e-8 * np.eye(n)
 
-    # Initial primal variable
+    # =========================================================================
+    # initial primal variable
     x = np.zeros(n)
 
-    # Slack variables (strictly positive)
+    # =========================================================================
+    # slack variables, strictly positive
     s = np.maximum(b - G @ x, 1e-3)
 
-    # Dual variables
+    # =========================================================================
+    # dual variables
     lam = np.ones(m)
 
-    # Initial barrier parameter
+    # =========================================================================
+    # initial barrier parameter which is update in the loop
     mu = 1
 
     for _ in range(max_iter):
 
-        # ==========================================================
-        # KKT RESIDUALS
-        # ==========================================================
-
-        # Stationarity residual
+        # =====================================================================
+        # KKT RESIDUALS:
+        # stationarity residual
         rx = H @ x + f + G.T @ lam
 
-        # Primal feasibility residual
+        # primal feasibility residual
         rs = G @ x + s - b
 
-        # Complementarity residual
+        # complementarity residual
         rlam = lam * s
 
-        # ==========================================================
-        # CONVERGENCE TEST
-        # ==========================================================
-
+        # =====================================================================
+        # checking convergence
         if (
             np.linalg.norm(rx) < tol and
             np.linalg.norm(rs) < tol and
@@ -187,76 +93,60 @@ def primal_dual_interior_point_qp(H, f, G, b, max_iter=100, tol=1e-10):
         ):
             break
 
-        # ==========================================================
-        # DIAGONAL MATRICES
-        # ==========================================================
-
+        # =====================================================================
+        # diagonal matrices
         S = np.diag(s)
         L = np.diag(lam)
 
-        # ==========================================================
+        # =====================================================================
         # KKT MATRIX
-        # ==========================================================
-
         KKT = np.block([
             [H,        G.T,        np.zeros((n, m))],
             [G,        np.zeros((m, m)), np.eye(m)],
             [np.zeros((m, n)), S, L]
         ])
 
-        # ==========================================================
+        # =====================================================================
         # RIGHT-HAND SIDE
-        # ==========================================================
-
         rhs = -np.hstack([
             rx,
             rs,
             rlam - (1e-2 * mu) * np.ones(m)
         ])
 
-        # ==========================================================
+        # =====================================================================
         # NEWTON STEP
-        # ==========================================================
-
         dx = np.linalg.solve(KKT, rhs)
 
         dx_x = dx[:n]
         dx_l = dx[n:n+m]
         dx_s = dx[n+m:]
 
-        # ==========================================================
+        # =====================================================================
         # STEP LENGTH COMPUTATION
-        # ==========================================================
-
         alpha = 1.0
-
         for d, v in [(dx_l, lam), (dx_s, s)]:
             idx = d < 0
-
             if np.any(idx):
                 alpha = min(alpha, 0.999 * np.min(-v[idx] / d[idx]))
 
-        # ==========================================================
+        # =====================================================================
         # VARIABLE UPDATE
-        # ==========================================================
-
         x += alpha * dx_x
         lam += alpha * dx_l
         s += alpha * dx_s
 
-        # Barrier parameter reduction
+        # =====================================================================
+        # barrier parameter reduction, mu update
         mu = max(1e-4, mu * 0.2)
 
-    # ==============================================================
+    # =========================================================================
     # FINAL PROJECTION SAFETY STEP
-    # ==============================================================
-
     viol = G @ x - b
-
     x = x - G.T @ np.maximum(viol, 0)
-
     if np.max(viol) > 1e-10:
         print("Warning: small constraint violation:",
               np.max(viol))
 
     return x, lam
+

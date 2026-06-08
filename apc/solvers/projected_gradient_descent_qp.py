@@ -2,11 +2,12 @@ import numpy as np
 
 def project_onto_polyhedron(x, G, b, max_proj_iter=50):
     """
-    Sequential projection onto halfspaces:
-
+    ===========================================================================
+    sequential projection onto halfspaces:
         Gx <= b
 
-    Uses cyclic orthogonal projections.
+    uses cyclic orthogonal projections.
+    ===========================================================================
     """
 
     x_proj = x.copy()
@@ -33,7 +34,6 @@ def project_onto_polyhedron(x, G, b, max_proj_iter=50):
     return x_proj
 
 
-
 def projected_gradient_descent_qp(
     H,
     f,
@@ -45,31 +45,45 @@ def projected_gradient_descent_qp(
     tol=1e-8
 ):
     """
+    ===========================================================================
     Projected Gradient Descent QP Solver
-    """
+    
+    ===========================================================================
+    Reference
 
+    Stephen J. Wright
+    "Primal-Dual Interior-Point Methods"
+    SIAM, 1997
+    
+    ===========================================================================
+    """
     n = H.shape[0]
 
     if x0 is None:
         x = np.zeros(n)
     else:
-        x = x0.copy()
+       x = x0.copy()
 
-    # Ensure initial feasibility
+    # =========================================================================
+    # ensure initial feasibility
     x = project_onto_polyhedron(x, G, b)
 
     for _ in range(max_iter):
 
-        # Gradient of quadratic objective
+        # =========================================================================        
+        # gradient of quadratic objective
         grad = H @ x + f
 
-        # Gradient step
+        # =========================================================================
+        # gradient step
         y = x - alpha * grad
 
-        # Projection step
+        # =========================================================================
+        # projection step
         x_new = project_onto_polyhedron(y, G, b)
 
-        # Convergence test
+        # =========================================================================
+        # checking convergence
         if np.linalg.norm(x_new - x) < tol:
             x = x_new
             break
@@ -77,3 +91,4 @@ def projected_gradient_descent_qp(
         x = x_new
 
     return x
+

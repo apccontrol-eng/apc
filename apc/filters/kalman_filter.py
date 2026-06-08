@@ -4,12 +4,14 @@ import numpy as np
 ===============================================================================
 Kalman Filter
 ===============================================================================
+
 Description
 
 Standard discrete-time linear Kalman Filter for state estimation of dynamic 
 systems affected by process and measurement noise.
 
 ===============================================================================
+
 Process Model
 
     x[k+1] = A x[k] + B u[k] + w[k]
@@ -26,6 +28,7 @@ where:
     v : measurement noise
 
 ===============================================================================
+
 Assumptions
 
 The filter assumes:
@@ -34,6 +37,7 @@ The filter assumes:
 - Process and measurement noise are uncorrelated
 
 ===============================================================================
+
 Reference
     
     Simo Särkkä and Lennart Svensson,
@@ -78,38 +82,38 @@ def kalman_filter(A, B, C, D, u, x, P, y, Q=None, R=None):
     n = A.shape[0]
     m = C.shape[0]
 
+    # =========================================================================
     # initial process model covariance matrix
     if Q is None:
         Q = 5 * np.eye(n)
+        
+    # =========================================================================
     # initial measurement model covariance matrix
     if R is None:
         R = 5 * np.eye(m)
 
-    # ==================================
+    # =========================================================================
     # PREDICTION STEP
-    # ==================================
-
     x_pred = A @ x + B @ u
     P_pred = A @ P @ A.T + Q
 
-    # ==================================
+    # =========================================================================
     # MEASUREMENT PREDICTION
-    # ==================================
-    
     y_pred = C @ x_pred + D @ u
     innovation = y - y_pred
 
+    # =========================================================================
     # Innovation covariance
     S = C @ P_pred @ C.T + R
 
+    # =========================================================================
     # Kalman gain
     K = P_pred @ C.T @ np.linalg.inv(S)
 
-    # ==================================
+    # =========================================================================
     # UPDATE STEP
-    # ==================================
-
     x_new = x_pred + K @ innovation
     P_new = (np.eye(n) - K @ C) @ P_pred
 
     return x_new, P_new
+

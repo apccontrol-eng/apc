@@ -6,6 +6,31 @@ from scipy.stats import f as f_
 from scipy.stats import norm
 from sklearn.metrics import mean_squared_error, r2_score
 
+'''
+===============================================================================
+PCA monitoring tools
+
+References:
+
+    Kadlec, P., Gabrys, B., & Strandt, S. (2009). 
+    Data-driven soft sensors in the process industry. 
+    Computers & Chemical Engineering, 33 (4), 795–814. 
+    https://doi.org/10.1016/j.compchemeng.2008.12.012
+    
+    Kadlec, P., Grbić, R., & Gabrys, B. (2011). 
+    Review of adaptation mechanisms for data-driven soft sensors. 
+    Computers & Chemical Engineering, 35 (1), 1–24. 
+    https://doi.org/10.1016/j.compchemeng.2010.07.034
+    
+    Wise, B. M., & Gallagher, N. B. (1996). 
+    The process chemometrics approach to process monitoring and fault detection. 
+    Journal of Process Control, 6 (6), 329–348. 
+    https://doi.org/10.1016/0959-1524(96)00009-1
+    
+===============================================================================
+'''
+
+
 def column_stats(matrix):
     """
     Computes column-wise means and standard deviations of a matrix.

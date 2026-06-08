@@ -1,6 +1,20 @@
 import numpy as np
 
-# Simple N4SID Joe Qin tutorial on subspace identification
+'''
+===============================================================================
+N4SID
+
+Reference:
+    
+    Isermann, R., & Münchhof, M. (2011). 
+    Identification of dynamic systems: An introduction with applications. 
+    Springer. 
+    https://doi.org/10.1007/978-3-540-78879-9
+
+===============================================================================
+'''
+
+
 def N4SID(u, y, i, n):
     """
     u: (N, m)
@@ -15,9 +29,9 @@ def N4SID(u, y, i, n):
 
     j = N - 2 * i + 1
 
-    # ----------------------------
+    # --------------------------------------------------
     # Block Hankel
-    # ----------------------------
+
     def block_hankel(data, rows, cols):
         d = data.shape[1]
         H = np.zeros((rows * d, cols))
@@ -39,9 +53,9 @@ def N4SID(u, y, i, n):
     
     LHS = Y_f @ PI_U_complement @ Z_p_T
     
-    # ----------------------------
+    # --------------------------------------------------
     # SVD
-    # ----------------------------
+
     U_svd, S_svd, _ = np.linalg.svd(LHS, full_matrices=False)
     
     U1 = U_svd[:, :n]
@@ -49,9 +63,9 @@ def N4SID(u, y, i, n):
 
     Gamma_i = U1 @ S1
 
-    # ----------------------------
-    # Extract C and A
-    # ----------------------------
+    # --------------------------------------------------
+    # extracting C and A
+
     C = Gamma_i[:p, :]
 
     Gamma_i_upper = Gamma_i[:-p, :]
@@ -59,14 +73,14 @@ def N4SID(u, y, i, n):
 
     A = np.linalg.lstsq(Gamma_i_upper, Gamma_i_lower, rcond=None)[0]
 
-    # ----------------------------
-    # Estimate states (FIXED)
-    # ----------------------------
+    # --------------------------------------------------
+    # estimating states
+
     X = np.linalg.pinv(Gamma_i) @ Y_p   # (n, j)
 
-    # ----------------------------
-    # Estimate B and D (FIXED)
-    # ----------------------------
+    # --------------------------------------------------
+    # estimating B and D
+
     N_x = X.shape[1]
 
     X_curr = X[:, :-1]          # (n, j-1)
@@ -77,7 +91,9 @@ def N4SID(u, y, i, n):
 
     Z = np.vstack((X_curr, U_trim))  # (n+m, j-1)
 
-    # least squares (correct orientation!)
+    # --------------------------------------------------
+    # ordinary least squares
+    
     AB = np.linalg.lstsq(Z.T, X_next.T, rcond=None)[0].T
     CD = np.linalg.lstsq(Z.T, Y_trim.T, rcond=None)[0].T
 

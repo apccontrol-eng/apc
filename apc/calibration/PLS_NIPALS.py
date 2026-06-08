@@ -17,6 +17,34 @@ def pls_nipals(X, Y, n_components):
         Q: Y loadings
         W: X weights
         B: Inner model coefficients (uᵗt / tᵗt)
+        
+    References:
+    
+        Kadlec, P., Gabrys, B., & Strandt, S. (2009). 
+        Data-driven soft sensors in the process industry. 
+        Computers & Chemical Engineering, 33 (4), 795–814. 
+        https://doi.org/10.1016/j.compchemeng.2008.12.012
+        
+        Kadlec, P., Grbić, R., & Gabrys, B. (2011). 
+        Review of adaptation mechanisms for data-driven soft sensors. 
+        Computers & Chemical Engineering, 35 (1), 1–24. 
+        https://doi.org/10.1016/j.compchemeng.2010.07.034
+        
+        Qin, S. J. (1998). 
+        Recursive PLS algorithms for adaptive data modeling. 
+        Computers & Chemical Engineering, 22 (4), 503–514. 
+        https://doi.org/10.1016/S0098-1354(97)00262-7
+        
+        Geladi, P., & Kowalski, B. R. (1986). 
+        Partial least-squares regression: A tutorial. 
+        Analytica Chimica Acta, 185, 1–17. 
+        https://doi.org/10.1016/0003-2670(86)80028-9    
+        
+        Wise, B. M., & Gallagher, N. B. (1996). 
+        The process chemometrics approach to process monitoring and fault detection. 
+        Journal of Process Control, 6 (6), 329–348. 
+        https://doi.org/10.1016/0959-1524(96)00009-1
+        
     """
     
     X = np.asarray(X)
@@ -30,7 +58,7 @@ def pls_nipals(X, Y, n_components):
     if n_components > px:
         raise("Latent variables cannot exceed the number of columns in X")
 
-    # Initialize
+    # initialize
     E = X.copy()
     F = Y.copy()
 

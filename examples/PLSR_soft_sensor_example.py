@@ -13,20 +13,109 @@ from apc.calibration.PCA_eigen import column_stats
 from apc.calibration.PCA_eigen import standardize_matrix
 from apc.calibration.PCA_eigen import plot_column_distributions_with_stats
 from apc.calibration.PLS_NIPALS import pls_nipals
-
-
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-# PLSR monitoring statistics
-
 from matplotlib.patches import Ellipse
 from scipy.stats import f as f_
 from scipy.stats import norm
 from sklearn.metrics import mean_squared_error, r2_score
 
+'''
+===============================================================================
+PLSR monitoring tools
+
+References:
+
+    Kadlec, P., Gabrys, B., & Strandt, S. (2009). 
+    Data-driven soft sensors in the process industry. 
+    Computers & Chemical Engineering, 33 (4), 795–814. 
+    https://doi.org/10.1016/j.compchemeng.2008.12.012
+    
+    Kadlec, P., Grbić, R., & Gabrys, B. (2011). 
+    Review of adaptation mechanisms for data-driven soft sensors. 
+    Computers & Chemical Engineering, 35 (1), 1–24. 
+    https://doi.org/10.1016/j.compchemeng.2010.07.034
+    
+    Qin, S. J. (1998). 
+    Recursive PLS algorithms for adaptive data modeling. 
+    Computers & Chemical Engineering, 22 (4), 503–514. 
+    https://doi.org/10.1016/S0098-1354(97)00262-7
+    
+    Geladi, P., & Kowalski, B. R. (1986). 
+    Partial least-squares regression: A tutorial. 
+    Analytica Chimica Acta, 185, 1–17. 
+    https://doi.org/10.1016/0003-2670(86)80028-9  
+
+    Wise, B. M., & Gallagher, N. B. (1996). 
+    The process chemometrics approach to process monitoring and fault detection. 
+    Journal of Process Control, 6 (6), 329–348. 
+    https://doi.org/10.1016/0959-1524(96)00009-1
+
+===============================================================================
+'''
+
+def q_residual_threshold_PLS(X, T, P, alpha=0.95):
+    """
+    Compute SPE (Q-statistic) control limit for PLS using Jackson's chi-square approximation.
+
+    Parameters:
+        X : np.ndarray (n_samples, n_features)
+            Original data matrix (centered/scaled as in model training)
+        T : np.ndarray (n_samples, n_components)
+            Score matrix from PLS
+        P : np.ndarray (n_features, n_components)
+            X-loading matrix
+        alpha : float
+            Confidence level (e.g., 0.95, 0.99)
+
+    Returns:
+        Q_crit : float
+            SPE control limit
+    """
+    # =========================================================================
+    # reconstruct X from latent structure
+    X_hat = T @ P.T
+
+    # =========================================================================
+    # residual matrix (THIS is the key step)
+    E = X - X_hat
+
+    # =========================================================================
+    # eigenvalues of residual covariance matrix
+    # equivalent to variance along each residual variable
+    residual_eigvals = np.linalg.eigvalsh(np.cov(E, rowvar=False))
+
+    # removing miniscule negatives from numerical noise
+    residual_eigvals = np.maximum(residual_eigvals, 0)
+
+    # =========================================================================
+    # Jackson moments
+    theta1 = np.sum(residual_eigvals)
+    theta2 = np.sum(residual_eigvals**2)
+    theta3 = np.sum(residual_eigvals**3)
+
+    # =========================================================================
+    # avoid divide-by-zero
+    if theta2 < 1e-12:
+        return 0.0
+    h0 = 1 - (2 * theta1 * theta3) / (3 * theta2**2)
+    h0 = max(h0, 1e-6)
+
+    # =========================================================================
+    # normal quantile
+    z = norm.ppf(alpha)
+
+    # =========================================================================
+    # Jackson Q-statistic threshold
+    term1 = (z * np.sqrt(2 * theta2) * h0) / theta1
+    term2 = (theta2 * h0 * (h0 - 1)) / (theta1**2)
+    Q_crit = theta1 * (1 + term1 + term2) ** (1 / h0)
+    return Q_crit
+
 def hotelling_t2_threshold(n_samples, n_components, alpha=0.95):
-    """Computes Hotelling's T² critical value using F-distribution."""
+    """
+    ===========================================================================
+    Hotelling's T² critical value using F-distribution
+    ===========================================================================
+    """
     F_crit = f_.ppf(alpha, dfn=n_components, dfd=n_samples - n_components)
     T2_crit = (n_components * (n_samples**2 - 1)) / (n_samples * (n_samples - n_components)) * F_crit
     return T2_crit
@@ -34,11 +123,13 @@ def hotelling_t2_threshold(n_samples, n_components, alpha=0.95):
 def pls_biplot_with_t2(scores, loadings, T2_thresh,
                        labels=None, feature_names=None, scale_scores=1.0, scale_loadings=1.0):
     """
-    Plots a PLS biplot including Hotelling's T² threshold as an ellipse.
+    ===========================================================================
+    PLS biplot including Hotelling's T² threshold as an ellipse
+    ===========================================================================
     """
     plt.figure(figsize=(8, 6))
-
-    # Plot scores
+    # =========================================================================
+    # plotting scores
     if labels is not None:
         unique_labels = np.unique(labels)
         for label in unique_labels:
@@ -48,7 +139,8 @@ def pls_biplot_with_t2(scores, loadings, T2_thresh,
     else:
         plt.scatter(scores[:, 0] * scale_scores, scores[:, 1] * scale_scores, alpha=0.7, color='gray')
 
-    # Plot loadings as red arrows
+    # =========================================================================
+    # plotting loadings as red arrows
     for i in range(loadings.shape[0]):
         plt.arrow(0, 0,
                   loadings[i, 0] * scale_loadings,
@@ -59,11 +151,11 @@ def pls_biplot_with_t2(scores, loadings, T2_thresh,
                  loadings[i, 1] * scale_loadings * 1.1,
                  name, color='red', ha='center', va='center', fontsize=9)
 
-    # Variance explained in axis labels
     plt.xlabel(f"LV1")
     plt.ylabel(f"LV2")
 
-    # Add T² confidence ellipse (assuming PC scores are uncorrelated & standardized)
+    # =========================================================================
+    # adding T² confidence ellipse (assuming LV scores are uncorrelated & standardized)
     lambda1 = np.var(scores[:, 0])  # ≈ eigenvalue 1
     lambda2 = np.var(scores[:, 1])  # ≈ eigenvalue 2
     width = 2 * np.sqrt(T2_thresh * lambda1)
@@ -82,8 +174,10 @@ def pls_biplot_with_t2(scores, loadings, T2_thresh,
 
 
 def compute_PLS_t2_q(data, W_star, loadings, num_components):
+
     """
-    Computes Hotelling's T² and Q residual statistics for PLS.
+    ===========================================================================
+    Hotelling's T² and Q residual statistics for PLS.
 
     Parameters:
         data (np.ndarray): Standardized data (Z-scores).
@@ -94,71 +188,33 @@ def compute_PLS_t2_q(data, W_star, loadings, num_components):
     Returns:
         T2 (np.ndarray): Hotelling’s T² statistic per sample.
         Q (np.ndarray): Q residual statistic per sample.
+    ===========================================================================
     """
-    # Truncate to selected LVs
+    # =========================================================================
+    # truncating to selected LVs
     T = data @ W_star
     T = T[:, :num_components]
     
     P = loadings[:, :num_components]
 
+    # =========================================================================
     # Hotelling's T² = sum of squared standardized scores
     T2 = np.sum((T / np.std(T, axis=0))**2, axis=1)
 
-    # Reconstruct data from selected LVs
+    # =========================================================================
+    # reconstruct data from selected LVs
     X_hat = T @ P.T
     residuals = data - X_hat
     Q = np.sum(residuals**2, axis=1)
 
     return T2, Q
 
-'''
-def q_residual_threshold_PLS(scores_T, n_components, alpha=0.95):
-    """Computes Q (SPE) critical value using Jackson’s method (chi-square approx)."""
-    
-    
-    def compute_lambda(T):
-        """
-        Compute eigenvalues λ_i ≈ var(t_i) for each latent variable (score vector).
-
-        Parameters:
-            T: np.ndarray of shape (n_samples, n_components)
-
-        Returns:
-            lambdas: np.ndarray of shape (n_components,)
-        """
-        N = T.shape[0]
-        lambdas = np.sum(T**2, axis=0) / (N - 1)
-        return lambdas
-    
-    eigenvalues = compute_lambda(scores_T)
-    
-    residual_eigvals = eigenvalues[n_components:]
-
-    theta1 = np.sum(residual_eigvals)
-    theta2 = np.sum(residual_eigvals**2)
-    theta3 = np.sum(residual_eigvals**3)
-
-    h0 = 1 - (2 * theta1 * theta3) / (3 * theta2**2)
-    z_alpha = norm.ppf(alpha)
-
-    Q_crit = theta1 * ((z_alpha * np.sqrt(2 * theta2) / theta1) + (theta2 * h0 * (h0 - 1)) / (theta1**2) + 1)**(1 / h0)
-    
-    print("Q_crit : ", Q_crit)
-    
-    return Q_crit
-'''
-
-
 
 #######################################################################################################
 #######################################################################################################
 #######################################################################################################
 
-
-
-# Add local project path
 sys.path.append('/Users/emil/Documents/GitHub/apc')
-
 
 # data source: https://www.kaggle.com/datasets/jorgecote/distillation-column?resource=download
 df = pd.read_csv("../apc/data/dataset_distill.csv", sep=';')
@@ -184,24 +240,11 @@ cols = (
 )
 
 df.columns = cols
-#df.pressure.hist(bins=30)
 
-'''
-# -------------------------
-# 1) PRESSURE OVER TIME
-# -------------------------
-plt.figure(figsize=(10,4))
-sns.lineplot(x=df.index, y=df["pressure"])
-plt.xlabel("Time step")
-plt.ylabel("Pressure")
-plt.title("Pressure Over Time")
-plt.show()
-'''
 
-'''
-# -------------------------
-# 2) DISTRIBUTIONS (HISTOGRAMS)
-# -------------------------
+# ===========================================================================
+# DISTRIBUTIONS (HISTOGRAMS)
+# ===========================================================================
 
 plt.figure(figsize=(6,4))
 sns.histplot(df["liquid_flow"], bins=30, kde=False)
@@ -244,9 +287,9 @@ for col in temp_cols:
     plt.show()
 
 
-# -------------------------
-# 3) TIME SERIES PLOTS
-# -------------------------
+# ===========================================================================
+# TIME SERIES PLOTS
+# ===========================================================================
 features = [
     "liquid_flow",
     "vapor_flow",
@@ -274,7 +317,7 @@ for col in temp_cols:
     plt.title(f"{col} Time Series")
     plt.show()
 
-'''
+
 
 df_for_modeling = df.drop(columns=["pressure"])
 #print(df_for_modeling)
@@ -359,8 +402,9 @@ plt.title("Regression Model Performance")
 save_fig("regression_model_performance")
 plt.show()
 
-
-#######################################################################################################
+'''
+===============================================================================
+'''
 
 plt.figure(figsize=(6,6))
 ax = sns.scatterplot(data=df, x="Actual", y="Predicted")
@@ -370,7 +414,7 @@ plt.xlabel("Actual ethanol concentration")
 plt.ylabel("Predicted ethanol concentration")
 plt.title("Regression Model Performance")
 
-# Add RMSE and R² annotation
+# adding RMSE and R²
 ax.text(
     0.05, 0.95,
     f"RMSE = {rmse:.2f}\n$R^2$ = {r2:.2f}",
@@ -383,7 +427,9 @@ ax.text(
 save_fig("regression_model_performance")
 plt.show()
 
-#######################################################################################################
+'''
+===============================================================================
+'''
 
 df = pd.DataFrame({
     "Sample": np.arange(len(actual)),
@@ -406,11 +452,10 @@ plt.title("Model Prediction vs Actual")
 plt.show()
 
 
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-# SAVING A GIF AND CONVERTING TO MP4
+'''
+===============================================================================
+saving as a gif
+'''
 
 import matplotlib.animation as animation
 import imageio as imageio
@@ -496,11 +541,10 @@ print(gif_filename)
 print(mp4_filename)
 
 
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-# PLOTTING PLSR MONITORING STATISTICS
+'''
+===============================================================================
+PLOTTING PLSR MONITORING STATISTICS
+'''
 
 
 calibration_T2, calibration_Q = compute_PLS_t2_q(data = X_calibration_autoscaled, 
@@ -516,72 +560,6 @@ n = X_calibration_autoscaled.shape[0]
 calibration_T2_thresh = hotelling_t2_threshold(n_samples = n, n_components = n_components)
 
 
-def q_residual_threshold_PLS(X, T, P, alpha=0.95):
-    """
-    Compute SPE (Q-statistic) control limit for PLS using Jackson's chi-square approximation.
-
-    Parameters:
-        X : np.ndarray (n_samples, n_features)
-            Original data matrix (centered/scaled as in model training)
-        T : np.ndarray (n_samples, n_components)
-            Score matrix from PLS
-        P : np.ndarray (n_features, n_components)
-            X-loading matrix
-        alpha : float
-            Confidence level (e.g., 0.95, 0.99)
-
-    Returns:
-        Q_crit : float
-            SPE control limit
-    """
-
-    # -------------------------------------------------------
-    # 1. Reconstruct X from latent structure
-    # -------------------------------------------------------
-    X_hat = T @ P.T
-
-    # -------------------------------------------------------
-    # 2. Residual matrix (THIS is the key step)
-    # -------------------------------------------------------
-    E = X - X_hat
-
-    # -------------------------------------------------------
-    # 3. Eigenvalues of residual covariance matrix
-    # -------------------------------------------------------
-    # Equivalent to variance along each residual variable
-    residual_eigvals = np.linalg.eigvalsh(np.cov(E, rowvar=False))
-
-    # Remove tiny negatives from numerical noise
-    residual_eigvals = np.maximum(residual_eigvals, 0)
-
-    # -------------------------------------------------------
-    # 4. Jackson moments
-    # -------------------------------------------------------
-    theta1 = np.sum(residual_eigvals)
-    theta2 = np.sum(residual_eigvals**2)
-    theta3 = np.sum(residual_eigvals**3)
-
-    # Avoid divide-by-zero issues
-    if theta2 < 1e-12:
-        return 0.0
-
-    h0 = 1 - (2 * theta1 * theta3) / (3 * theta2**2)
-    h0 = max(h0, 1e-6)
-
-    # -------------------------------------------------------
-    # 5. Normal quantile
-    # -------------------------------------------------------
-    z = norm.ppf(alpha)
-
-    # -------------------------------------------------------
-    # 6. Jackson Q-statistic threshold
-    # -------------------------------------------------------
-    term1 = (z * np.sqrt(2 * theta2) * h0) / theta1
-    term2 = (theta2 * h0 * (h0 - 1)) / (theta1**2)
-
-    Q_crit = theta1 * (1 + term1 + term2) ** (1 / h0)
-    
-    return Q_crit
 
 
 

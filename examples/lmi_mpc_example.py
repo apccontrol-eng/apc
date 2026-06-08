@@ -4,60 +4,53 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append('/Users/emil/Documents/GitHub/apc')
 
-
 """
 ===============================================================================
-Robust Infinite-Horizon MPC via Linear Matrix Inequalities (LMI-RMPC)
+Robust Infinite-Horizon MPC via Linear Matrix Inequalities Example
 ===============================================================================
 
+Description
+===============================================================================
 This controller implements a robust infinite-horizon Model Predictive Control
-(MPC) formulation based on Linear Matrix Inequalities (LMIs), following the
-approach proposed by:
+(MPC) formulation based on Linear Matrix Inequalities (LMIs), 
+following directly the approach proposed by:
 
 Kothare, M. V., Balakrishnan, V., & Morari, M. (1996).
-"Robust constrained model predictive control using linear matrix inequalities."
+Robust constrained model predictive control using linear matrix inequalities.
 Automatica, 32(10), 1361–1379.
 DOI: 10.1016/0005-1098(96)00063-5
 
-Reference:
 https://doi.org/10.1016/0005-1098(96)00063-5
 
--------------------------------------------------------------------------------
-Theory
--------------------------------------------------------------------------------
+Main Features
+===============================================================================
+- Linear MPC formulation
+- Prediction matrix construction
+- Quadratic cost function generation
+- Input constraint handling
+- QP optimization solver
+- Optional Kalman filtering
+- Closed-loop simulation
+- State and control signal visualization
 
-The linear discrete-time system
+System Model
+===============================================================================
+The simulated system is a discrete-time linear state-space model:
 
-    x_{k+1} = A x_k + B u_k
+    x[k+1] = A x[k] + B u[k] (+ w[k])
+
+where:
+    x : state vector
+    u : control input
+    w : Gaussian process noise
 
 The controller seeks a state-feedback law
 
-    u_k = L x_k
+    u[k] = L x[k]
+    
 
-that minimizes a worst-case infinite-horizon quadratic cost while satisfying
-input constraints.
-
-The quadratic cost is
-
-    J = Σ (x_kᵀ Q x_k + u_kᵀ R u_k)
-        k=0→∞
-
-where
-
-    Q ≻ 0  : state weighting matrix
-    R ≻ 0  : input weighting matrix
-
-Following Kothare (1996), the optimization is reformulated using a Lyapunov
-matrix Q_U and feedback parameterization
-
-    Y = L Q_U
-
-which converts the robust MPC problem into a convex semidefinite program (SDP).
-
--------------------------------------------------------------------------------
 Optimization Problem
--------------------------------------------------------------------------------
-
+===============================================================================
 Decision variables:
 
     Q_U     : Lyapunov matrix (positive semidefinite)
@@ -104,62 +97,18 @@ and the control law becomes
 
     u = L x
 
--------------------------------------------------------------------------------
-
+===============================================================================
 - CVXPY is used to formulate and solve the semidefinite program.
 - CVXOPT solves the LMI optimization.
 - The implementation assumes:
-    - Linear time-invariant dynamics
+    - Linear time-invariant dynamics (for this example)
     - Full-state feedback
     - Quadratic cost
-    - Hard input constraints
-- Gaussian disturbances/noise may be added externally during simulation.
-
--------------------------------------------------------------------------------
-Parameters
--------------------------------------------------------------------------------
-
-state_x : ndarray
-    Current system state x(k)
-
-A : ndarray
-    State transition matrix
-
-B : ndarray
-    Input matrix
-
-Q : ndarray
-    Positive definite state cost matrix
-
-R : ndarray
-    Positive definite input cost matrix
-
--------------------------------------------------------------------------------
-Returns
--------------------------------------------------------------------------------
-
-new_state_x : ndarray
-    Predicted next state after applying control
-
-control_u : ndarray
-    Optimal control action
-
--------------------------------------------------------------------------------
-Example
--------------------------------------------------------------------------------
-
-Given
-
-    x(k+1) = A x(k) + B u(k)
-
-the controller computes
-
-    u(k) = L x(k)
-
-by solving an online semidefinite optimization problem at each time step.
-
+    - Input constraints
+- Gaussian disturbances/noise added externally during simulation.
 ===============================================================================
 """
+
 
 
 def robust_linear_mpc( state_x , A , B , Q , R ):
@@ -167,13 +116,13 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
     Q_sqrt = np.linalg.cholesky(Q)
     R_sqrt = np.linalg.cholesky(R)
 
-    # Current state x(k|k)
+    # current state x(k|k)
     xk = state_x
 
-    # Decision variables
     n = A.shape[0]
     m = B.shape[1]
     
+    # decision variables
     XU = cp.Variable((m, m), symmetric=True)
     QU = cp.Variable((n, n), PSD=True)
     
@@ -190,7 +139,6 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
         [Y.T, QU] 
     ])
     
-    # 11 by 11 matrix
     row1 = [QU, QU @ A.T + Y.T @ B.T, QU @ Q_sqrt, Y.T @ R_sqrt]
     
     row2 = [A @ QU + B @ Y, QU, cp.Constant(np.zeros((n, n))), cp.Constant(np.zeros((n, m)))]
@@ -203,7 +151,7 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
     
     u_max = 1 # |u| <= u_max is a vector if we have many controls!
     
-    # Collection of constraints
+    # collecting constraints
     constraints = [
         C1 >> 0,
         C2 >> 0,
@@ -211,10 +159,9 @@ def robust_linear_mpc( state_x , A , B , Q , R ):
         -XU[0,0] >= - u_max**2 # here we have only one control so 0,0 means it is actually a scalar
     ]
 
-    # Objective
+    # objective
     objective = cp.Minimize(gamma)
 
-    # Solve
     prob = cp.Problem(objective, constraints)
     prob.solve(solver=cp.CVXOPT)
 
@@ -253,25 +200,22 @@ A = np.array([
 A = np.array(A)
 n = A.shape[0]
 
-# Define the symmetric positive definite matrix P
 P = cp.Variable((n, n), symmetric=True)
 
 # Define the LMI: A^T P + P A < 0
 LMI = A.T @ P + P @ A
 
-# Constraints
 constraints = [
     P >> 1e-6 * np.eye(n),      # P > 0 (positive definite)
     LMI << -1e-6 * np.eye(n)    # Lyapunov inequality (strict negative definite)
 ]
 
-# Objective (optional): minimize trace(P) for numerical regularity
+
 objective = cp.Minimize(cp.trace(P))
 
-# Problem setup
+
 prob = cp.Problem(objective, constraints)
 
-# Solve it
 prob.solve(solver=cp.CVXOPT)
 
 if prob.status == cp.OPTIMAL:
@@ -284,11 +228,11 @@ else:
 ###############################################################################
 ###############################################################################
 
-# =========================
+# --------------------------------------------------
 # EXAMPLE LMI RMPC LOOP
-# =========================
 
-# System
+
+# system matrices
 A = np.array([
     [0.9, 0.1, 0.0],
     [0.0, 0.8, 0.2],
@@ -303,7 +247,7 @@ m = B.shape[1]
 Q = np.eye(n)
 R = 0.1 * np.eye(m)
 
-# Initial state
+# initial state
 x = np.array([2.0, 0.0, 5.0])
 
 x_history = [x.copy()]
@@ -315,10 +259,10 @@ np.random.seed(42)
 for k in range(sim_steps):
 
     x, u = robust_linear_mpc(x, A, B, Q, R)
-    # Save control
+    # saving the control
     u_history.append(u.copy())
     
-    # System update
+    # system update
     if k == 40:
         bias = np.array([0.2, -0.3, -0.4])
         noise_std = 0.01
@@ -339,9 +283,9 @@ t = np.arange(len(x_history[:,0]))
 
 plt.figure(figsize=(14, 8))
 
-# ----------------------------
+# --------------------------------------------------
 # OUTPUTS
-# ----------------------------
+
 plt.subplot(2,1,1)
 plt.plot(t, x_history[:,0], '--', label="state 1", linewidth=2)
 plt.plot(t, x_history[:,1], '--', label="state 2", linewidth=2)
@@ -352,9 +296,9 @@ plt.ylabel("Output", fontsize=12)
 plt.legend()
 plt.grid(False)
 
-# ----------------------------
+# --------------------------------------------------
 # INPUT SIGNAL
-# ----------------------------
+
 plt.subplot(2,1,2)
 plt.plot(t[0:-1], u_history[:,0], label="MPC Input (u)", linewidth=2)
 plt.xlabel("Time step", fontsize=12)

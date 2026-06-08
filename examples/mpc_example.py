@@ -1,9 +1,9 @@
 """
 Model Predictive Control (MPC) Example
-==============================================================
+===============================================================================
 
 Description
------------
+===============================================================================
 This script implements a constrained linear Model Predictive Control (MPC)
 simulation for a discrete-time system using a quadratic programming (QP)
 formulation.
@@ -16,7 +16,7 @@ A Kalman filter is optionally used to estimate the system state in the
 presence of Gaussian process noise.
 
 Main Features
--------------
+===============================================================================
 - Linear MPC formulation
 - Prediction matrix construction
 - Quadratic cost function generation
@@ -27,7 +27,7 @@ Main Features
 - State and control signal visualization
 
 System Model
-------------
+===============================================================================
 The simulated system is a discrete-time linear state-space model:
 
     x[k+1] = A x[k] + B u[k] + w[k]
@@ -36,40 +36,7 @@ where:
     x : state vector
     u : control input
     w : Gaussian process noise
-
-Dependencies
-------------
-- numpy
-- matplotlib
-- apc.solvers.hildreth_qp
-- apc.solvers.primal_dual_interior_point_qp
-- apc.filters.kalman_filter
-
-Author
-------
-Emil
-
-Usage
------
-Run the script directly:
-
-    python mpc_simulation.py
-
-The script will:
-1. Build MPC prediction matrices
-2. Solve the constrained QP problem
-3. Simulate the closed-loop system
-4. Apply Kalman filtering
-5. Plot system states and control inputs
-
-Notes
------
-- The prediction horizon is configurable through `N`.
-- Input constraints are defined by `umin` and `umax`.
-- Gaussian noise is added to the plant dynamics to test estimator robustness.
-- The Kalman filter section can be disabled by uncommenting the
-  "no kalman filter" block.
-
+===============================================================================
 """
 
 import numpy as np
@@ -77,18 +44,18 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append('/Users/emil/Documents/GitHub/apc')
 
-# =========================
+# --------------------------------------------------
 # QP SOLVERS and KF
-# =========================
+
 from apc.solvers.hildreth_qp import hildreth_qp
 from apc.solvers.primal_dual_interior_point_qp import primal_dual_interior_point_qp
 from apc.solvers.active_set_qp import active_set_qp
 from apc.solvers.projected_gradient_descent_qp import projected_gradient_descent_qp
 from apc.filters.kalman_filter import kalman_filter
 
-# =========================
+# --------------------------------------------------
 # BUILD PREDICTION MATRICES
-# =========================
+
 def build_prediction_matrices(A, B, N):
     n = A.shape[0]
     m = B.shape[1]
@@ -106,33 +73,32 @@ def build_prediction_matrices(A, B, N):
 
     return Sx, Su
 
-# =========================
+# --------------------------------------------------
 # BLOCK DIAGONAL MATRIX
-# =========================
+
 def block_diag(Q, N):
     return np.kron(np.eye(N), Q)
 
-# =========================
-# BUILD QP MATRICES
-# =========================
+# --------------------------------------------------
+# CONSTRUCTING QP MATRICES
+
 def build_qp(Sx, Su, Q_bar, R_bar, x0):
     H = Su.T @ Q_bar @ Su + R_bar
     f = Su.T @ Q_bar @ (Sx @ x0)
     return H, f
 
-# =========================
-# INPUT CONSTRAINTS
-# =========================
+# --------------------------------------------------
+# CONSTRUCTING INPUT CONSTRAINTS
+
 def input_constraints(N, m, umin, umax):
     G = np.vstack((np.eye(N*m), -np.eye(N*m)))
     b = np.hstack((np.tile(umax, N), -np.tile(umin, N)))
     return G, b
 
-# =========================
+# --------------------------------------------------
 # EXAMPLE MPC LOOP
-# =========================
 
-# System (example: double integrator)
+# example system
 A = np.array([
     [0.9, 0.1, 0.0],
     [0.0, 0.8, 0.2],
@@ -143,21 +109,21 @@ B = np.array([[0.1], [0.05], [0.02]])
 
 n = A.shape[0]
 m = B.shape[1]
-N = 10  # horizon
+N = 10  # horizon length
 
-# Cost
+# weight matrices
 Q = np.eye(n)
 R = 0.1 * np.eye(m)
 
 Q_bar = block_diag(Q, N)
 R_bar = block_diag(R, N)
 
-# Constraints
+# constraints
 umin = np.array([-1.0])
 umax = np.array([1.0])
 G, b = input_constraints(N, m, umin, umax)
 
-# Initial state
+# initial state
 x = np.array([2.0, 0.0, 5.0])
 
 x_history = [x.copy()]

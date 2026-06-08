@@ -1,12 +1,8 @@
+import os
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
-import os
-
-sys.path.append('/Users/emil/Documents/GitHub/apc')
-
 from apc.solvers.hildreth_qp import hildreth_qp
-
 from apc.calibration.PCA_eigen import eigen_decomposition
 from apc.calibration.PCA_eigen import pca_from_correlation
 from apc.calibration.PCA_eigen import scale_with_reference
@@ -18,9 +14,30 @@ from apc.calibration.PCA_eigen import compute_t2_q
 from apc.calibration.PCA_eigen import plot_t2_q
 from apc.calibration.PCA_eigen import hotelling_t2_threshold
 from apc.calibration.PCA_eigen import q_residual_threshold
-
 from apc.filters.kalman_filter import kalman_filter
 
+'''
+===============================================================================
+PCA monitoring tools
+
+References:
+
+    Kadlec, P., Gabrys, B., & Strandt, S. (2009). 
+    Data-driven soft sensors in the process industry. 
+    Computers & Chemical Engineering, 33 (4), 795–814. 
+    https://doi.org/10.1016/j.compchemeng.2008.12.012
+    
+    Kadlec, P., Grbić, R., & Gabrys, B. (2011). 
+    Review of adaptation mechanisms for data-driven soft sensors. 
+    Computers & Chemical Engineering, 35 (1), 1–24. 
+    https://doi.org/10.1016/j.compchemeng.2010.07.034
+    
+===============================================================================
+'''
+
+
+
+sys.path.append('/Users/emil/Documents/GitHub/apc')
 
 os.makedirs("figures", exist_ok=True)
 def save_fig(name):
@@ -28,9 +45,9 @@ def save_fig(name):
     plt.savefig(f"figures/{name}.png", dpi=300, bbox_inches="tight")
 
 
-# ============================================================
-# BUILD PREDICTION MATRICES
-# ============================================================
+# ===========================================================================
+# BUILD MPC PREDICTION MATRICES
+
 def build_prediction_matrices(A, B, N):
     """
     Build MPC prediction matrices Sx and Su.
@@ -59,9 +76,9 @@ def build_prediction_matrices(A, B, N):
     return Sx, Su
 
 
-# ============================================================
+# ===========================================================================
 # BLOCK DIAGONAL MATRIX
-# ============================================================
+
 def block_diag(Q, N):
     """
     Create block diagonal matrix using Kronecker product.
@@ -72,9 +89,9 @@ def block_diag(Q, N):
     return np.kron(np.eye(N), Q)
 
 
-# ============================================================
-# BUILD QP MATRICES
-# ============================================================
+# ===========================================================================
+# CONSTRUCTING QP MATRICES
+
 def build_qp(Sx, Su, Q_bar, R_bar, x0):
     """
     Construct quadratic programming matrices for MPC.
@@ -91,9 +108,9 @@ def build_qp(Sx, Su, Q_bar, R_bar, x0):
     return H, f
 
 
-# ============================================================
-# INPUT CONSTRAINTS
-# ============================================================
+# ===========================================================================
+# CONSTRUCTING INPUT CONSTRAINTS
+
 def input_constraints(N, m, umin, umax):
     """
     Build inequality constraints for input bounds:
@@ -104,11 +121,9 @@ def input_constraints(N, m, umin, umax):
     return G, b
 
 
-# ============================================================
-# SYSTEM DEFINITION
-# ============================================================
+# ===========================================================================
+# EXAMPLE SYSTEM
 
-# System matrices (3-state linear system)
 A = np.array([
     [0.9, 0.1, 0.0],
     [0.0, 0.8, 0.2],
@@ -122,22 +137,19 @@ m = B.shape[1]
 
 N = 10  # MPC horizon
 
-
-# Cost matrices
+# weighting matrices
 Q = np.eye(n)
 R = 0.1 * np.eye(m)
 
 Q_bar = block_diag(Q, N)
 R_bar = block_diag(R, N)
 
-
-# Input constraints
+# input constraints
 umin = np.array([-1.0])
 umax = np.array([1.0])
 G, b = input_constraints(N, m, umin, umax)
 
-
-# Initial state
+# initial state
 x = np.array([2.0, 0.0, 5.0])
 
 x_history = [x.copy()]
@@ -146,25 +158,24 @@ u_history = []
 sim_steps = 300
 np.random.seed(42)
 
-
-# ============================================================
+# ===========================================================================
 # MPC SIMULATION LOOP
-# ============================================================
+
 for k in range(sim_steps):
 
-    # Build prediction model
+    # constructing prediction model
     Sx, Su = build_prediction_matrices(A, B, N)
 
-    # Build QP problem
+    # constructing QP problem
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
-    # Solve QP using Hildreth algorithm
+    # solving the QP using Hildreth algorithm
     U_opt, lam = hildreth_qp(H, f, G, b, lambda0=None)
     u = U_opt[:m]
 
     u_history.append(u.copy())
 
-    # Disturbance + fault injection
+    # adding disturbance + fault injection (noise + bias)
     if k == 150:
         bias = np.array([0.5, -0.5, -0.9])
         noise_std = 0.01
@@ -173,24 +184,22 @@ for k in range(sim_steps):
         noise_std = 0.01
         added_noise = noise_std * np.random.randn(3)
 
-    # System update
+    # system update
     x = A @ x + B @ u + added_noise
     x_history.append(x.copy())
 
-
-# Convert to arrays
 x_history = np.array(x_history)
 u_history = np.array(u_history)
 
 t = np.arange(len(x_history[:,0]))
 
 
-# ============================================================
+# ===========================================================================
 # PLOT RESULTS
-# ============================================================
+
 plt.figure(figsize=(14, 8))
 
-# States
+# states
 plt.subplot(2,1,1)
 plt.plot(t, x_history[:,0], '--', label="state 1")
 plt.plot(t, x_history[:,1], '--', label="state 2")
@@ -199,7 +208,7 @@ plt.title("MPC states with noise and disturbance")
 plt.legend()
 plt.grid(False)
 
-# Inputs
+# inputs
 plt.subplot(2,1,2)
 plt.plot(t[:-1], u_history[:,0], label="control input")
 plt.title("MPC input signal")
@@ -210,43 +219,40 @@ save_fig("MPC_states_controls")
 plt.show()
 
 
-# ============================================================
+# ===========================================================================
 # PCA PROCESS MONITORING
-# ============================================================
 
 mpc_states = x_history
 mpc_controls = u_history
 
-# Combine states and inputs
+# combined states and inputs
 process_data = np.hstack((mpc_states[:-1,:], mpc_controls))
 
-# Calibration window selection
+# calibration window selection
 monitor_calibration_window = range(50,100)
 calibration_data = process_data[monitor_calibration_window,:]
 
-# Compute statistics
+# computing statistics
 calibration_col_means_states, calibration_col_stds_states = column_stats(calibration_data)
 
-# Standardize calibration data
+# auto-scaling calibration data
 calibration_standardized_matrix_states, calibration_means_states, calibration_stds_states = standardize_matrix(calibration_data)
 
-# Covariance matrix
+# covariance matrix of auto-scaled data = sample correlation matrix
 n = calibration_data.shape[0]
 calibration_state_covariance_matrix = (1/(n-1)) * calibration_standardized_matrix_states.T @ calibration_standardized_matrix_states
 
 print("calibration_state_covariance_matrix : ", calibration_state_covariance_matrix)
 
-
-# Distribution plots
+# histogram plots
 print("Calibration data before autoscaling:")
 plot_column_distributions_with_stats(calibration_data, bins=10, name="Calibration_data_before_autoscaling")
 print("Calibration data after autoscaling:")
 plot_column_distributions_with_stats(calibration_standardized_matrix_states, bins=10, name="Calibration_data_after_autoscaling")
 
 
-# ============================================================
+# ===========================================================================
 # PCA MODEL
-# ============================================================
 
 calibration_standardized_matrix_states, calibration_means_states, calibration_stds_states = standardize_matrix(calibration_data)
 
@@ -258,11 +264,11 @@ corr = calibration_state_covariance_matrix
 
 eigvals, eigvecs, var_ratio = pca_from_correlation(corr)
 
-# PCA model
+# PCA model loadings and scores
 calibration_P = eigvecs
 calibration_T = calibration_standardized_matrix_states @ calibration_P
 
-k = 2  # number of components
+k = 2  # number of selected principal components
 
 calibration_T2, calibration_Q = compute_t2_q(
     data=calibration_standardized_matrix_states,
@@ -271,14 +277,13 @@ calibration_T2, calibration_Q = compute_t2_q(
     num_components=k
 )
 
-# Thresholds
+# thresholds for PCA 
 n = calibration_standardized_matrix_states.shape[0]
 calibration_T2_thresh = hotelling_t2_threshold(n_samples=n, n_components=k)
 calibration_Q_thresh = q_residual_threshold(eigenvalues=eigvals, n_components=k)
 
-# Monitoring plots
+# monitoring plots
 plot_t2_q(calibration_T2, calibration_Q, threshold_T2=calibration_T2_thresh, threshold_Q=calibration_Q_thresh, name="Calibration_T2_and_SPE_plot")
-
 
 # PCA biplot
 pca_biplot_with_t2(
@@ -290,7 +295,7 @@ pca_biplot_with_t2(
 )
 
 
-# Loading plots
+# loading plots
 variables = ['X1', 'X2', 'X3', 'U1']
 loadings = calibration_P
 
@@ -310,9 +315,8 @@ plt.grid(False)
 plt.show()
 
 
-# ============================================================
+# ===========================================================================
 # ONLINE MONITORING
-# ============================================================
 
 print("THIS IS TESTING THE PCA MONITORING MODEL:")
 print("new data is autoscaled with calibration means and standard deviations")
@@ -358,9 +362,8 @@ pca_biplot_with_t2(
 )
 
 
-# ============================================================
+# ===========================================================================
 # FAULT DIAGNOSIS (CONTRIBUTION PLOTS)
-# ============================================================
 
 print("Selecting one of the samples that is out of spec:")
 i_fault = 150
@@ -386,8 +389,5 @@ plt.title(f'Sample {i_fault} contribution to PC2')
 save_fig(f'Sample_{i_fault}_contribution_to_PC2')
 plt.show()
 
-
-
-
-
+# ===========================================================================
 

@@ -12,7 +12,10 @@ This project demonstrates:
 - PCA-based multivariate process monitoring
   - Fault detection using T² and Q statistics
   - Fault diagnosis via contribution plots  
-- PLSR-based Soft Sensor 
+- PLSR-based Soft Sensor
+- Open-loop subspace identification:
+  - MOESP
+  - N4SID
 
 ---
 

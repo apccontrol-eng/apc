@@ -115,5 +115,5 @@ def kalman_filter(A, B, C, D, u, x, P, y, Q=None, R=None):
     x_new = x_pred + K @ innovation
     P_new = (np.eye(n) - K @ C) @ P_pred
 
-    return x_new, P_new
+    return x_new, P_new, innovation
 

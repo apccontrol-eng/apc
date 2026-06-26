@@ -133,7 +133,7 @@ sim_steps = 100
 np.random.seed(42)
 
 for k in range(sim_steps):
-
+    
     Sx, Su = build_prediction_matrices(A, B, N)
     H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
 
@@ -174,10 +174,10 @@ for k in range(sim_steps):
         P = 0.01 * np.eye(3)
         Q = 0.0 * np.eye(3)                                                     # this demo only contains measurement noise, so we trust the process model to contain no noise
         R = 0.01 * np.eye(2)
-        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P, y[0:2], Q, R)       # only the first two states are "observed" with Gaussian noise
+        x_pred, P_pred, innovation = kalman_filter(A, B, C, D, u, x, P, y[0:2], Q, R)       # only the first two states are "observed" with Gaussian noise
 
     else:
-        x_pred, P_pred = kalman_filter(A, B, C, D, u, x, P_pred, y[0:2], Q, R)
+        x_pred, P_pred, innovation = kalman_filter(A, B, C, D, u, x, P_pred, y[0:2], Q, R)
     x = x_pred
     x_history.append(x.copy())
     '''

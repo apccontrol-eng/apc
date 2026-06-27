@@ -1,53 +1,53 @@
----
-
 ## Model Predictive Control (MPC)
 - Linear state-space model:  
-```math
+
+
+$$
 x_{k+1} = A x_k + B u_k
-```  
-where 
-```math
+$$  
+where  
+$$
  A \in \mathbb{R}^{nxn}
-```  
-```math
+$$  
+$$
  B \in \mathbb{R}^{nxm}
-```  
-```math
+$$   
+$$
  x_{k} \in \mathbb{R}^{nx1}
-```  
-```math
+$$  
+$$
  u_{k} \in \mathbb{R}^{mx1}
-```  
+$$  
 
 - Quadratic cost on states and inputs:  
-```math
+$$
 J = \sum_{k=0}^{N}\left(x_k^\top Q x_k+u_k^\top R u_k\right)
-```
+$$
 where  
-```math
+$$
 Q \succeq 0,
 \qquad
- ```
-```math
+$$
+$$
 R \succ 0,
 \qquad
- ```  
+$$  
 are weighting matrices for states and control effort.  
 
 - Box constraints (lower and upper bounds) on control inputs:  
-```math
+$$
 u_{lb} <= u_{k} <= u_{ub}  
-```  
+$$  
 - Optimization solved using QP algorithms
 - Lifted matrices dictated by prediction horizon
 
 Lifted system matrices form when prediction horizon is set to N:
 
-```math
+$$
 X_k = A_{lifted} x_k + B_{lifted} U_k
-```
+$$
 
-```math
+$$
 X_k =
 \begin{bmatrix}
 \hat{x}_{k|k} \\
@@ -57,9 +57,9 @@ X_k =
 \end{bmatrix}
 \in \mathcal{X}^{N+1} \subseteq \mathbb{R}^{n(N+1)},
 \quad
-```
+$$
 
-```math
+$$
 U_k =
 \begin{bmatrix}
 \hat{u}_{k|k} \\
@@ -68,9 +68,9 @@ U_k =
 \hat{u}_{k+N-1|k}
 \end{bmatrix}
 \in \mathcal{U}^{N} \subseteq \mathbb{R}^{mN}
-```
+$$
 
-```math
+$$
 A_{lifted} =
 \begin{bmatrix}
 I \\
@@ -80,35 +80,35 @@ A^2 \\
 A^N
 \end{bmatrix}
 \in \mathbb{R}^{n(N+1)\times n}
-```
+$$
 
-```math
+$$
 B_{lifted} =
 \begin{bmatrix}
 0 & 0 & \cdots & 0 \\
 B & 0 & \cdots & 0 \\
 AB & B & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
+\VDTs & \vdots & \ddots & \vdots \\
 A^{N-1}B & A^{N-2}B & \cdots & B
 \end{bmatrix}
 \in \mathbb{R}^{n(N+1)\times m(N+1)}
-```
+$$
 
 The Quadratic Programming problem is of form:
 
-```math
+$$
 U_k^* = \arg\min_{U_k}\; X_k^\top \tilde{Q} X_k + U_k^\top \tilde{R} U_k
-```
+$$
 subject to
-```math
+$$
 X_k = A_{lifted} x_k + B_{lifted} U_k
-```
+$$
 
-```math
+$$
 U_k \in \mathcal{U}_{ad}(x_k)
-```
+$$
 with
-```math
+$$
 \tilde{Q} =
 \begin{bmatrix}
 Q &  &  \\
@@ -124,21 +124,21 @@ R &  &  \\
  &  & R
 \end{bmatrix}
 \in \mathbb{R}^{mN\times mN}  
-```  
+$$  
 
 The QP problem can be reduced to the following form when $X_k$ is substituted to the cost function.  
 
-```math
+$$
 U_k^* =
 \arg\min_{U_k}\;
 U_k^\top(B_{lifted}^\top \tilde{Q}B_{lifted} + \tilde{R})U_k
 + 2x_k^\top A_{lifted}^\top B_{lifted} U_k
 + x_k^\top A_{lifted}^\top \tilde{Q}A_{lifted} x_k
-```
+$$
 subject to
-```math
+$$
 U_k \in \mathcal{U}_{ad}(x_k)
-```
+$$
 
 ### Reference
 Michael Fink (2021).  

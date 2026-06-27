@@ -88,7 +88,7 @@ B_{lifted} =
 0 & 0 & \cdots & 0 \\
 B & 0 & \cdots & 0 \\
 AB & B & \cdots & 0 \\
-\VDTs & \vdots & \ddots & \vdots \\
+\vdots & \vdots & \ddots & \vdots \\
 A^{N-1}B & A^{N-2}B & \cdots & B
 \end{bmatrix}
 \in \mathbb{R}^{n(N+1)\times m(N+1)}

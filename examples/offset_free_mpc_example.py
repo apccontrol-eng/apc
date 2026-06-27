@@ -227,8 +227,9 @@ for k in range(sim_steps):
         #sol = np.linalg.lstsq(M, d_hat, rcond=None)[0]
         #x_ss = sol[:3]
         #u_ss = sol[3:]
-    
-        # assume x_ss is zero and then perform u_ss = inverse(B) @ d so that the controller removes the identified offset that the nominal process model does not have
+        
+        # =====================================================================
+        # set x_ss (we want x_ss = 0) zero and then perform u_ss := inverse(B) @ d so that the controller removes the identified offset that the nominal process model does not have
         x_ss = np.zeros(3)
         u_ss = np.linalg.inv(-B) @ d_hat
     

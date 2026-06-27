@@ -18,6 +18,7 @@ This project demonstrates:
 - Open-loop subspace identification:
   - MOESP
   - N4SID
+  - Least Squares
 
 ---
 

@@ -1,6 +1,8 @@
 export default {
   title: "Project Docs",
-  description: "Intro, MPC, and Process Monitoring",
+  description: "My VitePress Documentation",
+
+  base: "/apc/",
 
   themeConfig: {
     nav: [
@@ -11,8 +13,7 @@ export default {
 
     sidebar: [
       {
-        text: "Documentation",
-        collapsed: false,
+        text: "Docs",
         items: [
           { text: "Intro", link: "/intro" },
           { text: "MPC", link: "/mpc" },

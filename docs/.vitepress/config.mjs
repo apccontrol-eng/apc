@@ -6,7 +6,7 @@ export default {
   markdown: {
     config: (md) => {
       md.use(mathjax3)
-    }
+    },
   themeConfig: {
     sidebar: [
       {

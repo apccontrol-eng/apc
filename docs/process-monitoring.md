@@ -11,12 +11,15 @@ In rank-1 terms we solve the scores T and loadings P separately and deflate X ei
 $$
 X=tp^{T}
 $$  
+
 $$
 t=Xp
 $$  
+
 $$
 var(t) = \frac{1}{n-1} t^{T}t \propto t^{T}t
 $$  
+
 $\max_{p} var(t)$
 subject to 
 $p^{T}p=1$
@@ -38,6 +41,7 @@ This is an eigenvalue problem (EVP) for which there are multiple ways of solving
 The remaining scores t and loadings p are calculated by repeating the optimization problem for deflated X.
 
 The deflation step:
+
 $$
 X:=X-tp^{T}
 $$  
@@ -47,6 +51,7 @@ Suppose $k$ principal components are chosen, then the X is approximated as:
 $$
 \hat{X} = T_{1:k}P_{1:k}^{T}
 $$  
+
 The common ways of directly solving for all scores T and loadings P directly are SVD and Eigenvalue decomposition.  
 SVD: $X = TP^{T}$ where $T = U\Sigma$ and $P = V$  
 
@@ -63,13 +68,17 @@ https://doi.org/10.5281/zenodo.20284935
 ## PLSR
 
 PLSR outer relations (X and Y auto-scaled):  
+
 $$
 X = TP^{T} +E
 $$
+
 $$
 Y = UQ^{T} +F
 $$
+
 PLSR inner relation (we are interested in regression/prediction of Y variables):  
+
 $$
 U = TB +R
 $$  
@@ -79,12 +88,15 @@ In rank-1 terms, PLS is solved iteratively.
 $$
 t=Xw
 $$
+
 $$
 u=Yc
 $$  
+
 $$
 cov(t,u) = \frac{1}{n-1} t^{T}u \propto t^{T}u
 $$  
+
 $\max_{w,c} cov(t,u)$  
 subject to  
 $w^{T}w=1$  
@@ -117,15 +129,19 @@ $Y^{T}XX^{T}Yc=(2\lambda_1) (2\lambda_2) c$
 $Y^{T}XX^{T}Yc=\lambda c$  
 
 The solution to maximizing covariance is a matter of finding the solution to this set of equations (notice similarities with SVD on $X^{T}Y$):  
+
 $$
 X^{T}YY^{T}Xw=\lambda w  
 $$
+
 $$
 Y^{T}XX^{T}Yc=\lambda c  
 $$
+
 $$
 w^{T}w=1  
 $$
+
 $$
 c^{T}c=1  
 $$  
@@ -136,6 +152,7 @@ The loadings for the outer PLSR relation are solved by ordinary least squares:
 $$
 p = (X^{T}w)/(w^{T}w)
 $$  
+
 $$
 q = (Y^{T}c)/(c^{T}c)
 $$  
@@ -145,15 +162,19 @@ The inner relation is then calculated by ordinary least squares on the scores:
 $$
 b = (u^{T}t)/(t^{T}t)
 $$  
+
 After these steps we have $w$, $c$, $p$, $q$ and $b$. The next latent variables are calculated for the deflated matrices:  
 
 $$
 X:=X-tp^{T}
 $$  
+
 $$
 Y:=Y-uq^{T}
 $$  
+
 or
+
 $$
 Y:=Y-tbq^{T}
 $$  
@@ -161,20 +182,27 @@ $$
 The PLSR model is usually calculated with NIPALS algorithm.  
 
 The following matrix is useful for predicting purposes:  
+
 $$
 W^{*} = W(P^{T}W)^{-1}
 $$  
+
 which is used for new measurement data (autoscaled with calibration means and standard deviations) followingly:  
+
 $$
 T = XW^{*}
 $$  
+
 $$
 U = TB
 $$  
+
 $$
 \hat{Y} = TBQ^{T} = XW^{*}BQ^{T}
 $$  
+
 Which is still in autoscaled form and is brought back to original scale by:  
+
 $$
 \hat{Y}_{unscaled} = \hat{Y}diag(s_{Y}) + 1\mu_{Y}
 $$  
@@ -184,9 +212,11 @@ The autoscaling that is assumed for both PCA and PLSR can be expressed in the fo
 $$
 Y = (Y_{unscaled} - 1\mu_{Y})diag(s_{Y})^{-1}
 $$  
+
 $$
 X = (X_{unscaled} - 1\mu_{X})diag(s_{X})^{-1}
 $$  
+
 $\mu_{X}$: mean vector of calibration block $X$.  
 $\mu_{Y}$: mean vector of calibration block $Y$.  
 $s_{X}$: sample standard deviation vector of calibration block $X$.  

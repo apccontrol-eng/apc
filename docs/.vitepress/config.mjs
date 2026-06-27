@@ -6,7 +6,6 @@ export default {
       {
         text: "Docs",
         items: [
-          { text: "Intro", link: "/intro" },
           { text: "MPC", link: "/mpc" },
           { text: "Process Monitoring", link: "/process-monitoring" }
         ]

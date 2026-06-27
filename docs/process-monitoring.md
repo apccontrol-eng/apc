@@ -5,6 +5,7 @@ PCA relation (X auto-scaled):
 $$
 X = TP^{T} +E
 $$
+
 In rank-1 terms we solve the scores T and loadings P separately and deflate X either to the full column space or just to get e.g. the first two principal components.
 
 $$

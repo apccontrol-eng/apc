@@ -34,16 +34,28 @@ The simulated system is a discrete-time linear state-space model:
         d : disturbance/bias lumped together
 
 ===============================================================================
+
+References:
+
+    Pannocchia, G. (2015)
+    Offset-free tracking MPC: A tutorial review and comparison of different formulations
+    In Proceedings of the 2015 European Control Conference (ECC) (pp. 527–532)
+    IEEE 
+    https://doi.org/10.1109/ECC.2015.7330597
+    
+    
+    Pannocchia, G., Gabiccini, M., & Artoni, A. (2015)
+    Offset-free MPC explained: Novelties, subtleties, and applications
+    IFAC-PapersOnLine, 48 (23), 342–351
+    https://doi.org/10.1016/j.ifacol.2015.11.304
+
+===============================================================================
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 sys.path.append('/Users/emil/Documents/GitHub/apc')
-
-# =============================================================================
-# QP SOLVERS and KF
-
 from apc.solvers.hildreth_qp import hildreth_qp
 from apc.solvers.primal_dual_interior_point_qp import primal_dual_interior_point_qp
 from apc.solvers.active_set_qp import active_set_qp
@@ -52,7 +64,6 @@ from apc.filters.kalman_filter import kalman_filter
 
 # =============================================================================
 # BUILD PREDICTION MATRICES
-
 def build_prediction_matrices(A, B, N):
     n = A.shape[0]
     m = B.shape[1]
@@ -72,211 +83,42 @@ def build_prediction_matrices(A, B, N):
 
 # =============================================================================
 # BLOCK DIAGONAL MATRIX
-
 def block_diag(Q, N):
     return np.kron(np.eye(N), Q)
 
 # =============================================================================
-# CONSTRUCTING QP MATRICES
-
+# CONSTRUCTING QP MATRICES (not tracking mpc version)
 def build_qp(Sx, Su, Q_bar, R_bar, x0):
     H = Su.T @ Q_bar @ Su + R_bar
     f = Su.T @ Q_bar @ (Sx @ x0)
     return H, f
 
 # =============================================================================
-# CONSTRUCTING INPUT CONSTRAINTS
+# CONSTRUCTING QP MATRICES (tracking mpc version which is needed in the offset-free mpc)
+def build_qp_tracking(Sx, Su, Q_bar, R_bar, x0, r_bar, u_bar):
+    H = Su.T @ Q_bar @ Su + R_bar
+    f = ( Su.T @ Q_bar @ (Sx @ x0 - r_bar) - R_bar @ u_bar )
+    return H, f
 
+# =============================================================================
+# CONSTRUCTING INPUT CONSTRAINTS
 def input_constraints(N, m, umin, umax):
     G = np.vstack((np.eye(N*m), -np.eye(N*m)))
     b = np.hstack((np.tile(umax, N), -np.tile(umin, N)))
     return G, b
 
 # =============================================================================
-    
 def is_controllable(A, B, tol=1e-100):
-    """
-    Test controllability of the pair (A, B).
-
-    Parameters
-    ----------
-    A : ndarray, shape (n, n)
-    B : ndarray, shape (n, m)
-    tol : float
-        Rank tolerance.
-
-    Returns
-    -------
-    controllable : bool
-    """
+    #Test controllability of the pair (A, B)
     n = A.shape[0]
-
     C = B
     Ak = np.eye(n)
-
     for _ in range(1, n):
         Ak = Ak @ A
         C = np.hstack((C, Ak @ B))
-
     rank = np.linalg.matrix_rank(C, tol)
-
     return rank == n
 
-# =============================================================================
-'''
-# example systems
-A_true = np.array([
-    [0.75,  0.15,  0.00],
-    [0.10,  0.65,  0.20],
-    [0.00,  0.10,  0.55]
-])
-
-B_true = np.array([
-    [1.0],
-    [0.7],
-    [0.9]
-])
-
-A_approx = np.array([
-    [0.72,  0.18,  0.02],
-    [0.12,  0.63,  0.22],
-    [0.01,  0.08,  0.53]
-])
-
-B_approx = np.array([
-    [0.95],
-    [0.75],
-    [0.85]
-])
-
-print("(A_true, B_true) pair is controllable : ",       is_controllable(A_true,     B_true,     tol=1e-1000))
-print("(A_approx, B_approx) pair is controllable : ",   is_controllable(A_approx,   B_approx,   tol=1e-1000))
-print("(A_approx, B_true) pair is controllable : ",     is_controllable(A_approx,   B_true,     tol=1e-1000))
-print("(A_true, B_approx) pair is controllable : ",     is_controllable(A_true,     B_approx,   tol=1e-1000))
-
-print("Stable discrete-time system model should have all of its eigenvalues under unit circle:")
-print("A_true max abs eigenvalue : ",    abs( max( np.linalg.eigvals(  A_true    ) ) ) ) 
-print("A_approx max abs eigenvalue : ",  abs( max( np.linalg.eigvals(  A_approx  ) ) ) )
-
-
-n = A_true.shape[0]
-m = B_true.shape[1]
-N = 10  # horizon length
-
-# weight matrices
-Q = np.eye(n)
-R = 0.1 * np.eye(m)
-
-Q_bar = block_diag(Q, N)
-R_bar = block_diag(R, N)
-
-# constraints
-umin = np.array([-1.0])
-umax = np.array([1.0])
-G, b = input_constraints(N, m, umin, umax)
-
-# initial state
-x = np.array([2.0, 0.0, 5.0])
-
-x_history = [x.copy()]
-u_history = []
-
-sim_steps = 100
-np.random.seed(42)
-
-for k in range(sim_steps):
-
-    Sx, Su = build_prediction_matrices(A_approx, B_approx, N)
-    H, f = build_qp(Sx, Su, Q_bar, R_bar, x)
-
-    #U_opt, lam = hildreth_qp(H, f, G, b, max_iter=1000, tol=1e-10, lambda0=None)
-    U_opt, lam= primal_dual_interior_point_qp(H, f, G, b, max_iter=200, tol=1e-100)
-    #U_opt, lam, W = active_set_qp(H, f, G, b, x0=None, tol=1e-10, max_iter=100)
-    #U_opt = projected_gradient_descent_qp(H, f, G, b, x0=None, alpha=1e-1, max_iter=100, tol=1e-10)
-    u = U_opt[:m]
-    
-    u_history.append(u.copy())
-
-    #if k == 40:
-    #    bias = np.array([0.2, -0.3, -0.4])
-    #    noise_std = 0.01
-    #    added_noise = noise_std * np.random.randn(3) + bias
-    #else:
-    #    noise_std = 0.01
-    #    added_noise = noise_std * np.random.randn(3)
-    
-    bias = np.array([0.1, -0.23, -0.14])
-    # =========================================================================
-    # no kalman filter:
-    #x = A_true @ x + B_true @ u + bias
-    x = A_approx @ x + B_approx @ u + bias
-    x_history.append(x.copy())
-
-    # =========================================================================
-    # kalman filter:
-    
-    #y = A_true @ x + B_true @ u + added_noise
-    #C_approx = np.array([
-    #    [1.0, 0.0, 0.0],
-    #    [0.0, 1.0, 0.0]
-    #])
-    #D_approx = np.array([
-    #    [0.0],
-    #    [0.0]
-    #])
-    #if k == 0:
-    #    P = 0.01 * np.eye(3)
-    #    Q = 0.01 * np.eye(3)
-    #    R = 0.01 * np.eye(2)
-    #    x_pred, P_pred, innovation = kalman_filter(A_approx, B_approx, C_approx, D_approx, u, x, P, y[0:2], Q, R)       # only the first two states are "observed"
-
-    #else:
-    #    x_pred, P_pred, innovation = kalman_filter(A, B, C, D, u, x, P_pred, y[0:2], Q, R)
-    #x = x_pred
-    #x_history.append(x.copy())
-    
-    if k > 95:
-        print(f"Step {k}, state: {x}, control: {u}")
-
-
-x_history = np.array(x_history)
-u_history = np.array(u_history)
-
-
-t = np.arange(len(x_history[:,0]))
-
-plt.figure(figsize=(14, 8))
-
-# =============================================================================
-# OUTPUT COMPARISON
-
-plt.subplot(2,1,1)
-
-plt.plot(t, x_history[:,0], '--', label="state 1", linewidth=2)
-plt.plot(t, x_history[:,1], '--', label="state 2", linewidth=2)
-plt.plot(t, x_history[:,2], '--', label="state 3", linewidth=2)
-
-plt.title("Approximate MPC controller input and system states w/ added model bias", fontsize=14)
-plt.ylabel("Output", fontsize=12)
-plt.legend()
-plt.grid()
-
-# =============================================================================
-# INPUT SIGNAL
-
-plt.subplot(2,1,2)
-
-plt.plot(t[0:-1], u_history[:,0], label="MPC Input (u)", linewidth=2)
-
-plt.xlabel("Time step", fontsize=12)
-plt.ylabel("MPC Input", fontsize=12)
-plt.title("MPC Input Signal", fontsize=14)
-plt.grid()
-
-plt.tight_layout()
-plt.show()
-
-'''
 print("\n")
 print("==========================================================================================================================================================")
 print("==========================================================================================================================================================")
@@ -287,20 +129,24 @@ print("\n")
 # ==========================================================================================================================================================
 # ==========================================================================================================================================================
 # ESTIMATING THE BIAS/INNOVATION/DISTURBANCE WITH KALMAN FILTER AND USING OFFSET FREE MPC TO FIX THE PLANT-MODEL MISMATCH
-
-A_approx = np.array([
+A = np.array([
     [0.72,  0.18,  0.02],
     [0.12,  0.63,  0.22],
     [0.01,  0.08,  0.53]
 ])
 
-B_approx = np.array([
+B = np.array([
     [0.12,  0.88,  0.22],
     [0.32,  0.23,  0.52],
     [0.21,  0.18,  0.83]
 ])
 
-C_approx = np.array([
+print("(A, B) pair is controllable : ",   is_controllable(A, B, tol=1e-1000))
+print("Stable discrete-time system model should have all of its eigenvalues under unit circle (Schur stability):")
+print("A max abs eigenvalue : ", abs(max(np.linalg.eigvals(A))))
+
+
+C = np.array([
     [1.0, 0.0, 0.0],
     [0.0, 1.0, 0.0],
     [0.0, 0.0, 1.0]
@@ -316,17 +162,17 @@ Z = np.zeros((3, 3))
 # ---- Augmented matrices ----
 
 Aa = np.block([
-    [A_approx,  Bd],
+    [A,  Bd],
     [Z,  I ]
 ])
 
 Ba = np.vstack([
-    B_approx,
+    B,
     np.zeros((3, 3))
 ])
 
 Ca = np.hstack([
-    C_approx, Cd
+    C, Cd
 ])
 
 print("Aa shape:", Aa.shape)  # (6, 6)
@@ -360,25 +206,6 @@ u_history = []
 sim_steps = 100
 np.random.seed(42)
 
-
-def build_qp_tracking(
-    Sx, Su,
-    Q_bar, R_bar,
-    x0,
-    r_bar,
-    u_bar
-):
-
-    H = Su.T @ Q_bar @ Su + R_bar
-
-    f = (
-        Su.T @ Q_bar @ (Sx @ x0 - r_bar)
-        - R_bar @ u_bar
-    )
-
-    return H, f
-
-
 for k in range(sim_steps):
 
     Sx, Su = build_prediction_matrices(Aa, Ba, N)
@@ -395,15 +222,15 @@ for k in range(sim_steps):
         # ⇒ (I - A)x_ss - B u = d
         
         #M = np.block([
-        #    [np.eye(3) - A_approx, -B_approx]
+        #    [np.eye(3) - A, -B]
         #])
         #sol = np.linalg.lstsq(M, d_hat, rcond=None)[0]
         #x_ss = sol[:3]
         #u_ss = sol[3:]
     
-        # assume x_ss is zero and then perform u_ss = inverse(B_approx) @ d so that the controller removes the identified offset that the nominal process model does not have
+        # assume x_ss is zero and then perform u_ss = inverse(B) @ d so that the controller removes the identified offset that the nominal process model does not have
         x_ss = np.zeros(3)
-        u_ss = np.linalg.inv(-B_approx) @ d_hat
+        u_ss = np.linalg.inv(-B) @ d_hat
     
         # =====================================================================
         x_ref_stage = np.hstack([x_ss, d_hat])
@@ -437,8 +264,8 @@ for k in range(sim_steps):
 
     # =========================================================================
     # kalman filter:
-    
-    y = C_approx @ ( A_approx @ x[0:3] + B_approx @ u + bias )
+    x_true_state = A @ x[0:3] + B @ u + bias
+    y = C @ ( x_true_state ) # measured state (this example is not about rejecting Gaussian noise though)
 
     Da = np.array([
         [0.0, 0.0, 0.0],

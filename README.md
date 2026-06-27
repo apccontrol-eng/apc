@@ -6,8 +6,8 @@ A simulation framework combining **Model Predictive Control (MPC)** with **Princ
 ## Overview
 This project demonstrates:  
 - Three different formulations of constrained MPC:
-  - Finiter-Horizon constrained MPC solved with different QP solvers (Hildreth, Projected gradient descent, Primal-dual interior point and Active set method)
-  - offset-free MPC w/ Kalman Filter
+  - Finite-Horizon constrained MPC solved with different QP solvers (Hildreth, Projected gradient descent, Primal-dual interior point and Active set method)
+  - Offset-free MPC w/ Kalman Filter
   - Infinite-Horizon constrained MPC formulated as a Linear Matrix Inequality (LMI) and solved as a Semidefinite Program (SDP)
 - Kalman Filter and partial state observations
 - PCA-based multivariate process monitoring

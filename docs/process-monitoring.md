@@ -1,6 +1,7 @@
 ## PCA
 
 PCA relation (X auto-scaled):  
+
 $$
 X = TP^{T} +E
 $$

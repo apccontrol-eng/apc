@@ -3,10 +3,13 @@ import mathjax3 from 'markdown-it-mathjax3'
 export default {
   title: "Project Docs",
   base: "/apc/",
+
   markdown: {
-    config: (md) => {
+    config(md) {
       md.use(mathjax3)
     },
+  },
+
   themeConfig: {
     sidebar: [
       {

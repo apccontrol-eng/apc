@@ -9,17 +9,16 @@ export default {
       { text: "Process Monitoring", link: "/process-monitoring" },
     ],
 
-    sidebar: {
-      "/": [
-        {
-          text: "Documentation",
-          items: [
-            { text: "Intro", link: "/intro" },
-            { text: "MPC", link: "/mpc" },
-            { text: "Process Monitoring", link: "/process-monitoring" },
-          ],
-        },
-      ],
-    },
+    sidebar: [
+      {
+        text: "Documentation",
+        collapsed: false,
+        items: [
+          { text: "Intro", link: "/intro" },
+          { text: "MPC", link: "/mpc" },
+          { text: "Process Monitoring", link: "/process-monitoring" },
+        ],
+      },
+    ],
   },
 }

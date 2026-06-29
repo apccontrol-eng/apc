@@ -1,5 +1,5 @@
 
-## Model Predictive Control (MPC)
+## Finite-horizon Model Predictive Control (MPC)
 - Linear state-space model:  
 
 

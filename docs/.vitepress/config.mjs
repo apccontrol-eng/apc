@@ -9,21 +9,35 @@ export default {
       md.use(mathjax3)
     }
   },
-
+  
   themeConfig: {
-    nav: [
-      { text: "Home", link: "/" }
-    ],
-
     sidebar: [
       {
-        text: "Documentation",
-        collapsed: false, // true = starts collapsed
+        text: "MPC",
+        collapsed: false,
         items: [
-          { text: "Finite-horizon MPC", link: "/fh-mpc" },
-          { text: "Infinite-horizon MPC", link: "/ih-mpc" },
-          { text: "PCA", link: "/PCA" },
-          { text: "PLS", link: "/PLS" }
+          {
+            text: "Infinite Horizon",
+            link: "/mpc/ih-mpc"
+          },
+          {
+            text: "Finite Horizon",
+            link: "/mpc/fh-mpc"
+          }
+        ]
+      },
+      {
+        text: "Process Monitoring",
+        collapsed: false,
+        items: [
+          {
+            text: "PCA",
+            link: "/process-monitoring/PCA"
+          },
+          {
+            text: "PLS",
+            link: "/process-monitoring/PLS"
+          }
         ]
       }
     ]

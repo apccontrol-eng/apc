@@ -20,9 +20,10 @@ export default {
         text: "Documentation",
         collapsed: false, // true = starts collapsed
         items: [
-          { text: "MPC", link: "/mpc" },
-          { text: "Process Monitoring", link: "/process-monitoring" },
-          { text: "Getting Started", link: "/getting-started" }
+          { text: "Finite-horizon MPC", link: "/fh-mpc" },
+          { text: "Infinite-horizon MPC", link: "/ih-mpc" },
+          { text: "PCA", link: "/PCA" },
+          { text: "PLS", link: "/PLS" }
         ]
       }
     ]

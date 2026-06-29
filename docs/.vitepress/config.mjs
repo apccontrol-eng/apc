@@ -17,12 +17,12 @@ export default {
         collapsed: false,
         items: [
           {
-            text: "Infinite Horizon",
-            link: "/mpc/ih-mpc"
+            text: "Finite-horizon",
+            link: "/mpc/fh-mpc"
           },
           {
-            text: "Finite Horizon",
-            link: "/mpc/fh-mpc"
+            text: "Infinite-horizon",
+            link: "/mpc/ih-mpc"
           }
         ]
       },

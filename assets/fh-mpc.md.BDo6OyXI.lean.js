@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as a}from"./chunks/framework.BsWcg17L.js";const d=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"fh-mpc.md","filePath":"fh-mpc.md"}'),c={name:"fh-mpc.md"};function r(o,s,n,p,f,m){return t(),a("div")}const i=e(c,[["render",r]]);export{d as __pageData,i as default};

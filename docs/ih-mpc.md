@@ -1,17 +1,21 @@
 
-## Robust Model Predictive Control (RMPC)
+## Infinite-horizon Model Predictive Control
 - Linear state-space model
 - Quadratic cost on states and inputs
 - Box constraints on control inputs
-- Optimization solved using LMI
+- Optimization solved using LMI  
 
+Discrete-time state-space model:  
 $$
 x_{k+1}=Ax_k+Bu_k
 $$
 
+Full state feedback control law:  
 $$
 u_k=Lx_k
 $$
+
+Cost function:  
 
 $$
 J =
@@ -21,7 +25,9 @@ x_k^\top Q x_k
 +
 u_k^\top R u_k
 \right)
-$$
+$$  
+
+Positive definite and positive semi-definite weight matrices for states and control effort:  
 
 $$
 Q \succeq 0,
@@ -29,11 +35,13 @@ Q \succeq 0,
 R \succ 0
 $$
 
+LMI variable trick:  
+
 $$
 Y = LQ_U
 $$  
 
-The LMI formulation of the problem:  
+Condenses down to the following LMI formulation of the problem:  
 
 $$
 \min_{Q_U,Y,X_U,\gamma}
@@ -108,13 +116,13 @@ $$
 (X_U)_{jj} \le u_{j,\max}^2
 $$  
 
-The feedback gain is recovered from  
+The feedback gain is recovered from the variable trick:  
 
 $$
 L = YQ_U^{-1}
 $$
 
-RMPC control input:  
+The calculated control input at time k:  
 
 $$
 u_k=Lx_k

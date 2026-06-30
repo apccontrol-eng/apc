@@ -400,5 +400,4 @@ plt.show()
 #    print(x)
 
 # add state constraints to MPC and safety layer because the nonlinear system has runaway dynamics
-# add citation to rawlings book
 

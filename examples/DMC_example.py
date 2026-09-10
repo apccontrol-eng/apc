@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+sys.path.append('/Users/emil/Documents/GitHub/apc')
 from apc.solvers.hildreth_qp import hildreth_qp
 
+'''
 def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-100, lambda0=None):
     """
     ===========================================================================
@@ -104,7 +107,7 @@ def hildreth_qp(H, f, G, b, max_iter=100, tol=1e-100, lambda0=None):
     return x, lam
 
 
-
+'''
 
 # ============================================================
 # 1. Generate unit-step response data

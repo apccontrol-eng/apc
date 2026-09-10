@@ -58,7 +58,13 @@ export default {
       },
       {
         text: "Miscellaneous",
-        collapsed: false
+        collapsed: false,
+        items: [
+          {
+            text: "Aurafarmingjpg",
+            link: "/misc/misc"
+          }
+        ]
       }
     ]
   }

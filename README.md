@@ -19,6 +19,8 @@ This project demonstrates:
   - MOESP
   - N4SID
 
+WIP doc page: https://apccontrol-eng.github.io/apc/
+
 ---
 
 ## Model Predictive Control (MPC)

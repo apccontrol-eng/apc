@@ -237,10 +237,10 @@ x_setpoint = np.array([0.878, 324.5, 0.659, 0.0, 0.0, 0.0])
 u_setpoint = np.array([300, 0.1])
 
 # initial states (the nonlinear CSTR is not controllable too far from the setpoint values, the Arrhenius term explodes easily)
-x_prop = np.array([0.50, 324.5, 0.29, 0.0, 0.0, 0.0]) # the last 3 are initial values for the bias
+x_prop = np.array([0.40, 337.5, 0.29, 0.0, 0.0, 0.0]) # the last 3 are initial values for the bias
 x_dev = x_prop - x_setpoint 
 # steady-state around which MPC is defined
-u_prop = np.array([310, 0.15])
+u_prop = np.array([310, 0.2])
 u_dev = u_prop - u_setpoint
 
 x_prop_history = [x_prop.copy()]
@@ -307,7 +307,7 @@ for k in range(sim_steps):
     u_prop = u_dev + u_setpoint
     u_prop_history.append(u_prop.copy())
     
-    noise_std = 0.01
+    noise_std = 0.03
     added_noise = noise_std * np.random.randn(3)
     
     #bias = np.array([0.1, -0.23, -0.14]) #+ added_noise
@@ -365,13 +365,13 @@ plt.figure(figsize=(14, 8))
 plt.subplot(2,1,1)
 
 plt.plot(t, x_prop_history[:,0], '--', label="x_1", linewidth=2)
-plt.plot(t, x_prop_history[:,1]/100, '--', label="x_2/100", linewidth=2)
+plt.plot(t, x_prop_history[:,1]/300, '--', label="x_2/300", linewidth=2)
 plt.plot(t, x_prop_history[:,2], '--', label="x_3", linewidth=2)
 
 plt.title("Non-linear state-space model response to MPC controls", fontsize=14)
 plt.ylabel("Output", fontsize=12)
 plt.legend()
-plt.ylim(-1, 4)
+plt.ylim(0, 1.5)
 plt.grid()
 
 
@@ -380,13 +380,13 @@ plt.grid()
 
 plt.subplot(2,1,2)
 
-plt.plot(t, u_prop_history[:,0]/100, label="MPC Input (u_1)/100", linewidth=2)
+plt.plot(t, u_prop_history[:,0]/300, label="MPC Input (u_1)/300", linewidth=2)
 plt.plot(t, u_prop_history[:,1], label="MPC Input (u_2)", linewidth=2)
 
 plt.xlabel("Time step", fontsize=12)
 plt.ylabel("MPC Input", fontsize=12)
 plt.title("MPC Input Signal", fontsize=14)
-plt.ylim(-1, 4)
+plt.ylim(0, 1.5)
 plt.grid()
 plt.legend()
 plt.show()

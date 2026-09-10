@@ -39,6 +39,26 @@ export default {
             link: "/process-monitoring/PLS"
           }
         ]
+      },
+      {
+        text: "DMC",
+        collapsed: false
+      },
+      {
+        text: "State Estimation",
+        collapsed: false
+      },
+      {
+        text: "Subspace Identification",
+        collapsed: false
+      },
+      {
+        text: "Quadratic Programming",
+        collapsed: false
+      },
+      {
+        text: "Miscellaneous",
+        collapsed: false
       }
     ]
   }

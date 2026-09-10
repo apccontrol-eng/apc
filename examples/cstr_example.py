@@ -48,8 +48,8 @@ The controller uses a discrete-time linear state-space model:
     dx[k+1] = A_d dx[k] + B_d du[k]
 
 where:
-    x : state vector
-    u : control input
+    dx : state vector in deviation coordinates
+    du : control input in deviation coordinates
 
 """
 

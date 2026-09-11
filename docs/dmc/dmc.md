@@ -1,4 +1,6 @@
-Dynamic Matrix Control is one of the earliest commercial Model Predictive Control schemes. DMC utilizes step-response models instead of state-space models and states. One of the advantages is in that MIMO models do not have to be updated completely and MIMO models can be constructed step-testing channels i.e. input-output pairs individually. The other advantage is that the DMC handles process dead-times naturally. 
+## Dynamic Matrix Control (DMC)
+
+DMC is one of the earliest commercial Model Predictive Control schemes. DMC utilizes step-response models instead of state-space models and states. One of the advantages is in that MIMO models do not have to be updated completely and MIMO models can be constructed step-testing channels i.e. input-output pairs individually. The other advantage is that the DMC handles process dead-times naturally. 
 
 ## Example system for MIMO Dynamic Matrix Control (DMC)
 

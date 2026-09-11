@@ -37,7 +37,7 @@ are weighting matrices for states and control effort.
 
 - Box constraints (lower and upper bounds) on control inputs:  
 $$
-u_{lb} <= u_{k} <= u_{ub}  
+u_{lb} \geq u_{k} \leq u_{ub}  
 $$  
 - Optimization solved using QP algorithms
 - Lifted matrices dictated by prediction horizon

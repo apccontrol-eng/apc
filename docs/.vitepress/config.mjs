@@ -56,7 +56,13 @@ export default {
       },
       {
         text: "State Estimation",
-        collapsed: false
+        collapsed: false,
+        items: [
+          {
+            text: "Kalman Filter",
+            link: "/state-estimation/KF"
+          }
+        ]
       },
       {
         text: "Subspace Identification",

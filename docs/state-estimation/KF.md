@@ -1,4 +1,4 @@
-# Kalman Filter
+## Kalman Filter
 
 The goal of the Kalman Filter is to obtain estimates for the given process states when only measurements or partial state observations are available. The standard Kalman Filter assumes linear process and measurement models, and the noise is assumed to be Gaussian, which is only an approximation of real-world process uncertainty and measurement noise.
 

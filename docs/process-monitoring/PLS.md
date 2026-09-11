@@ -158,7 +158,7 @@ $s_{Y}$: sample standard deviation vector of calibration block $Y$.
 
 The PLSR predicting power is in first checking whether the scores T of new X data fall under threshold which gives confidence for predicting estimates.  
 
-### Reference(s)
+### References
 Rosipal, R., & Krämer, N. (2006)   
 *Overview and Recent Advances in Partial Least Squares*.  
 In C. Saunders et al. (Eds.), *Subspace, Latent Structure and Feature Selection* (LNCS 3940, pp. 34–51).  

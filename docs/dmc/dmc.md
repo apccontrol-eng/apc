@@ -264,3 +264,23 @@ J
 \end{aligned}
 }
 $$
+
+### References
+
+Camacho, E. F., & Bordons, C. (2007).
+*Model Predictive Control* (2nd ed.).
+Springer London.
+[**https://doi.org/10.1007/978-0-85729-398-5**](https://doi.org/10.1007/978-0-85729-398-5)
+
+Ogunnaike, B. A., & Ray, W. H. (1994).
+*Process Dynamics, Modeling, and Control*.
+Oxford University Press.
+ISBN: 978-0-19-509119-9.
+
+Corriou, J.-P. (2018).
+*Process Control: Theory and Applications* (2nd ed.).
+Springer Cham.
+[**https://doi.org/10.1007/978-3-319-61143-3**](https://doi.org/10.1007/978-3-319-61143-3)
+
+
+

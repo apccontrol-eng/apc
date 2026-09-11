@@ -1,3 +1,5 @@
+Dynamic Matrix Control is one of the earliest commercial Model Predictive Control schemes. DMC utilizes step-response models instead of state-space models and states. One of the advantages is in that MIMO models do not have to be updated completely and MIMO models can be constructed step-testing channels i.e. input-output pairs individually. The other advantage is that the DMC handles process dead-times naturally. 
+
 ## Example system for MIMO Dynamic Matrix Control (DMC)
 
 A 2x2 FOPDT MIMO process model is the following:
@@ -282,5 +284,9 @@ Corriou, J.-P. (2018).
 Springer Cham.
 [**https://doi.org/10.1007/978-3-319-61143-3**](https://doi.org/10.1007/978-3-319-61143-3)
 
+García, C. E., & Morshedi, A. M. (1986).
+*Quadratic Programming Solution of Dynamic Matrix Control (QDMC).*
+*Chemical Engineering Communications*, 46, 73–87.
+[**https://doi.org/10.1080/00986448608911397**](https://doi.org/10.1080/00986448608911397)
 
 

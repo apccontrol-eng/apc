@@ -99,6 +99,7 @@ P_{k} = (I - K_{k} C) P_{k}^{-}
 $$
 
 ### Reference
+
 Särkkä, S., & Svensson, L. (2023).  
 *Bayesian Filtering and Smoothing* (2nd ed.).  
 Cambridge: Cambridge University Press.  

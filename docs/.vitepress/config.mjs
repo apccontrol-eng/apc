@@ -42,7 +42,13 @@ export default {
       },
       {
         text: "DMC",
-        collapsed: false
+        collapsed: false,
+        items: [
+          {
+            text: "Dynamic Matrix Control",
+            link: "/dmc/dmc"
+          }
+        ]
       },
       {
         text: "State Estimation",

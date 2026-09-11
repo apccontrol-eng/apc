@@ -47,6 +47,10 @@ export default {
           {
             text: "Dynamic Matrix Control",
             link: "/dmc/dmc"
+          },
+          {
+            text: "Example",
+            link: "/dmc/dmc-example"
           }
         ]
       },

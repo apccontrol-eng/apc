@@ -70,7 +70,13 @@ export default {
       },
       {
         text: "Quadratic Programming",
-        collapsed: false
+        collapsed: false,
+        items: [
+          {
+            text: "Standard Form",
+            link: "/quadratic-programming/general-form"
+          }
+        ]
       },
       {
         text: "Miscellaneous",

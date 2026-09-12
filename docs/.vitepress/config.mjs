@@ -42,7 +42,7 @@ export default {
             text: "PCA Monitoring Statistics"
           },
           {
-            text: "PCA Monitoring Statistics"
+            text: "PLS Monitoring Statistics"
           }
         ]
       },

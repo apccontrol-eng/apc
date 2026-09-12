@@ -1,7 +1,9 @@
 
 ## Finite-horizon Model Predictive Control (MPC)
-- Linear state-space model:  
 
+Finite-horizon MPC is a control scheme where the linear nominal model of the plant is at every loop instance used for predicting a future horizon with the knowledge or measured state information. The prediction horizon is of finite length and therefore does not guarantee stability. However the common practise is to have a reasonably long prediction horizon (depending on system and model needs) as longer prediction horizon gets closer to the infinite-horizon results. The finite-horizon formulation can therefore be thought as a scheduling problem that obeys linear dynamics. Linear model, box constraints, quadratic cost function and state enforcing equality constraints guarantee convexity of the optimization problem. The LQR type analysis about controllability is required for the model matrices A and B. The connection of finite-horizon LQR and linear finite-horizon MPC is in that MPC allows constraints and uses new state measurements. MPC optimizes control action in every control loop instance even though the optimization solution has control actions for future control actions. This is achieved by considering only the first control action from the optimization solution. For short prediction lengths the optimization problem is dense and for long horizons the problem becomes sparse if the resulting QP optimization problem is carried out with lifted system matrices.
+
+The nominal plant linear state-space model:  
 
 $$
 x_{k+1} = A x_k + B u_k
@@ -20,7 +22,7 @@ $$
 u_{k} \in \mathbb{R}^{m \times 1}
 $$  
 
-- Quadratic cost on states and inputs:  
+The quadratic cost on states and inputs for the optimization problem:  
 $$
 J = \sum_{k=0}^{N}\left(x_k^\top Q x_k+u_k^\top R u_k\right)
 $$
@@ -35,14 +37,12 @@ R \succ 0,
 $$  
 are weighting matrices for states and control effort.  
 
-- Box constraints (lower and upper bounds) on control inputs:  
+The controls are always bounded by real-life constraints which can be formulated as box constraints (lower and upper bounds) on control inputs:  
 $$
 u_{lb} \leq u_{k} \leq u_{ub}  
 $$  
-- Optimization solved using QP algorithms
-- Lifted matrices dictated by prediction horizon
 
-Lifted system matrices form when prediction horizon is set to N:
+Lifted system matrices form when prediction horizon is set to $N$:
 
 $$
 X_k = A_{lifted} x_k + B_{lifted} U_k
@@ -141,10 +141,15 @@ $$
 U_k \in \mathcal{U}_{ad}(x_k)
 $$
 
-### Reference
+### References
 Michael Fink (2021).  
 Implementation of Linear Model Predictive Control — Tutorial.   
 https://arxiv.org/abs/2109.11986  
+
+Maciejowski, J. M. (2002).
+Predictive Control with Constraints.
+Prentice Hall.
+
 
 ---
 ---

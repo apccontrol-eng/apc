@@ -8,16 +8,16 @@ x_{k+1} = A x_k + B u_k
 $$  
 where  
 $$
-* A \in \mathbb{R}^{n\timesn}
+A \in \mathbb{R}^{n \times n}
 $$  
 $$
-* B \in \mathbb{R}^{n\timesm}
+B \in \mathbb{R}^{n \times m}
 $$   
 $$
-* x_{k} \in \mathbb{R}^{n\times1}
+x_{k} \in \mathbb{R}^{n \times 1}
 $$  
 $$
-* u_{k} \in \mathbb{R}^{m\times1}
+u_{k} \in \mathbb{R}^{m \times 1}
 $$  
 
 - Quadratic cost on states and inputs:  

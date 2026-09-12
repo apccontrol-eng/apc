@@ -37,6 +37,12 @@ export default {
           {
             text: "PLS",
             link: "/process-monitoring/PLS"
+          },
+          {
+            text: "PCA Monitoring Statistics"
+          },
+          {
+            text: "PCA Monitoring Statistics"
           }
         ]
       },
@@ -61,12 +67,23 @@ export default {
           {
             text: "Kalman Filter",
             link: "/state-estimation/KF"
+          },
+          {
+            text: "Moving Horizon Estimation"
           }
-        ]
+        ],
       },
       {
         text: "Subspace Identification",
-        collapsed: false
+        collapsed: false,
+        items: [
+          {
+            text: "N4SID"
+          },
+          {
+            text: "MOESP"
+          }
+        ],
       },
       {
         text: "Quadratic Programming",

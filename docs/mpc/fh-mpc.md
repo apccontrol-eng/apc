@@ -146,9 +146,9 @@ Michael Fink (2021).
 Implementation of Linear Model Predictive Control — Tutorial.   
 https://arxiv.org/abs/2109.11986  
 
-Maciejowski, J. M. (2002).
-Predictive Control with Constraints.
-Prentice Hall.
+Maciejowski, J. M. (2002).  
+Predictive Control with Constraints.  
+Prentice Hall.  
 
 
 ---

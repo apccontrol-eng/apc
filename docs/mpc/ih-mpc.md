@@ -1,18 +1,10 @@
-
 ## Infinite-horizon Model Predictive Control
-- Linear state-space model
-- Quadratic cost on states and inputs
-- Box constraints on control inputs
-- Optimization solved using LMI  
+
+The structural difference between finite-horizon MPC and infinite-horizon MPC is in that finite-horizon problem is a scheduling problem from the viewpoint of optimization. The infinite-horizon MPC problem requires a different approach and the optimized control action is a constant control gain matrix $L$ and not a vector of future control actions as in the finite-horizon MPC. The following presents the optimization form for infinite-horizon MPC which is later cleverly solved with Linear Matrix Inequalities.
 
 Discrete-time state-space model:  
 $$
 x_{k+1}=Ax_k+Bu_k
-$$
-
-Full state feedback control law:  
-$$
-u_k=Lx_k
 $$
 
 Cost function:  
@@ -35,13 +27,59 @@ Q \succeq 0,
 R \succ 0
 $$
 
-LMI variable trick:  
+The general infinite-horizon MPC problem:
+
+$$
+\boxed{
+\begin{aligned}
+\min
+\quad &
+J(x_0)
+=
+\sum_{k=0}^{\infty}
+\left(
+x_k^T Q x_k
++
+u_k^T R u_k
+\right)
+\\[4pt]
+\text{subject to}
+\quad &
+x_{k+1}
+=
+Ax_k+Bu_k,
+\qquad k=0,1,\ldots
+\\
+&
+x_0
+=
+\hat{x}_0
+\\
+&
+x_k \in \mathcal{X},
+\qquad k=0,1,\ldots
+\\
+&
+u_k \in \mathcal{U},
+\qquad k=0,1,\ldots
+\end{aligned}
+}
+$$
+
+
+For the infinite-horizon MPC problem we seek for a full-state feedback control law that minimizes the upper bound of the cost function:
+  
+$$
+u_k=Lx_k
+$$
+
+The LMI variable trick/substitution:  
 
 $$
 Y = LQ_U
 $$  
 
-Condenses down to the following LMI formulation of the problem:  
+The Semi-Definite Programming (SDP) optimization problem with LMIs (considering only input box constraints):
 
 $$
 \min_{Q_U,Y,X_U,\gamma}

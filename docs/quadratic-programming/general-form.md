@@ -1,6 +1,6 @@
 ## Quadratic Programming (QP)
 
-Linear MPC and DMC rely on optimization. The mentioned control schemes usually use quadratic cost functions for states and penalized control actions. With linear process models, box constraints, quadratic costs and finite horizons, the underlying optimization problem is typically categorized as a quadratic optimization problem, hence the name Quadratic Programming (QP). 
+Linear MPC and DMC rely on optimization. The mentioned control schemes usually use quadratic cost functions for states and penalized control actions. With linear process models, box constraints, quadratic costs and finite horizons, the underlying optimization problem is typically categorized as a quadratic optimization problem, hence the name Quadratic Programming (QP). The following shows the standard QP structure and required conditions for optimality. Constructing the Lagrangian and satisfying Karush-Kuhn-Tucker conditions are the essential steps for reaching optimality when equality and inequality constraints are present. If no constraints are present, the problem structure often collapses to a least squares solution.
 
 
 ### 1. Standard QP Formulation

@@ -37,12 +37,53 @@ R \succ 0,
 $$  
 are weighting matrices for states and control effort.  
 
+The general finite-horizon MPC problem:
+
+$$
+\boxed{
+\begin{aligned}
+\min
+\quad &
+J
+=
+\sum_{k=0}^{N}
+\left(
+x_k^T Q x_k
++
+u_k^T R u_k
+\right)
+\\[4pt]
+\text{subject to}
+\quad &
+x_{k+1}
+=
+Ax_k+Bu_k,
+\qquad k=0,1,\ldots
+\\
+&
+x_0
+=
+\hat{x}_0
+\\
+&
+x_k \in \mathcal{X},
+\qquad k=0,1,\ldots
+\\
+&
+u_k \in \mathcal{U},
+\qquad k=0,1,\ldots
+\end{aligned}
+}
+$$
+
+
+
 The controls are always bounded by real-life constraints which can be formulated as box constraints (lower and upper bounds) on control inputs:  
 $$
 u_{lb} \leq u_{k} \leq u_{ub}  
 $$  
 
-Lifted system matrices form when prediction horizon is set to $N$:
+Rather than enforcing state using equality constraints, one can use lifted system matrices form when prediction horizon is set to $N$. The states are then stacked in one large vector ($X_k$) and the controls are stacked into a similar vector structure ($U_k$). The $A$ and $B$ matrices are used for constructing the corresponding block matrix forms ($A_{lifted}$ and $B_{lifted}$). This allows for direct optimization of minimizing control vector $U_k$. The lifted matrices and stacked vector are constructed followingly:
 
 $$
 X_k = A_{lifted} x_k + B_{lifted} U_k
@@ -140,6 +181,8 @@ subject to
 $$
 U_k \in \mathcal{U}_{ad}(x_k)
 $$
+
+Note that the formulation above considers only the input box constraints!
 
 ### References
 Michael Fink (2021).  

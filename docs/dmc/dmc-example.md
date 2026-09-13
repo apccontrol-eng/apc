@@ -14,7 +14,7 @@ G(s)=
 \end{bmatrix}
 $$
 
-It consists of four First Order Plus Dead Time models. The identified models are all open-loop stable and also $y_1(0)=0$ and $y_2(0)=0$.
+It consists of four First Order Plus Dead Time models. The identified models are all open-loop stable and both are modelled around zero (operating point not revealed).
 
 The first input-output channel $u_1$ to $y_1$:
 
@@ -176,4 +176,17 @@ The unit-step response models are then simulated from $k=0$ up to the point wher
 |     48 |                  3.90 |                  1.66 |                  5.22 |                  5.43 |     98 |                  4.05 |                  1.77 |                  5.39 |                  5.71 |
 |     49 |                  3.91 |                  1.66 |                  5.24 |                  5.45 |     99 |                  4.05 |                  1.77 |                  5.39 |                  5.71 |
 
+
+The unit-step response plot:
+
+![unit-step response plot](./unit_step_responses_plot.png)
+
+## Simulation setup
+
+The Control Variables (CVs) $y_1$ and y_2$ are both regulated to 0 from chosen initial conditions. As an example they can be y_1$= 4 and y_2$ = -2
+at $k$=0.
+
+The DMC simulation result plot:
+
+![DMC_plot](./DMC_plot.png)
 

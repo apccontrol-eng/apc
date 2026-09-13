@@ -150,7 +150,3 @@ Maciejowski, J. M. (2002).
 Predictive Control with Constraints.  
 Prentice Hall.  
 
-
----
----
----

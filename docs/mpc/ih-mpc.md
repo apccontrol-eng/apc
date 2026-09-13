@@ -173,6 +173,4 @@ Kothare, M. V., Balakrishnan, V., & Morari, M. (1996).
 *Automatica*, 32(10), 1361–1379.  
 DOI: 10.1016/0005-1098(96)00063-5
 
----
----
----
+

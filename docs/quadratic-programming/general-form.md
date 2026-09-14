@@ -9,60 +9,51 @@ The standard form of a quadratic programming problem is
 
 $$
 \begin{aligned}
-\min_{\mathbf{x}} \quad &
-J(\mathbf{x})
+\min_{x} \quad &
+J(x)
 =
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
+\frac{1}{2}x^{T}Hx
 +
-\mathbf{f}^{T}\mathbf{x}
+f^{T}x
 \\[4pt]
 \text{subject to} \quad &
-A_{\mathrm{eq}}\mathbf{x}
+A_{\mathrm{eq}}x
 =
-\mathbf{b}_{\mathrm{eq}}
+b_{\mathrm{eq}}
 \\
 &
-A_{\mathrm{ineq}}\mathbf{x}
+A_{\mathrm{ineq}}x
 \leq
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 \\
 &
-\mathbf{x}_{\mathrm{lb}}
+x_{\mathrm{lb}}
 \leq
-\mathbf{x}
+x
 \leq
-\mathbf{x}_{\mathrm{ub}}.
+x_{\mathrm{ub}}
 \end{aligned}
 $$
 
 where:
 
-* $\mathbf{x} \in \mathbb{R}^{n}$ is the **decision-variable vector**.
-* $H \in \mathbb{R}^{n\times n}$ is the **Hessian matrix** of the quadratic objective.
-* $\mathbf{f} \in \mathbb{R}^{n}$ is the **linear objective coefficient vector**.
-* $A_{\mathrm{eq}} \in \mathbb{R}^{m_e\times n}$ is the **equality-constraint matrix**.
-* $\mathbf{b}_{\mathrm{eq}} \in \mathbb{R}^{m_e}$ is the **equality-constraint vector**.
-* $A_{\mathrm{ineq}} \in \mathbb{R}^{m_i\times n}$ is the **inequality-constraint matrix**.
-* $\mathbf{b}_{\mathrm{ineq}} \in \mathbb{R}^{m_i}$ is the **inequality-constraint vector**.
-* $\mathbf{x}*{\mathrm{lb}}$ and $\mathbf{x}*{\mathrm{ub}}$ are the **lower and upper bounds** on the decision variables.
+* $x \in \mathbb{R}^{n}$   (the decision variables)
+* $H \in \mathbb{R}^{n\times n}$
+* $f \in \mathbb{R}^{n}$
+* $A_{\mathrm{eq}} \in \mathbb{R}^{m_e\times n}$
+* $b_{\mathrm{eq}} \in \mathbb{R}^{m_e}$
+* $A_{\mathrm{ineq}} \in \mathbb{R}^{m_i\times n}$
+* $b_{\mathrm{ineq}} \in \mathbb{R}^{m_i}$
+* $x_{\mathrm{lb}} \in \mathbb{R}^{n}$  (lower bound for decision variables $x$)
+* $x_{\mathrm{ub}} \in \mathbb{R}^{n}$ (upper bound for decision variables $x$)
 
-The objective function is therefore
-
-$$
-J(\mathbf{x})
-=
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
-+
-\mathbf{f}^{T}\mathbf{x}.
-$$
-
-The objective is to determine the optimal decision vector $\mathbf{x}^*$ that minimizes $J(\mathbf{x})$ while satisfying all constraints.
+The objective is to determine the optimal decision vector $x^*$ that minimizes $J(x)$ while satisfying all constraints.
 
 ---
 
 ### 2. Convexity Requirements
 
-For the QP to be a **convex optimization problem**, the Hessian matrix must be positive semidefinite:
+For the QP to be a convex optimization problem, the Hessian matrix must be positive semidefinite:
 
 $$
 H = H^T
@@ -71,26 +62,26 @@ $$
 and
 
 $$
-H \succeq 0.
+H \succeq 0
 $$
 
 Positive semidefiniteness means that
 
 $$
-\mathbf{z}^{T}H\mathbf{z} \geq 0
+z^{T}Hz \geq 0
 $$
 
-for every vector $\mathbf{z}$.
+for every vector $z$.
 
 If the Hessian is positive definite,
 
 $$
-H \succ 0,
+H \succ 0
 $$
 
-then the objective function is **strictly convex**.
+then the objective function is strictly convex.
 
-For a feasible strictly convex QP, the optimal decision vector $\mathbf{x}^*$ is unique.
+For a feasible strictly convex QP, the optimal decision vector $x^*$ is unique.
 
 Thus:
 
@@ -115,43 +106,43 @@ $$
 For deriving the optimality conditions, the inequality constraints are written in the standard form
 
 $$
-\mathbf{g}(\mathbf{x}) \leq 0.
+g(x) \leq 0
 $$
 
 Define
 
 $$
-\mathbf{g}(\mathbf{x})
+g(x)
 =
-A_{\mathrm{ineq}}\mathbf{x}
+A_{\mathrm{ineq}}x
 -
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 $$
 
 and
 
 $$
-\mathbf{h}(\mathbf{x})
+h(x)
 =
-A_{\mathrm{eq}}\mathbf{x}
+A_{\mathrm{eq}}x
 -
-\mathbf{b}_{\mathrm{eq}}.
+b_{\mathrm{eq}}
 $$
 
 The QP can therefore be expressed as
 
 $$
 \begin{aligned}
-\min_{\mathbf{x}} \quad &
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
+\min_{x} \quad &
+\frac{1}{2}x^{T}Hx
 +
-\mathbf{f}^{T}\mathbf{x}
+f^{T}x
 \\
 \text{subject to} \quad &
-\mathbf{h}(\mathbf{x}) = 0
+h(x) = 0
 \\
 &
-\mathbf{g}(\mathbf{x}) \leq 0.
+g(x) \leq 0
 \end{aligned}
 $$
 
@@ -162,7 +153,7 @@ $$
 Introduce the Lagrange multiplier vectors
 
 $$
-\boldsymbol{\lambda}
+\lambda
 \in
 \mathbb{R}^{m_e}
 $$
@@ -170,7 +161,7 @@ $$
 for the equality constraints and
 
 $$
-\boldsymbol{\mu}
+\mu
 \in
 \mathbb{R}^{m_i}
 $$
@@ -182,29 +173,29 @@ The Lagrangian is
 $$
 \mathcal{L}
 =
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
+\frac{1}{2}x^{T}Hx
 +
-\mathbf{f}^{T}\mathbf{x}
+f^{T}x
 +
-\boldsymbol{\lambda}^{T}
+\lambda^{T}
 \left(
-A_{\mathrm{eq}}\mathbf{x}
+A_{\mathrm{eq}}x
 -
-\mathbf{b}_{\mathrm{eq}}
+b_{\mathrm{eq}}
 \right)
 +
-\boldsymbol{\mu}^{T}
+\mu^{T}
 \left(
-A_{\mathrm{ineq}}\mathbf{x}
+A_{\mathrm{ineq}}x
 -
-\mathbf{b}_{\mathrm{ineq}}
-\right).
+b_{\mathrm{ineq}}
+\right)
 $$
 
 For the inequality constraints, the Lagrange multipliers must satisfy
 
 $$
-\boldsymbol{\mu} \geq 0.
+\mu \geq 0
 $$
 
 ---
@@ -216,33 +207,33 @@ For a convex QP, the KKT conditions characterize the optimal solution, provided 
 The optimal solution is denoted by
 
 $$
-\mathbf{x} = \mathbf{x}^*,
+x = x^*
 $$
 
 with corresponding optimal Lagrange multipliers
 
 $$
-\boldsymbol{\lambda}
+\lambda
 =
-\boldsymbol{\lambda}^*
+\lambda^*
 $$
 
 and
 
 $$
-\boldsymbol{\mu}
+\mu
 =
-\boldsymbol{\mu}^*.
+\mu^*
 $$
 
-The four KKT conditions are **stationarity, primal feasibility, dual feasibility, and complementary slackness**.
+The four KKT conditions are stationarity, primal feasibility, dual feasibility, and complementary slackness.
 
 ### 5.1 Stationarity
 
-The gradient of the Lagrangian with respect to $\mathbf{x}$ must be zero:
+The gradient of the Lagrangian with respect to $x$ must be zero:
 
 $$
-\nabla_{\mathbf{x}}\mathcal{L}
+\nabla_{x}\mathcal{L}
 =
 0.
 $$
@@ -250,29 +241,29 @@ $$
 Therefore,
 
 $$
-H\mathbf{x}
+Hx
 +
-\mathbf{f}
+f
 +
-A_{\mathrm{eq}}^T\boldsymbol{\lambda}
+A_{\mathrm{eq}}^T\lambda
 +
-A_{\mathrm{ineq}}^T\boldsymbol{\mu}
+A_{\mathrm{ineq}}^T\mu
 =
-0.
+0
 $$
 
 At the optimum,
 
 $$
-H\mathbf{x}^*
+Hx^*
 +
-\mathbf{f}
+f
 +
-A_{\mathrm{eq}}^T\boldsymbol{\lambda}^*
+A_{\mathrm{eq}}^T\lambda^*
 +
-A_{\mathrm{ineq}}^T\boldsymbol{\mu}^*
+A_{\mathrm{ineq}}^T\mu^*
 =
-0.
+0
 $$
 
 ---
@@ -282,27 +273,27 @@ $$
 The optimal decision vector must satisfy all equality and inequality constraints:
 
 $$
-A_{\mathrm{eq}}\mathbf{x}^*
+A_{\mathrm{eq}}x^*
 =
-\mathbf{b}_{\mathrm{eq}}
+b_{\mathrm{eq}}
 $$
 
 and
 
 $$
-A_{\mathrm{ineq}}\mathbf{x}^*
+A_{\mathrm{ineq}}x^*
 \leq
-\mathbf{b}_{\mathrm{ineq}}.
+b_{\mathrm{ineq}}
 $$
 
 The variable bounds must also be satisfied:
 
 $$
-\mathbf{x}_{\mathrm{lb}}
+x_{\mathrm{lb}}
 \leq
-\mathbf{x}^*
+x^*
 \leq
-\mathbf{x}_{\mathrm{ub}}.
+x_{\mathrm{ub}}
 $$
 
 ---
@@ -312,17 +303,17 @@ $$
 The multipliers associated with inequality constraints must be nonnegative:
 
 $$
-\boldsymbol{\mu}^*
+\mu^*
 \geq
-0.
+0
 $$
 
 There is no corresponding sign restriction on the equality multipliers:
 
 $$
-\boldsymbol{\lambda}^*
+\lambda^*
 \in
-\mathbb{R}^{m_e}.
+\mathbb{R}^{m_e}
 $$
 
 ---
@@ -334,25 +325,25 @@ For each inequality constraint,
 $$
 \mu_i^*
 \left(
-A_{\mathrm{ineq}}\mathbf{x}^*
+A_{\mathrm{ineq}}x^*
 -
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 \right)_i
 =
-0.
+0
 $$
 
 In vector form,
 
 $$
-\boldsymbol{\mu}^{*T}
+\mu^{*T}
 \left(
-A_{\mathrm{ineq}}\mathbf{x}^*
+A_{\mathrm{ineq}}x^*
 -
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 \right)
 =
-0.
+0
 $$
 
 Complementary slackness means that each inequality constraint satisfies one of two conditions:
@@ -365,15 +356,15 @@ or
 
 $$
 \left(
-A_{\mathrm{ineq}}\mathbf{x}^*
+A_{\mathrm{ineq}}x^*
 -
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 \right)_i
 =
-0.
+0
 $$
 
-Thus, an inequality constraint is either **inactive**, with zero multiplier, or **active**, with zero constraint slack.
+Thus, an inequality constraint is either inactive, with zero multiplier, or active, with zero constraint slack.
 
 ---
 
@@ -383,13 +374,13 @@ The complete KKT conditions for the QP are therefore
 
 $$
 \boxed{
-H\mathbf{x}^*
+Hx^*
 +
-\mathbf{f}
+f
 +
-A_{\mathrm{eq}}^T\boldsymbol{\lambda}^*
+A_{\mathrm{eq}}^T\lambda^*
 +
-A_{\mathrm{ineq}}^T\boldsymbol{\mu}^*
+A_{\mathrm{ineq}}^T\mu^*
 =
 0
 }
@@ -397,9 +388,9 @@ $$
 
 $$
 \boxed{
-A_{\mathrm{eq}}\mathbf{x}^*
+A_{\mathrm{eq}}x^*
 -
-\mathbf{b}_{\mathrm{eq}}
+b_{\mathrm{eq}}
 =
 0
 }
@@ -407,9 +398,9 @@ $$
 
 $$
 \boxed{
-A_{\mathrm{ineq}}\mathbf{x}^*
+A_{\mathrm{ineq}}x^*
 -
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 \leq
 0
 }
@@ -417,7 +408,7 @@ $$
 
 $$
 \boxed{
-\boldsymbol{\mu}^*
+\mu^*
 \geq
 0
 }
@@ -427,14 +418,14 @@ and
 
 $$
 \boxed{
-\boldsymbol{\mu}^{*T}
+\mu^{*T}
 \left(
-A_{\mathrm{ineq}}\mathbf{x}^*
+A_{\mathrm{ineq}}x^*
 -
-\mathbf{b}_{\mathrm{ineq}}
+b_{\mathrm{ineq}}
 \right)
 =
-0.
+0
 }
 $$
 
@@ -447,32 +438,32 @@ These conditions collectively characterize the optimal solution.
 If there are no constraints, the optimization problem reduces to
 
 $$
-\min_{\mathbf{x}}
+\min_{x}
 \quad
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
+\frac{1}{2}x^{T}Hx
 +
-\mathbf{f}^{T}\mathbf{x}.
+f^{T}x
 $$
 
 The first-order optimality condition is
 
 $$
-\nabla J(\mathbf{x})
+\nabla J(x)
 =
-H\mathbf{x}
+Hx
 +
-\mathbf{f}
+f
 =
-0.
+0
 $$
 
 Therefore, if $H$ is nonsingular,
 
 $$
 \boxed{
-\mathbf{x}^*
+x^*
 =
--H^{-1}\mathbf{f}.
+-H^{-1}f
 }
 $$
 
@@ -486,15 +477,15 @@ If only equality constraints are present,
 
 $$
 \begin{aligned}
-\min_{\mathbf{x}}\quad&
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
+\min_{x}\quad&
+\frac{1}{2}x^{T}Hx
 +
-\mathbf{f}^{T}\mathbf{x}
+f^{T}x
 \\
 \text{subject to}\quad&
-A_{\mathrm{eq}}\mathbf{x}
+A_{\mathrm{eq}}x
 =
-\mathbf{b}_{\mathrm{eq}},
+b_{\mathrm{eq}}
 \end{aligned}
 $$
 
@@ -506,28 +497,28 @@ H & A_{\mathrm{eq}}^T \\
 A_{\mathrm{eq}} & 0
 \end{bmatrix}
 \begin{bmatrix}
-\mathbf{x}^* \\
-\boldsymbol{\lambda}^*
+x^* \\
+\lambda^*
 \end{bmatrix}
 =
 \begin{bmatrix}
--\mathbf{f} \\
-\mathbf{b}_{\mathrm{eq}}
-\end{bmatrix}.
+-f \\
+b_{\mathrm{eq}}
+\end{bmatrix}
 $$
 
-Solving this system gives the optimal decision vector $\mathbf{x}^*$ and its corresponding equality multipliers $\boldsymbol{\lambda}^*$.
+Solving this system gives the optimal decision vector $x^*$ and its corresponding equality multipliers $\lambda^*$.
 
 ---
 
 ### 9. Inequality-Constrained QP and Active Constraints
 
-For inequality-constrained problems, the main difficulty is determining which constraints are **active** at the optimum.
+For inequality-constrained problems, the main difficulty is determining which constraints are active at the optimum.
 
 An inequality constraint
 
 $$
-a_i^T\mathbf{x}
+a_i^Tx
 \leq
 b_i
 $$
@@ -535,17 +526,17 @@ $$
 is active if
 
 $$
-a_i^T\mathbf{x}^*
+a_i^Tx^*
 =
-b_i.
+b_i
 $$
 
 It is inactive if
 
 $$
-a_i^T\mathbf{x}^*
+a_i^Tx^*
 <
-b_i.
+b_i
 $$
 
 From complementary slackness:
@@ -553,22 +544,22 @@ From complementary slackness:
 $$
 \mu_i^*
 \left(
-a_i^T\mathbf{x}^*
+a_i^Tx^*
 -
 b_i
 \right)
 =
-0.
+0
 $$
 
 Therefore:
 
 $$
-a_i^T\mathbf{x}^*
+a_i^Tx^*
 <
 b_i
 \quad\Rightarrow\quad
-\mu_i^*=0,
+\mu_i^*=0
 $$
 
 whereas
@@ -576,9 +567,9 @@ whereas
 $$
 \mu_i^*>0
 \quad\Rightarrow\quad
-a_i^T\mathbf{x}^*
+a_i^Tx^*
 =
-b_i.
+b_i
 $$
 
 QP algorithms exploit this structure to determine the active set or otherwise solve the constrained optimization problem directly.
@@ -589,54 +580,54 @@ QP algorithms exploit this structure to determine the active set or otherwise so
 
 A QP has a well-defined global solution when the following requirements are appropriately satisfied:
 
-1. **Well-defined objective**
+1. Well-defined objective
 
-   The matrices $H$ and $\mathbf{f}$ must be specified.
+   The matrices $H$ and $f$ must be specified.
 
-2. **Linear constraints**
+2. Linear constraints
 
    The equality and inequality constraints must have the form
 
    $$
-   A_{\mathrm{eq}}\mathbf{x}
+   A_{\mathrm{eq}}x
    =
-   \mathbf{b}_{\mathrm{eq}}
+   b_{\mathrm{eq}}
    $$
 
    and
 
    $$
-   A_{\mathrm{ineq}}\mathbf{x}
+   A_{\mathrm{ineq}}x
    \leq
-   \mathbf{b}_{\mathrm{ineq}}.
+   b_{\mathrm{ineq}}
    $$
 
-3. **Convexity**
+3. Convexity
 
    For a convex QP,
 
    $$
-   H\succeq0.
+   H\succeq0
    $$
 
-4. **Feasibility**
+4. Feasibility
 
-   There must exist at least one $\mathbf{x}$ satisfying all constraints.
+   There must exist at least one $x$ satisfying all constraints.
 
-5. **Constraint qualification**
+5. Constraint qualification
 
    An appropriate constraint qualification, such as LICQ or Slater's condition where applicable, should hold so that the KKT conditions properly characterize optimality.
 
-6. **KKT optimality**
+6. KKT optimality
 
    The candidate solution must satisfy stationarity, primal feasibility, dual feasibility, and complementary slackness.
 
-For a convex QP, satisfaction of the KKT conditions is sufficient for **global optimality**.
+For a convex QP, satisfaction of the KKT conditions is sufficient for global optimality.
 
 If, in addition,
 
 $$
-H\succ0,
+H\succ0
 $$
 
 the objective is strictly convex and the optimal decision vector is unique whenever the feasible set is nonempty.
@@ -650,52 +641,52 @@ The general QP can therefore be summarized as
 $$
 \boxed{
 \begin{aligned}
-\min_{\mathbf{x}}\quad&
-\frac{1}{2}\mathbf{x}^{T}H\mathbf{x}
+\min_{x}\quad&
+\frac{1}{2}\mathbf{x}^{T}Hx
 +
-\mathbf{f}^{T}\mathbf{x}
+f^{T}x
 \\
 \text{subject to}\quad&
-A_{\mathrm{eq}}\mathbf{x}
+A_{\mathrm{eq}}x
 =
-\mathbf{b}_{\mathrm{eq}}
+b_{\mathrm{eq}}
 \\
 &
-A_{\mathrm{ineq}}\mathbf{x}
+A_{\mathrm{ineq}}x
 \leq
-\mathbf{b}_{\mathrm{ineq}}.
+b_{\mathrm{ineq}}
 \end{aligned}
 }
 $$
 
-The optimal solution $\mathbf{x}^*$ is characterized by
+The optimal solution $x^*$ is characterized by
 
 $$
 \boxed{
 \begin{aligned}
-H\mathbf{x}^*
-+\mathbf{f}
-+A_{\mathrm{eq}}^T\boldsymbol{\lambda}^*
-+A_{\mathrm{ineq}}^T\boldsymbol{\mu}^*
-&=0,
+Hx^*
++f
++A_{\mathrm{eq}}^T\lambda^*
++A_{\mathrm{ineq}}^T\mu^*
+&=0
 \\
-A_{\mathrm{eq}}\mathbf{x}^*
--\mathbf{b}_{\mathrm{eq}}
-&=0,
+A_{\mathrm{eq}}x^*
+-b_{\mathrm{eq}}
+&=0
 \\
-A_{\mathrm{ineq}}\mathbf{x}^*
--\mathbf{b}_{\mathrm{ineq}}
-&\leq0,
+A_{\mathrm{ineq}}x^*
+-b_{\mathrm{ineq}}
+&\leq0
 \\
-\boldsymbol{\mu}^*
-&\geq0,
+\mu^*
+&\geq0
 \\
-\boldsymbol{\mu}^{*T}
+\mu^{*T}
 \left(
-A_{\mathrm{ineq}}\mathbf{x}^*
--\mathbf{b}_{\mathrm{ineq}}
+A_{\mathrm{ineq}}x^*
+-b_{\mathrm{ineq}}
 \right)
-&=0.
+&=0
 \end{aligned}
 }
 $$

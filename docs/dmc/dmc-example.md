@@ -181,7 +181,7 @@ The unit-step response plot:
 
 ![unit-step response plot](./unit_step_responses_plot.png)
 
-## Simulation setup
+## Simulation setup and results
 
 The Control Variables (CVs) $y_1$ and $y_2$ are both regulated to 0 from chosen initial conditions. As an example they can be $y_1$ = 4 and $y_2$ = -2 at $k$ = 0. The Manipulated Variables (MVs) start from zero initial conditions $u_1$ = 0 and $u_2$ = 0 at $k$ = 0. 
 
